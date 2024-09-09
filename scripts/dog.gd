@@ -6,12 +6,18 @@ const MIN_PATIENCE = 0.0
 
 # Properties
 @export var patience_reduction_rate = 10 # Amount of patience lost per second
-@export var speed: float = 2 # Movement speed
+@export var speed: float = 2             # Movement speed
+@export var min_interval: float = 5.0    # Min interval for random status timer
+@export var max_interval: float = 15.0   # Max interval for random status timer
+var patience: float = 100.0              # A patience meter starting at 100
+var status_time_accumulator: float = 0.0 # Accumulates time for triggering status
+var status_interval: float = 0.0         # Interval to wait for triggering status
 
-var patience: float = 100.0  # A patience meter starting at 100
-var hunger: float = 0.0      # Hunger level
-var thirst: float = 0.0      # Thirst level
-var playfulness: float = 0.0 # Playfulness level
+# Possible variables to use in future
+var hunger: float = 0.0                  # Hunger level
+var thirst: float = 0.0                  # Thirst level
+var playfulness: float = 0.0             # Playfulness level
+
 
 var drink_water : bool = false
 var eat_food : bool = false
@@ -29,8 +35,8 @@ var current_status: String = ""
 # Called when the node enters the scene
 func _ready():
 	# Initialize the patience meter and status randomly
-	current_status = get_random_status()
 	progress_bar.value = MAX_PATIENCE
+	status_interval = randf_range(min_interval, max_interval)
 
 func _physics_process(delta):
 	if drink_water:
@@ -39,22 +45,16 @@ func _physics_process(delta):
 	if eat_food:
 		hungry()
 	# Decrease patience over time
-	patience -= delta * patience_reduction_rate  # Decrease patience by a rate
+	status_time_accumulator += delta
+	
+	if status_time_accumulator >= status_interval:
+		if current_status == "":
+			current_status = get_random_status()
+
+	if current_status != "":
+		patience -= delta * patience_reduction_rate  # Decrease patience by a rate
 	check_patience()
 
-	# Periodically change status based on randomness
-	if patience <= 50:  # Randomize a status based on certain conditions
-		current_status = get_random_status()
-
-	# Implement behavior based on the current status
-	match current_status:
-		"hunger":
-			hunger += delta * 5
-		"thirst":
-			thirst += delta * 5
-		"play":
-			playfulness += delta * 5
-			
 	var direction = Vector2.ZERO
 
 	# Handle input for movement. TODO: Generate this automatically
