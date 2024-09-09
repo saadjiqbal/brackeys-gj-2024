@@ -1,14 +1,11 @@
-[gd_scene load_steps=5 format=3 uid="uid://dnubasacbx764"]
+[gd_scene load_steps=4 format=3 uid="uid://dnubasacbx764"]
 
 [ext_resource type="Script" path="res://scripts/game.gd" id="1_c07yq"]
-[ext_resource type="PackedScene" uid="uid://dl3doxn22vvx4" path="res://scenes/dog.tscn" id="2_88e1o"]
 [ext_resource type="AudioStream" uid="uid://b1xvnipsnfxwq" path="res://assets/music/2_cafe_avenue_master.ogg" id="3_b074d"]
 [ext_resource type="PackedScene" uid="uid://7hc6qrro5n2s" path="res://scenes/cursor.tscn" id="4_07oxg"]
 
 [node name="Game" type="Node2D"]
 script = ExtResource("1_c07yq")
-
-[node name="Dog" parent="." instance=ExtResource("2_88e1o")]
 
 [node name="BackgroundMusic" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("3_b074d")
