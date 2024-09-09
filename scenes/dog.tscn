@@ -225,3 +225,13 @@ frame_progress = 0.989445
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(54.6954, 32.6615)
 shape = SubResource("RectangleShape2D_mshye")
+
+[node name="ProgressBar" type="ProgressBar" parent="CollisionShape2D"]
+anchors_preset = -1
+offset_left = -9.98629
+offset_top = -10.765
+offset_right = 10.0137
+offset_bottom = -6.76503
+step = 1.0
+show_percentage = false
+metadata/_edit_use_anchors_ = true

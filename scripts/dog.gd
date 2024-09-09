@@ -1,6 +1,12 @@
 extends CharacterBody2D
 
+# References to the UI elements
+@onready var progress_bar = $CollisionShape2D/ProgressBar
+@onready var animated_sprite = $AnimatedSprite2D
+
+
 # Properties
+@export var speed: float = 2  # Movement speed
 var patience: float = 100.0  # A patience meter starting at 100
 var hunger: float = 0.0      # Hunger level
 var thirst: float = 0.0      # Thirst level
@@ -20,6 +26,7 @@ const MIN_PATIENCE = 0.0
 func _ready():
 	# Initialize the patience meter and status randomly
 	current_status = get_random_status()
+	progress_bar.value = MAX_PATIENCE
 
 func _process(delta):
 	# Decrease patience over time
@@ -38,6 +45,42 @@ func _process(delta):
 			thirst += delta * 5
 		"play":
 			playfulness += delta * 5
+			
+	var direction = Vector2.ZERO
+
+	# Handle input for movement. TODO: Generate this automatically
+	if Input.is_action_pressed("ui_right"):
+		direction.x += 1
+	if Input.is_action_pressed("ui_left"):
+		direction.x -= 1
+	if Input.is_action_pressed("ui_down"):
+		direction.y += 1
+	if Input.is_action_pressed("ui_up"):
+		direction.y -= 1
+
+	# Normalize direction to ensure consistent speed
+	if direction.length() > 0:
+		direction = direction.normalized()
+
+	# Move the Dog
+	move_and_collide(direction * speed)
+
+	# Update animation based on direction
+	update_animation(direction)
+
+func update_animation(direction: Vector2) -> void:
+	if direction.x > 0:
+		# Moving right
+		animated_sprite.play("walk_right")
+	elif direction.x < 0:
+		# Moving left
+		animated_sprite.play("walk_left")
+	elif direction.y > 0:
+		# Moving down
+		animated_sprite.play("walk_down")
+	elif direction.y < 0:
+		# Moving up
+		animated_sprite.play("walk_up")
 
 # Function to handle random status selection
 func get_random_status() -> String:
@@ -46,10 +89,11 @@ func get_random_status() -> String:
 
 # Function to check and respond to patience level
 func check_patience():
+	progress_bar.value = patience
 	if patience <= MIN_PATIENCE:
 		handle_patience_loss()
 
 func handle_patience_loss():
-	# Implement what happens when patience runs out, such as triggering an event
-	patience = MAX_PATIENCE  # Reset patience, or handle it differently
+	# Reset and print message for now
+	patience = MAX_PATIENCE
 	print("Patience ran out! The animal is unhappy.")
