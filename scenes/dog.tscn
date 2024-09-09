@@ -1,7 +1,8 @@
-[gd_scene load_steps=29 format=3 uid="uid://dl3doxn22vvx4"]
+[gd_scene load_steps=30 format=3 uid="uid://dl3doxn22vvx4"]
 
 [ext_resource type="Script" path="res://scripts/dog.gd" id="1_prb03"]
 [ext_resource type="Texture2D" uid="uid://dxvdm74jtvroe" path="res://assets/animals/dog/dog_animation.png" id="1_uw2wv"]
+[ext_resource type="Theme" uid="uid://dt22essonkqc" path="res://themes/happiness_bar.tres" id="3_1p2hg"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_k1w5p"]
 atlas = ExtResource("1_uw2wv")
@@ -225,3 +226,14 @@ frame_progress = 0.989445
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(54.6954, 32.6615)
 shape = SubResource("RectangleShape2D_mshye")
+
+[node name="ProgressBar" type="ProgressBar" parent="CollisionShape2D"]
+anchors_preset = -1
+offset_left = -9.986
+offset_top = -12.0
+offset_right = 10.014
+offset_bottom = -7.76503
+theme = ExtResource("3_1p2hg")
+step = 1.0
+show_percentage = false
+metadata/_edit_use_anchors_ = true
