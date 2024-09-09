@@ -1,0 +1,13 @@
+[gd_scene load_steps=4 format=3 uid="uid://7hc6qrro5n2s"]
+
+[ext_resource type="PackedScene" uid="uid://b6xq2iui7gq4a" path="res://scenes/click_particles.tscn" id="1_e8kl7"]
+[ext_resource type="Script" path="res://scripts/cursor.gd" id="1_hjlpi"]
+[ext_resource type="AudioStream" uid="uid://cyyc58vmxoao7" path="res://assets/sfx/Click.wav" id="3_wwkhq"]
+
+[node name="Cursor" type="Node2D"]
+script = ExtResource("1_hjlpi")
+
+[node name="ClickParticles" parent="." instance=ExtResource("1_e8kl7")]
+
+[node name="ClickSFX" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_wwkhq")
