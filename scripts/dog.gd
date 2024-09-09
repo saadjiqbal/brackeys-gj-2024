@@ -6,7 +6,8 @@ extends CharacterBody2D
 
 
 # Properties
-@export var speed: float = 2  # Movement speed
+@export var patience_reduction_rate = 10 # Amount of patience lost per second
+@export var speed: float = 2 # Movement speed
 var patience: float = 100.0  # A patience meter starting at 100
 var hunger: float = 0.0      # Hunger level
 var thirst: float = 0.0      # Thirst level
@@ -30,7 +31,7 @@ func _ready():
 
 func _process(delta):
 	# Decrease patience over time
-	patience -= delta * 10  # Decrease patience by a rate
+	patience -= delta * patience_reduction_rate  # Decrease patience by a rate
 	check_patience()
 
 	# Periodically change status based on randomness
@@ -68,7 +69,7 @@ func _process(delta):
 	# Update animation based on direction
 	update_animation(direction)
 
-func update_animation(direction: Vector2) -> void:
+func update_animation(direction: Vector2):
 	if direction.x > 0:
 		# Moving right
 		animated_sprite.play("walk_right")
