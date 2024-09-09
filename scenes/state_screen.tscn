@@ -1,0 +1,60 @@
+[gd_scene load_steps=2 format=3 uid="uid://cynkd182kws34"]
+
+[ext_resource type="Script" path="res://scripts/state_screen.gd" id="1_x0x03"]
+
+[node name="StateScreen" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_x0x03")
+
+[node name="Start button" type="Button" parent="."]
+layout_mode = 0
+offset_left = 218.0
+offset_top = 520.0
+offset_right = 990.0
+offset_bottom = 581.0
+theme_override_font_sizes/font_size = 33
+text = "Start game"
+
+[node name="Quit button" type="Button" parent="."]
+offset_left = 216.0
+offset_top = 606.0
+offset_right = 988.0
+offset_bottom = 667.0
+theme_override_font_sizes/font_size = 33
+text = "Quit"
+
+[node name="Start Game label" type="Label" parent="."]
+layout_mode = 0
+offset_left = 233.0
+offset_top = 58.0
+offset_right = 974.0
+offset_bottom = 208.0
+theme_override_font_sizes/font_size = 72
+text = "Title"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Restart button" type="Button" parent="."]
+visible = false
+offset_left = 216.0
+offset_top = 519.0
+offset_right = 988.0
+offset_bottom = 580.0
+theme_override_font_sizes/font_size = 33
+text = "Restart"
+
+[node name="Game Over label" type="Label" parent="."]
+visible = false
+offset_left = 233.0
+offset_top = 58.0
+offset_right = 974.0
+offset_bottom = 208.0
+theme_override_font_sizes/font_size = 72
+text = "Game Over"
+horizontal_alignment = 1
+vertical_alignment = 1
