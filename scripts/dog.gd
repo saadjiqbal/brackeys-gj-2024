@@ -163,6 +163,8 @@ func _on_animal_action_area_area_entered(area):
 		drink_water = true
 	elif area.name == "FoodBowlArea":
 		eat_food = true
+	elif area.name == "AnimalActionArea":
+		print("Colliding with animal")
 
 # Check what has exited our Area2D node
 func _on_animal_action_area_area_exited(area):
