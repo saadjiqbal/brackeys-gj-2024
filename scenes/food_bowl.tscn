@@ -1,32 +1,51 @@
-[gd_scene load_steps=6 format=3 uid="uid://blsnk45mypkkh"]
+[gd_scene load_steps=8 format=3 uid="uid://blsnk45mypkkh"]
 
 [ext_resource type="Script" path="res://scripts/food_bowl.gd" id="1_3a7ic"]
 [ext_resource type="Texture2D" uid="uid://rir81ybqu0t2" path="res://assets/items/items.png" id="1_wmlwq"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_rsoye"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_x62ib"]
 atlas = ExtResource("1_wmlwq")
-region = Rect2(432, 17, 16, 17)
+region = Rect2(432, 24, 16, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_umhy3"]
+atlas = ExtResource("1_wmlwq")
+region = Rect2(432, 24, 16, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4sb7e"]
+atlas = ExtResource("1_wmlwq")
+region = Rect2(432, 8, 16, 8)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_o78pc"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_rsoye")
+"texture": SubResource("AtlasTexture_x62ib")
 }],
 "loop": true,
 "name": &"default",
 "speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_umhy3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4sb7e")
+}],
+"loop": true,
+"name": &"empty",
+"speed": 5.0
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2kom1"]
-size = Vector2(11.4, 9.2)
+size = Vector2(11.1, 8.95)
 
 [node name="FoodBowl" type="Node2D"]
-position = Vector2(1191, 51)
 scale = Vector2(10, 10)
 script = ExtResource("1_3a7ic")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+z_index = 1
 sprite_frames = SubResource("SpriteFrames_o78pc")
 
 [node name="FoodBowlArea" type="Area2D" parent="."]
@@ -34,8 +53,7 @@ collision_layer = 8
 collision_mask = 15
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="FoodBowlArea"]
-position = Vector2(0.1, 2.7)
 shape = SubResource("RectangleShape2D_2kom1")
 
-[connection signal="mouse_entered" from="FoodBowlArea" to="." method="_on_area_2d_mouse_entered"]
-[connection signal="mouse_exited" from="FoodBowlArea" to="." method="_on_area_2d_mouse_exited"]
+[connection signal="mouse_entered" from="FoodBowlArea" to="." method="_on_food_bowl_area_mouse_entered"]
+[connection signal="mouse_exited" from="FoodBowlArea" to="." method="_on_food_bowl_area_mouse_exited"]

@@ -1,42 +1,59 @@
-[gd_scene load_steps=6 format=3 uid="uid://b5df3mp0lbdpt"]
+[gd_scene load_steps=8 format=3 uid="uid://b5df3mp0lbdpt"]
 
 [ext_resource type="Texture2D" uid="uid://rir81ybqu0t2" path="res://assets/items/items.png" id="1_5k8od"]
 [ext_resource type="Script" path="res://scripts/water_bowl.gd" id="1_s2wny"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_wvslc"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_fkyml"]
 atlas = ExtResource("1_5k8od")
-region = Rect2(432, 34, 16, 17)
+region = Rect2(432, 40, 16, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_degwl"]
+atlas = ExtResource("1_5k8od")
+region = Rect2(432, 40, 16, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yptv4"]
+atlas = ExtResource("1_5k8od")
+region = Rect2(432, 8, 16, 8)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_2bp0e"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_wvslc")
+"texture": SubResource("AtlasTexture_fkyml")
 }],
 "loop": true,
 "name": &"default",
 "speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_degwl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yptv4")
+}],
+"loop": true,
+"name": &"empty",
+"speed": 5.0
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xyryh"]
-size = Vector2(11, 8.8)
+size = Vector2(11, 9)
 
 [node name="WaterBowl" type="Node2D"]
 scale = Vector2(10, 10)
 script = ExtResource("1_s2wny")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-position = Vector2(9.80001, 10.5)
+z_index = 1
 sprite_frames = SubResource("SpriteFrames_2bp0e")
-frame_progress = 0.952996
 
 [node name="WaterBowlArea" type="Area2D" parent="."]
 collision_layer = 4
 collision_mask = 15
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="WaterBowlArea"]
-position = Vector2(9.7, 12)
 shape = SubResource("RectangleShape2D_xyryh")
 
-[connection signal="mouse_entered" from="WaterBowlArea" to="." method="_on_area_2d_mouse_entered"]
-[connection signal="mouse_exited" from="WaterBowlArea" to="." method="_on_area_2d_mouse_exited"]
+[connection signal="mouse_entered" from="WaterBowlArea" to="." method="_on_water_bowl_area_mouse_entered"]
+[connection signal="mouse_exited" from="WaterBowlArea" to="." method="_on_water_bowl_area_mouse_exited"]

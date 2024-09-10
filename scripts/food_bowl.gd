@@ -20,12 +20,13 @@ func _physics_process(_delta) -> void:
 		elif Input.is_action_just_released("action"):
 			gameGlobals.can_drag_item = true
 
-func _on_area_2d_mouse_entered():
+func _on_food_bowl_area_mouse_entered():
 	if gameGlobals.can_drag_item:
 		draggable = true
 		self.scale = SCALE_ON_HOVER
 
-func _on_area_2d_mouse_exited():
+
+func _on_food_bowl_area_mouse_exited():
 	if gameGlobals.can_drag_item:
 		draggable = false
 		self.scale = scale_on_load

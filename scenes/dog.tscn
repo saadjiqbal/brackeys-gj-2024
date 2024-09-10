@@ -95,17 +95,15 @@ size = Vector2(17.0408, 11.6354)
 size = Vector2(36.0971, 24.3701)
 
 [node name="Dog" type="CharacterBody2D"]
-scale = Vector2(10.915, 10.915)
+scale = Vector2(8, 8)
 script = ExtResource("1_prb03")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-position = Vector2(54.6038, 29.6839)
 sprite_frames = SubResource("SpriteFrames_tkcq3")
 animation = &"walk"
 frame_progress = 0.469953
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(54.6954, 32.6615)
 shape = SubResource("RectangleShape2D_mshye")
 
 [node name="ProgressBar" type="ProgressBar" parent="CollisionShape2D"]
@@ -122,7 +120,8 @@ metadata/_edit_use_anchors_ = true
 collision_mask = 15
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AnimalActionArea"]
-position = Vector2(54.8786, 30.142)
+position = Vector2(0, 10.915)
+scale = Vector2(1.5, 1.5)
 shape = SubResource("RectangleShape2D_64iw8")
 
 [connection signal="area_entered" from="AnimalActionArea" to="." method="_on_animal_action_area_area_entered"]
