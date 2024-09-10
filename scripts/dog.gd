@@ -47,7 +47,8 @@ func _ready():
 
 func _physics_process(delta):
 	if Input.is_action_just_pressed("action") and cursor_on_animal:
-		show_affection()
+		if not drink_water and not eat_food:
+			show_affection()
 
 	# Accumulate timer and trigger status if not already set, based on random interval
 	status_time_accumulator += delta
