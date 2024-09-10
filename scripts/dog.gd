@@ -169,6 +169,7 @@ func _on_animal_action_area_area_entered(area):
 	elif area.name == "FoodBowlArea":
 		eat_food = true
 	elif area.name == "AnimalActionArea":
+		# TODO: Stop moving and start throwing some hands
 		print("Colliding with animal")
 
 # Check what has exited our Area2D node
