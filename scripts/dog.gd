@@ -39,18 +39,21 @@ func _ready():
 	status_interval = randf_range(min_interval, max_interval)
 
 func _physics_process(delta):
-	if drink_water:
-		thirsty()
-	
-	if eat_food:
-		hungry()
-	# Decrease patience over time
+
+	# Accumulate timer and trigger status if not already set, based on random interval
 	status_time_accumulator += delta
-	
 	if status_time_accumulator >= status_interval:
 		if current_status == "":
 			current_status = get_random_status()
+			print(current_status)
 
+	if drink_water:
+		thirsty(current_status, delta)
+	
+	if eat_food:
+		hungry(current_status, delta)
+
+	# Decrease patience over time if status is set
 	if current_status != "":
 		patience -= delta * patience_reduction_rate  # Decrease patience by a rate
 	check_patience()
@@ -108,12 +111,20 @@ func handle_patience_loss():
 	print("Patience ran out! The animal is unhappy.")
 
 # Implement logic for animal being thirsty
-func thirsty():
-	print("Drinking water")
+func thirsty(status: String, delta: float):
+	if status == "thirst":
+		print("Drinking water")
+		current_status = ""
+	else:
+		patience -= patience_reduction_rate * delta
 
 # Implement logic for animal being hungry
-func hungry():
-	print("Eating food")
+func hungry(status: String, delta: float):
+	if status == "hunger":
+		print("Eating food")
+		current_status = ""
+	else:
+		patience -= patience_reduction_rate * delta
 
 # Check what has entered our Area2D node
 func _on_animal_action_area_area_entered(area):
