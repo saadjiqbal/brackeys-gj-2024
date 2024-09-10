@@ -15,6 +15,6 @@ func _physics_process(_delta) -> void:
 		click_particles.emitting = true
 
 		click_sfx.play()
-		
 
-		
+func _on_hitbox_area_entered(area):
+	print("area entered")

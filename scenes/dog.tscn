@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=3 uid="uid://dl3doxn22vvx4"]
+[gd_scene load_steps=31 format=3 uid="uid://dl3doxn22vvx4"]
 
 [ext_resource type="Script" path="res://scripts/dog.gd" id="1_prb03"]
 [ext_resource type="Texture2D" uid="uid://dxvdm74jtvroe" path="res://assets/animals/dog/dog_animation.png" id="1_uw2wv"]
@@ -213,6 +213,9 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mshye"]
 size = Vector2(17.0408, 11.6354)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_64iw8"]
+size = Vector2(36.0971, 24.3701)
+
 [node name="Dog" type="CharacterBody2D"]
 scale = Vector2(10.915, 10.915)
 script = ExtResource("1_prb03")
@@ -228,7 +231,6 @@ position = Vector2(54.6954, 32.6615)
 shape = SubResource("RectangleShape2D_mshye")
 
 [node name="ProgressBar" type="ProgressBar" parent="CollisionShape2D"]
-anchors_preset = -1
 offset_left = -9.986
 offset_top = -12.0
 offset_right = 10.014
@@ -237,3 +239,14 @@ theme = ExtResource("3_1p2hg")
 step = 1.0
 show_percentage = false
 metadata/_edit_use_anchors_ = true
+
+[node name="AnimalActionArea" type="Area2D" parent="."]
+collision_mask = 15
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AnimalActionArea"]
+position = Vector2(54.8786, 30.142)
+scale = Vector2(1, 1)
+shape = SubResource("RectangleShape2D_64iw8")
+
+[connection signal="area_entered" from="AnimalActionArea" to="." method="_on_animal_action_area_area_entered"]
+[connection signal="area_exited" from="AnimalActionArea" to="." method="_on_animal_action_area_area_exited"]

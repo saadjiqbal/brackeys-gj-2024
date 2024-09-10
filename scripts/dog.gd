@@ -8,10 +8,14 @@ extends CharacterBody2D
 # Properties
 @export var patience_reduction_rate = 10 # Amount of patience lost per second
 @export var speed: float = 2 # Movement speed
+
 var patience: float = 100.0  # A patience meter starting at 100
 var hunger: float = 0.0      # Hunger level
 var thirst: float = 0.0      # Thirst level
 var playfulness: float = 0.0 # Playfulness level
+
+var drink_water : bool = false
+var eat_food : bool = false
 
 # Statuses
 var statuses: Array = ["hunger", "thirst", "play"]  # Possible statuses
@@ -29,7 +33,12 @@ func _ready():
 	current_status = get_random_status()
 	progress_bar.value = MAX_PATIENCE
 
-func _process(delta):
+func _physics_process(delta):
+	if drink_water:
+		thirsty()
+	
+	if eat_food:
+		hungry()
 	# Decrease patience over time
 	patience -= delta * patience_reduction_rate  # Decrease patience by a rate
 	check_patience()
@@ -98,3 +107,24 @@ func handle_patience_loss():
 	# Reset and print message for now
 	patience = MAX_PATIENCE
 	print("Patience ran out! The animal is unhappy.")
+
+func thirsty():
+	print("Drinking water")
+
+func hungry():
+	print("Eating food")
+
+func _on_animal_action_area_area_entered(area):
+	if area.name == "WaterBowlArea":
+		drink_water = true
+	elif area.name == "FoodBowlArea":
+		eat_food = true
+
+
+func _on_animal_action_area_area_exited(area):
+	if area.name == "WaterBowlArea":
+		print("Done drinking water")
+		drink_water = false
+	elif area.name == "FoodBowlArea":
+		print("Done eating food")
+		eat_food = false
