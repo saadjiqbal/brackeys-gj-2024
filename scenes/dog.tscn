@@ -245,7 +245,6 @@ collision_mask = 15
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AnimalActionArea"]
 position = Vector2(54.8786, 30.142)
-scale = Vector2(1, 1)
 shape = SubResource("RectangleShape2D_64iw8")
 
 [connection signal="area_entered" from="AnimalActionArea" to="." method="_on_animal_action_area_area_entered"]

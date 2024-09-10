@@ -4,7 +4,6 @@ const DOG = preload("res://scenes/dog.tscn")
 const FOOD_BOWL = preload("res://scenes/food_bowl.tscn")
 const WATER_BOWL_SCENE = preload("res://scenes/water_bowl.tscn")
 
-
 func _ready() -> void:
 	var dog_scene_instance = DOG.instantiate()
 	var food_bowl_scene_instance = FOOD_BOWL.instantiate()
