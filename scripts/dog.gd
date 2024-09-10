@@ -73,47 +73,40 @@ func _physics_process(delta):
 		patience -= delta * patience_reduction_rate  # Decrease patience by a rate
 	check_patience()
 
-	var direction = Vector2.ZERO
-
-	# Handle input for movement. TODO: Generate this automatically
-	if Input.is_action_pressed("ui_right"):
-		direction.x += 1
-	if Input.is_action_pressed("ui_left"):
-		direction.x -= 1
-	if Input.is_action_pressed("ui_down"):
-		direction.y += 1
-	if Input.is_action_pressed("ui_up"):
-		direction.y -= 1
-
-	# Normalize direction to ensure consistent speed
-	if direction.length() > 0:
-		direction = direction.normalized()
-
-	# Move the Dog
-	move_and_collide(direction * speed)
-
 	# Update animation based on direction
-	update_animation(direction)
+	var direction = (target_position - position).normalized()
+	if is_moving:
+		move_to_target(direction)
+	update_animation(is_moving, direction)
+
+func move_to_target(direction: Vector2):
+	velocity = direction * speed
+	move_and_collide(velocity)
+
+	# Check if the dog is close enough to the target
+	if position.distance_to(target_position) < 5:
+		# Stop moving and reset timer
+		is_moving = false
+		reset_movement_timer()
+		print("Reached target, waiting for", move_interval, "seconds")
 
 func set_random_position():
 	var game_scene = get_parent()
 	var game_area = game_scene.game_size
+	# TODO: Make sure this position is at least X distance away
 	target_position = Vector2(randf_range(0, game_area.x), randf_range(0, game_area.y))
-	print(target_position)
 
-func update_animation(direction: Vector2):
-	if direction.x > 0:
+func update_animation(is_moving: bool, direction: Vector2):
+	if not is_moving:
+		animated_sprite.play("idle")
+	elif direction.x > 0:
 		# Moving right
 		animated_sprite.play("walk")
+		animated_sprite. flip_h = false
 	elif direction.x < 0:
 		# Moving left
 		animated_sprite.play("walk")
-	elif direction.y > 0:
-		# Moving down
-		animated_sprite.play("walk")
-	elif direction.y < 0:
-		# Moving up
-		animated_sprite.play("walk")
+		animated_sprite.flip_h = true
 
 func reset_status_timer():
 	status_time_accumulator = 0
