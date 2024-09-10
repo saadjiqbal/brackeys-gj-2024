@@ -1,6 +1,6 @@
-[gd_scene load_steps=4 format=3 uid="uid://47deeqif0u4w"]
+[gd_scene load_steps=4 format=3 uid="uid://7hc6qrro5n2s"]
 
-[ext_resource type="PackedScene" uid="uid://c8y6hdwsj4og4" path="res://scenes/click_particles.tscn" id="1_e8kl7"]
+[ext_resource type="PackedScene" uid="uid://b6xq2iui7gq4a" path="res://scenes/click_particles.tscn" id="1_e8kl7"]
 [ext_resource type="Script" path="res://scripts/cursor.gd" id="1_hjlpi"]
 [ext_resource type="AudioStream" uid="uid://cyyc58vmxoao7" path="res://assets/sfx/Click.wav" id="3_wwkhq"]
 
