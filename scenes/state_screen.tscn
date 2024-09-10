@@ -12,6 +12,7 @@ grow_vertical = 2
 script = ExtResource("1_x0x03")
 
 [node name="Start button" type="Button" parent="."]
+visible = false
 layout_mode = 0
 offset_left = 218.0
 offset_top = 520.0
@@ -21,6 +22,8 @@ theme_override_font_sizes/font_size = 33
 text = "Start game"
 
 [node name="Quit button" type="Button" parent="."]
+visible = false
+layout_mode = 0
 offset_left = 216.0
 offset_top = 606.0
 offset_right = 988.0
@@ -29,6 +32,7 @@ theme_override_font_sizes/font_size = 33
 text = "Quit"
 
 [node name="Start Game label" type="Label" parent="."]
+visible = false
 layout_mode = 0
 offset_left = 233.0
 offset_top = 58.0
@@ -41,6 +45,7 @@ vertical_alignment = 1
 
 [node name="Restart button" type="Button" parent="."]
 visible = false
+layout_mode = 0
 offset_left = 216.0
 offset_top = 519.0
 offset_right = 988.0
@@ -50,6 +55,7 @@ text = "Restart"
 
 [node name="Game Over label" type="Label" parent="."]
 visible = false
+layout_mode = 0
 offset_left = 233.0
 offset_top = 58.0
 offset_right = 974.0
@@ -58,3 +64,5 @@ theme_override_font_sizes/font_size = 72
 text = "Game Over"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[connection signal="pressed" from="Quit button" to="." method="_on_quit_button_pressed"]
