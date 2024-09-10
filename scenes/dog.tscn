@@ -126,3 +126,5 @@ shape = SubResource("RectangleShape2D_64iw8")
 
 [connection signal="area_entered" from="AnimalActionArea" to="." method="_on_animal_action_area_area_entered"]
 [connection signal="area_exited" from="AnimalActionArea" to="." method="_on_animal_action_area_area_exited"]
+[connection signal="mouse_entered" from="AnimalActionArea" to="." method="_on_animal_action_area_mouse_entered"]
+[connection signal="mouse_exited" from="AnimalActionArea" to="." method="_on_animal_action_area_mouse_exited"]

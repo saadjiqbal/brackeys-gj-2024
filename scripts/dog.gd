@@ -19,8 +19,9 @@ var thirst: float = 0.0                  # Thirst level
 var playfulness: float = 0.0             # Playfulness level
 
 
-var drink_water : bool = false
-var eat_food : bool = false
+var drink_water: bool = false
+var eat_food: bool = false
+var cursor_on_animal: bool = false
 
 # Statuses
 var statuses: Array = ["hunger", "thirst", "play"]  # Possible statuses
@@ -39,6 +40,8 @@ func _ready():
 	reset_status_timer()
 
 func _physics_process(delta):
+	if Input.is_action_just_pressed("action") and cursor_on_animal:
+		show_affection()
 
 	# Accumulate timer and trigger status if not already set, based on random interval
 	status_time_accumulator += delta
@@ -132,6 +135,9 @@ func hungry(status: String, delta: float):
 	elif status != "":
 		patience -= patience_reduction_rate * delta
 
+func show_affection() -> void:
+	print("Showing affection")
+
 # Check what has entered our Area2D node
 func _on_animal_action_area_area_entered(area):
 	if area.name == "WaterBowlArea":
@@ -147,3 +153,11 @@ func _on_animal_action_area_area_exited(area):
 	elif area.name == "FoodBowlArea":
 		print("Done eating food")
 		eat_food = false
+
+# Check if mouse is inside our Area2D node
+func _on_animal_action_area_mouse_entered():
+	cursor_on_animal = true
+
+# Check if mouse has exited our Area2D node
+func _on_animal_action_area_mouse_exited():
+	cursor_on_animal = false
