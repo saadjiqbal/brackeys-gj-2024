@@ -1,6 +1,6 @@
 extends Node2D
 
-const SCALE_ON_HOVER : Vector2 = Vector2(10.5, 10.5) 
+const SCALE_ON_HOVER : Vector2 = Vector2(8.5, 8.5) 
 
 var draggable : bool = false
 var sprite_offset : Vector2
@@ -20,13 +20,12 @@ func _physics_process(_delta) -> void:
 		elif Input.is_action_just_released("action"):
 			gameGlobals.can_drag_item = true
 
-func _on_water_bowl_area_mouse_entered():
+func _on_toy_area_mouse_entered():
 	if gameGlobals.can_drag_item:
 		draggable = true
 		self.scale = SCALE_ON_HOVER
 
-
-func _on_water_bowl_area_mouse_exited():
+func _on_toy_area_mouse_exited():
 	if gameGlobals.can_drag_item:
 		draggable = false
 		self.scale = scale_on_load
