@@ -35,7 +35,6 @@ collision_mask = 15
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="FoodBowlArea"]
 position = Vector2(0.1, 2.7)
-scale = Vector2(1, 1)
 shape = SubResource("RectangleShape2D_2kom1")
 
 [connection signal="mouse_entered" from="FoodBowlArea" to="." method="_on_area_2d_mouse_entered"]

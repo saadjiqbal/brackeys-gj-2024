@@ -1,28 +1,26 @@
 extends Node2D
 
-var area_entered : bool = false
-var draggable : bool = false
-var offset : Vector2
+const SCALE_ON_HOVER : Vector2 = Vector2(10.5, 10.5) 
 
-func _physics_process(delta):
+var draggable : bool = false
+var sprite_offset : Vector2
+var scale_on_load : Vector2
+
+func _ready() -> void:
+	scale_on_load = self.scale
+
+func _physics_process(_delta) -> void:
 	if draggable:
 		if Input.is_action_just_pressed("action"):
-			offset = get_global_mouse_position() - self.position
+			sprite_offset = get_global_mouse_position() - self.position
 			
 		if Input.is_action_pressed("action"):
-			self.position = get_global_mouse_position() - offset
-			
+			self.position = get_global_mouse_position() - sprite_offset
+
 func _on_area_2d_mouse_entered():
 	draggable = true
-	self.scale = Vector2(10.5, 10.5)
+	self.scale = SCALE_ON_HOVER
 
 func _on_area_2d_mouse_exited():
 	draggable = false
-	self.scale = Vector2(10, 10)
-
-func _on_area_2d_area_entered(area):
-	pass
-
-
-func _on_area_2d_area_exited(area):
-	pass
+	self.scale = scale_on_load

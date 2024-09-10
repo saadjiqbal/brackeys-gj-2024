@@ -1,9 +1,8 @@
 extends CharacterBody2D
 
-# References to the UI elements
-@onready var progress_bar = $CollisionShape2D/ProgressBar
-@onready var animated_sprite = $AnimatedSprite2D
-
+# Constants
+const MAX_PATIENCE = 100.0
+const MIN_PATIENCE = 0.0
 
 # Properties
 @export var patience_reduction_rate = 10 # Amount of patience lost per second
@@ -23,9 +22,9 @@ var statuses: Array = ["hunger", "thirst", "play"]  # Possible statuses
 # RNG to determine which status is affecting the animal
 var current_status: String = ""
 
-# Constants
-const MAX_PATIENCE = 100.0
-const MIN_PATIENCE = 0.0
+# References to the UI elements
+@onready var progress_bar = $CollisionShape2D/ProgressBar
+@onready var animated_sprite = $AnimatedSprite2D
 
 # Called when the node enters the scene
 func _ready():
@@ -108,19 +107,22 @@ func handle_patience_loss():
 	patience = MAX_PATIENCE
 	print("Patience ran out! The animal is unhappy.")
 
+# Implement logic for animal being thirsty
 func thirsty():
 	print("Drinking water")
 
+# Implement logic for animal being hungry
 func hungry():
 	print("Eating food")
 
+# Check what has entered our Area2D node
 func _on_animal_action_area_area_entered(area):
 	if area.name == "WaterBowlArea":
 		drink_water = true
 	elif area.name == "FoodBowlArea":
 		eat_food = true
 
-
+# Check what has exited our Area2D node
 func _on_animal_action_area_area_exited(area):
 	if area.name == "WaterBowlArea":
 		print("Done drinking water")
