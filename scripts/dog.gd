@@ -3,6 +3,7 @@ extends CharacterBody2D
 # Constants
 const MAX_PATIENCE = 100.0
 const MIN_PATIENCE = 0.0
+const MIN_MOVEMENT_DISTANCE = 20.0
 
 # Properties
 @export var patience_reduction_rate = 10 # Amount of patience lost per second
@@ -94,8 +95,10 @@ func move_to_target(direction: Vector2):
 func set_random_position():
 	var game_scene = get_parent()
 	var game_area = game_scene.game_size
-	# TODO: Make sure this position is at least X distance away
-	target_position = Vector2(randf_range(0, game_area.x), randf_range(0, game_area.y))
+	while true:
+		target_position = Vector2(randf_range(0, game_area.x), randf_range(0, game_area.y))
+		if position.distance_to(target_position) >= MIN_MOVEMENT_DISTANCE:
+			break
 
 func update_animation(is_moving: bool, direction: Vector2):
 	if not is_moving:
