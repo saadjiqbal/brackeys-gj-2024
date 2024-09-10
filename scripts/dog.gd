@@ -36,7 +36,7 @@ var current_status: String = ""
 func _ready():
 	# Initialize the patience meter and status randomly
 	progress_bar.value = MAX_PATIENCE
-	status_interval = randf_range(min_interval, max_interval)
+	reset_status_timer()
 
 func _physics_process(delta):
 
@@ -94,6 +94,10 @@ func update_animation(direction: Vector2):
 		# Moving up
 		animated_sprite.play("walk")
 
+func reset_status_timer():
+	status_time_accumulator = 0
+	status_interval = randf_range(min_interval, max_interval)
+
 # Function to handle random status selection
 func get_random_status() -> String:
 	var rand_index = randi() % statuses.size()
@@ -115,7 +119,8 @@ func thirsty(status: String, delta: float):
 	if status == "thirst":
 		print("Drinking water")
 		current_status = ""
-	else:
+		reset_status_timer()
+	elif status != "":
 		patience -= patience_reduction_rate * delta
 
 # Implement logic for animal being hungry
@@ -123,7 +128,8 @@ func hungry(status: String, delta: float):
 	if status == "hunger":
 		print("Eating food")
 		current_status = ""
-	else:
+		reset_status_timer()
+	elif status != "":
 		patience -= patience_reduction_rate * delta
 
 # Check what has entered our Area2D node
