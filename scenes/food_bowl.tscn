@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://blsnk45mypkkh"]
 
-[ext_resource type="Script" path="res://scripts/item.gd" id="1_ifmuo"]
+[ext_resource type="Script" path="res://scripts/food_bowl.gd" id="1_3a7ic"]
 [ext_resource type="Texture2D" uid="uid://rir81ybqu0t2" path="res://assets/items/items.png" id="1_wmlwq"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_rsoye"]
@@ -18,19 +18,25 @@ animations = [{
 "speed": 5.0
 }]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_nqnq4"]
-size = Vector2(107, 88)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2kom1"]
+size = Vector2(11.4, 9.2)
 
 [node name="FoodBowl" type="Node2D"]
-script = ExtResource("1_ifmuo")
+position = Vector2(1191, 51)
+scale = Vector2(10, 10)
+script = ExtResource("1_3a7ic")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-position = Vector2(1194, 92)
-scale = Vector2(10, 10)
 sprite_frames = SubResource("SpriteFrames_o78pc")
 
-[node name="Area2D" type="Area2D" parent="."]
+[node name="FoodBowlArea" type="Area2D" parent="."]
+collision_layer = 8
+collision_mask = 15
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-position = Vector2(1193.5, 118)
-shape = SubResource("RectangleShape2D_nqnq4")
+[node name="CollisionShape2D" type="CollisionShape2D" parent="FoodBowlArea"]
+position = Vector2(0.1, 2.7)
+scale = Vector2(1, 1)
+shape = SubResource("RectangleShape2D_2kom1")
+
+[connection signal="mouse_entered" from="FoodBowlArea" to="." method="_on_area_2d_mouse_entered"]
+[connection signal="mouse_exited" from="FoodBowlArea" to="." method="_on_area_2d_mouse_exited"]
