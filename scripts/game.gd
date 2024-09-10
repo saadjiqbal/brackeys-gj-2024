@@ -10,6 +10,8 @@ const FOOD_BOWL_POS: Vector2 = Vector2(150, 100)
 const TOY_POS: Vector2 = Vector2(450, 100)
 const WATER_BOWL_POS: Vector2 = Vector2(300, 100)
 
+var game_size: Vector2 = Vector2(1024, 768) # TODO: Confirm this
+
 func _ready() -> void:
 	gameGlobals.can_drag_item = true
 	

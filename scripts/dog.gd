@@ -12,6 +12,11 @@ const MIN_PATIENCE = 0.0
 var patience: float = 100.0              # A patience meter starting at 100
 var status_time_accumulator: float = 0.0 # Accumulates time for triggering status
 var status_interval: float = 0.0         # Interval to wait for triggering status
+var move_time_accumulator: float = 0.0   # Accumulates time for triggering movement
+var move_interval: float = 0.0           # Interval to wait for triggering movement
+
+var is_moving: bool = false
+var target_position = Vector2()  # Target position
 
 # Possible variables to use in future
 var hunger: float = 0.0                  # Hunger level
@@ -38,6 +43,7 @@ func _ready():
 	# Initialize the patience meter and status randomly
 	progress_bar.value = MAX_PATIENCE
 	reset_status_timer()
+	reset_movement_timer()
 
 func _physics_process(delta):
 	if Input.is_action_just_pressed("action") and cursor_on_animal:
@@ -49,6 +55,12 @@ func _physics_process(delta):
 		if current_status == "":
 			current_status = get_random_status()
 			print(current_status)
+
+	if not is_moving:
+		move_time_accumulator += delta
+		if move_time_accumulator >= move_interval:
+			set_random_position()
+			is_moving = true
 
 	if drink_water:
 		thirsty(current_status, delta)
@@ -83,6 +95,12 @@ func _physics_process(delta):
 	# Update animation based on direction
 	update_animation(direction)
 
+func set_random_position():
+	var game_scene = get_parent()
+	var game_area = game_scene.game_size
+	target_position = Vector2(randf_range(0, game_area.x), randf_range(0, game_area.y))
+	print(target_position)
+
 func update_animation(direction: Vector2):
 	if direction.x > 0:
 		# Moving right
@@ -100,6 +118,10 @@ func update_animation(direction: Vector2):
 func reset_status_timer():
 	status_time_accumulator = 0
 	status_interval = randf_range(min_interval, max_interval)
+
+func reset_movement_timer():
+	move_time_accumulator = 0
+	move_interval = randf_range(min_interval, max_interval)
 
 # Function to handle random status selection
 func get_random_status() -> String:
