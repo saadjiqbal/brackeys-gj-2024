@@ -80,16 +80,16 @@ func _physics_process(delta):
 func update_animation(direction: Vector2):
 	if direction.x > 0:
 		# Moving right
-		animated_sprite.play("walk_right")
+		animated_sprite.play("walk")
 	elif direction.x < 0:
 		# Moving left
-		animated_sprite.play("walk_left")
+		animated_sprite.play("walk")
 	elif direction.y > 0:
 		# Moving down
-		animated_sprite.play("walk_down")
+		animated_sprite.play("walk")
 	elif direction.y < 0:
 		# Moving up
-		animated_sprite.play("walk_up")
+		animated_sprite.play("walk")
 
 # Function to handle random status selection
 func get_random_status() -> String:
