@@ -37,7 +37,10 @@ func spawn_items() -> void:
 func spawn_animals() -> void:
 	# Animal positions need to be randomized in a given area
 	var dog_instance = DOG_SCENE.instantiate()
-	
 	dog_instance.position = DOG_POS
-	
 	add_child(dog_instance)
+	
+	#for i in range (2):
+		#var dog_instance = DOG_SCENE.instantiate()
+		#dog_instance.position = Vector2(randf() * 1024, randf() * 768)
+		#add_child(dog_instance)

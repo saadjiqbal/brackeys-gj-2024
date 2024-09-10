@@ -3,6 +3,7 @@ extends CharacterBody2D
 # Constants
 const MAX_PATIENCE = 100.0
 const MIN_PATIENCE = 0.0
+const MIN_MOVEMENT_DISTANCE = 20.0
 
 # Properties
 @export var patience_reduction_rate = 10 # Amount of patience lost per second
@@ -46,10 +47,6 @@ func _ready():
 	reset_movement_timer()
 
 func _physics_process(delta):
-	if Input.is_action_just_pressed("action") and cursor_on_animal:
-		if not drink_water and not eat_food:
-			show_affection()
-
 	# Accumulate timer and trigger status if not already set, based on random interval
 	status_time_accumulator += delta
 	if status_time_accumulator >= status_interval:
@@ -68,6 +65,15 @@ func _physics_process(delta):
 	
 	if eat_food:
 		hungry(current_status, delta)
+
+	# Left click will show affection or move the dog
+	if Input.is_action_just_pressed("action") and cursor_on_animal:
+		if not drink_water and not eat_food:
+			if gameGlobals.is_affection_cursor_selected:
+				show_affection()
+			else:
+				target_position = get_global_mouse_position()
+				is_moving = true
 
 	# Decrease patience over time if status is set
 	if current_status != "":
@@ -94,8 +100,10 @@ func move_to_target(direction: Vector2):
 func set_random_position():
 	var game_scene = get_parent()
 	var game_area = game_scene.game_size
-	# TODO: Make sure this position is at least X distance away
-	target_position = Vector2(randf_range(0, game_area.x), randf_range(0, game_area.y))
+	while true:
+		target_position = Vector2(randf_range(0, game_area.x), randf_range(0, game_area.y))
+		if position.distance_to(target_position) >= MIN_MOVEMENT_DISTANCE:
+			break
 
 func update_animation(is_moving: bool, direction: Vector2):
 	if not is_moving:
@@ -160,6 +168,9 @@ func _on_animal_action_area_area_entered(area):
 		drink_water = true
 	elif area.name == "FoodBowlArea":
 		eat_food = true
+	elif area.name == "AnimalActionArea":
+		# TODO: Stop moving and start throwing some hands
+		print("Colliding with animal")
 
 # Check what has exited our Area2D node
 func _on_animal_action_area_area_exited(area):
