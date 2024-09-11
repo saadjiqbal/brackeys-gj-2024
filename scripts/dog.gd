@@ -42,11 +42,9 @@ var current_status: String = ""
 func _ready():
 	# Initialize the patience meter and status randomly
 	progress_bar.value = MAX_PATIENCE
-	reset_status_timer()
+	init_status_icon()
+	reset_status()
 	reset_movement_timer()
-	status_icon = STATUS_ICON_SCENE.instantiate()
-	add_child(status_icon)
-	status_icon.hide_icon()
 
 func _physics_process(delta):
 	# Accumulate timer and trigger status if not already set, based on random interval
@@ -54,7 +52,7 @@ func _physics_process(delta):
 	if status_time_accumulator >= status_interval:
 		if current_status == "":
 			current_status = get_random_status()
-			status_icon.update_icon(current_status)
+			status_icon.show_icon(current_status)
 			print(current_status)
 
 	if not is_moving:
@@ -89,6 +87,13 @@ func _physics_process(delta):
 		move_to_target(direction)
 	update_animation(is_moving, direction)
 
+# Initialise status icon as invisible and to the right of progress bar
+func init_status_icon():
+	status_icon = STATUS_ICON_SCENE.instantiate()
+	status_icon.position = Vector2(16, - 10)
+	add_child(status_icon)
+	status_icon.hide_icon()
+
 func move_to_target(direction: Vector2):
 	velocity = direction * speed
 	move_and_collide(velocity)
@@ -98,7 +103,7 @@ func move_to_target(direction: Vector2):
 		# Stop moving and reset timer
 		is_moving = false
 		reset_movement_timer()
-		print("Reached target, waiting for", move_interval, "seconds")
+		print("Reached target, waiting for ", move_interval, " seconds")
 
 func set_random_position():
 	var game_scene = get_parent()
@@ -120,9 +125,11 @@ func update_animation(is_moving: bool, direction: Vector2):
 		animated_sprite.play("walk")
 		animated_sprite.flip_h = true
 
-func reset_status_timer():
+func reset_status():
+	current_status = ""
 	status_time_accumulator = 0
 	status_interval = randf_range(min_interval, max_interval)
+	status_icon.hide_icon()
 
 func reset_movement_timer():
 	move_time_accumulator = 0
@@ -148,8 +155,7 @@ func handle_patience_loss():
 func thirsty(status: String, delta: float):
 	if status == gameGlobals.THIRST_STATUS:
 		print("Drinking water")
-		current_status = ""
-		reset_status_timer()
+		reset_status()
 	elif status != "":
 		patience -= patience_reduction_rate * delta
 
@@ -157,8 +163,7 @@ func thirsty(status: String, delta: float):
 func hungry(status: String, delta: float):
 	if status == gameGlobals.HUNGER_STATUS:
 		print("Eating food")
-		current_status = ""
-		reset_status_timer()
+		reset_status()
 	elif status != "":
 		patience -= patience_reduction_rate * delta
 

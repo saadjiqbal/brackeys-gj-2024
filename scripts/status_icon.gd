@@ -17,10 +17,8 @@ var sprite: Sprite2D
 
 func _ready():
 	sprite = $Sprite2D
-	print("Instantiated icon")
-	show_icon("hunger")
 
-func update_icon(status: String) -> bool:
+func select_texture(status: String) -> bool:
 	var is_valid_status: bool = false
 	if status == gameGlobals.HUNGER_STATUS:
 		current_image_index = HUNGER_ICON_INDEX
@@ -31,13 +29,14 @@ func update_icon(status: String) -> bool:
 	elif status == gameGlobals.PLAY_STATUS:
 		current_image_index = PLAY_ICON_INDEX
 		is_valid_status = true
+	elif status == gameGlobals.AFFECTION_STATUS:
+		current_image_index = AFFECTION_ICON_INDEX
+		is_valid_status = true
 	sprite.texture = icon_images[current_image_index]
 	return is_valid_status
 
 func show_icon(status: String):
-	print("Trying to show")
-	if update_icon(status):
-		print("Showing icon?")
+	if select_texture(status):
 		visible = true
 
 func hide_icon():
