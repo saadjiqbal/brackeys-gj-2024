@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://dn17l6uycwnax"]
+
+[ext_resource type="Script" path="res://scripts/status_icon.gd" id="1_avfrr"]
+[ext_resource type="Texture2D" uid="uid://c8to3xxw4s8op" path="res://assets/icons/hunger icon.png" id="2_eqc06"]
+
+[node name="StatusIcon" type="Node2D"]
+script = ExtResource("1_avfrr")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.05, 0.05)
+texture = ExtResource("2_eqc06")

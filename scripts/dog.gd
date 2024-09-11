@@ -4,12 +4,14 @@ extends CharacterBody2D
 const MAX_PATIENCE = 100.0
 const MIN_PATIENCE = 0.0
 const MIN_MOVEMENT_DISTANCE = 20.0
+const STATUS_ICON_SCENE: PackedScene = preload("res://scenes/status_icon.tscn")
 
 # Properties
 @export var patience_reduction_rate = 10 # Amount of patience lost per second
 @export var speed: float = 2             # Movement speed
 @export var min_interval: float = 5.0    # Min interval for random status timer
 @export var max_interval: float = 15.0   # Max interval for random status timer
+
 var patience: float = 100.0              # A patience meter starting at 100
 var status_time_accumulator: float = 0.0 # Accumulates time for triggering status
 var status_interval: float = 0.0         # Interval to wait for triggering status
@@ -23,16 +25,13 @@ var target_position = Vector2()  # Target position
 var hunger: float = 0.0                  # Hunger level
 var thirst: float = 0.0                  # Thirst level
 var playfulness: float = 0.0             # Playfulness level
-
-
 var drink_water: bool = false
 var eat_food: bool = false
 var cursor_on_animal: bool = false
 
 # Statuses
-var statuses: Array = ["hunger", "thirst", "play"]  # Possible statuses
-
-# RNG to determine which status is affecting the animal
+var statuses: Array = [gameGlobals.HUNGER_STATUS, gameGlobals.THIRST_STATUS, gameGlobals.PLAY_STATUS, gameGlobals.AFFECTION_STATUS]  # Possible statuses
+var status_icon : Node2D
 var current_status: String = ""
 
 # References to the UI elements
@@ -43,7 +42,8 @@ var current_status: String = ""
 func _ready():
 	# Initialize the patience meter and status randomly
 	progress_bar.value = MAX_PATIENCE
-	reset_status_timer()
+	init_status_icon()
+	reset_status()
 	reset_movement_timer()
 
 func _physics_process(delta):
@@ -52,6 +52,7 @@ func _physics_process(delta):
 	if status_time_accumulator >= status_interval:
 		if current_status == "":
 			current_status = get_random_status()
+			status_icon.show_icon(current_status)
 			print(current_status)
 
 	if not is_moving:
@@ -86,6 +87,13 @@ func _physics_process(delta):
 		move_to_target(direction)
 	update_animation(is_moving, direction)
 
+# Initialise status icon as invisible and to the right of progress bar
+func init_status_icon():
+	status_icon = STATUS_ICON_SCENE.instantiate()
+	status_icon.position = Vector2(16, - 10)
+	add_child(status_icon)
+	status_icon.hide_icon()
+
 func move_to_target(direction: Vector2):
 	velocity = direction * speed
 	move_and_collide(velocity)
@@ -95,7 +103,7 @@ func move_to_target(direction: Vector2):
 		# Stop moving and reset timer
 		is_moving = false
 		reset_movement_timer()
-		print("Reached target, waiting for", move_interval, "seconds")
+		print("Reached target, waiting for ", move_interval, " seconds")
 
 func set_random_position():
 	var game_scene = get_parent()
@@ -117,9 +125,11 @@ func update_animation(is_moving: bool, direction: Vector2):
 		animated_sprite.play("walk")
 		animated_sprite.flip_h = true
 
-func reset_status_timer():
+func reset_status():
+	current_status = ""
 	status_time_accumulator = 0
 	status_interval = randf_range(min_interval, max_interval)
+	status_icon.hide_icon()
 
 func reset_movement_timer():
 	move_time_accumulator = 0
@@ -143,19 +153,17 @@ func handle_patience_loss():
 
 # Implement logic for animal being thirsty
 func thirsty(status: String, delta: float):
-	if status == "thirst":
+	if status == gameGlobals.THIRST_STATUS:
 		print("Drinking water")
-		current_status = ""
-		reset_status_timer()
+		reset_status()
 	elif status != "":
 		patience -= patience_reduction_rate * delta
 
 # Implement logic for animal being hungry
 func hungry(status: String, delta: float):
-	if status == "hunger":
+	if status == gameGlobals.HUNGER_STATUS:
 		print("Eating food")
-		current_status = ""
-		reset_status_timer()
+		reset_status()
 	elif status != "":
 		patience -= patience_reduction_rate * delta
 
