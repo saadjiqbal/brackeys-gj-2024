@@ -30,7 +30,7 @@ var eat_food: bool = false
 var cursor_on_animal: bool = false
 
 # Statuses
-var statuses: Array = ["hunger", "thirst", "play"]  # Possible statuses
+var statuses: Array = [gameGlobals.HUNGER_STATUS, gameGlobals.THIRST_STATUS, gameGlobals.PLAY_STATUS, gameGlobals.AFFECTION_STATUS]  # Possible statuses
 
 # RNG to determine which status is affecting the animal
 var current_status: String = ""
@@ -143,7 +143,7 @@ func handle_patience_loss():
 
 # Implement logic for animal being thirsty
 func thirsty(status: String, delta: float):
-	if status == "thirst":
+	if status == gameGlobals.THIRST_STATUS:
 		print("Drinking water")
 		current_status = ""
 		reset_status_timer()
@@ -152,7 +152,7 @@ func thirsty(status: String, delta: float):
 
 # Implement logic for animal being hungry
 func hungry(status: String, delta: float):
-	if status == "hunger":
+	if status == gameGlobals.HUNGER_STATUS:
 		print("Eating food")
 		current_status = ""
 		reset_status_timer()
