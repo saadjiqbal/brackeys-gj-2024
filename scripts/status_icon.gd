@@ -17,7 +17,8 @@ var sprite: Sprite2D
 
 func _ready():
 	sprite = $Sprite2D
-	update_icon(current_image_index)
+	print("Instantiated icon")
+	show_icon("hunger")
 
 func update_icon(status: String) -> bool:
 	var is_valid_status: bool = false
@@ -34,7 +35,9 @@ func update_icon(status: String) -> bool:
 	return is_valid_status
 
 func show_icon(status: String):
+	print("Trying to show")
 	if update_icon(status):
+		print("Showing icon?")
 		visible = true
 
 func hide_icon():

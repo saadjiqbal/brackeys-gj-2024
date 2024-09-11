@@ -4,12 +4,14 @@ extends CharacterBody2D
 const MAX_PATIENCE = 100.0
 const MIN_PATIENCE = 0.0
 const MIN_MOVEMENT_DISTANCE = 20.0
+const STATUS_ICON_SCENE: PackedScene = preload("res://scenes/status_icon.tscn")
 
 # Properties
 @export var patience_reduction_rate = 10 # Amount of patience lost per second
 @export var speed: float = 2             # Movement speed
 @export var min_interval: float = 5.0    # Min interval for random status timer
 @export var max_interval: float = 15.0   # Max interval for random status timer
+
 var patience: float = 100.0              # A patience meter starting at 100
 var status_time_accumulator: float = 0.0 # Accumulates time for triggering status
 var status_interval: float = 0.0         # Interval to wait for triggering status
@@ -23,16 +25,13 @@ var target_position = Vector2()  # Target position
 var hunger: float = 0.0                  # Hunger level
 var thirst: float = 0.0                  # Thirst level
 var playfulness: float = 0.0             # Playfulness level
-
-
 var drink_water: bool = false
 var eat_food: bool = false
 var cursor_on_animal: bool = false
 
 # Statuses
 var statuses: Array = [gameGlobals.HUNGER_STATUS, gameGlobals.THIRST_STATUS, gameGlobals.PLAY_STATUS, gameGlobals.AFFECTION_STATUS]  # Possible statuses
-
-# RNG to determine which status is affecting the animal
+var status_icon : Node2D
 var current_status: String = ""
 
 # References to the UI elements
@@ -45,6 +44,9 @@ func _ready():
 	progress_bar.value = MAX_PATIENCE
 	reset_status_timer()
 	reset_movement_timer()
+	status_icon = STATUS_ICON_SCENE.instantiate()
+	add_child(status_icon)
+	status_icon.hide_icon()
 
 func _physics_process(delta):
 	# Accumulate timer and trigger status if not already set, based on random interval
@@ -52,6 +54,7 @@ func _physics_process(delta):
 	if status_time_accumulator >= status_interval:
 		if current_status == "":
 			current_status = get_random_status()
+			status_icon.update_icon(current_status)
 			print(current_status)
 
 	if not is_moving:
