@@ -1,5 +1,7 @@
 extends CharacterBody2D
 
+signal patience_lost
+
 # Constants
 const MAX_PATIENCE = 100.0
 const MIN_PATIENCE = 0.0
@@ -25,9 +27,9 @@ var target_position = Vector2()  # Target position
 var hunger: float = 0.0                  # Hunger level
 var thirst: float = 0.0                  # Thirst level
 var playfulness: float = 0.0             # Playfulness level
-var drink_water: bool = false
-var eat_food: bool = false
-var cursor_on_animal: bool = false
+var drink_water: bool = false            
+var eat_food: bool = false               
+var cursor_on_animal: bool = false       
 
 # Statuses
 var statuses: Array = [gameGlobals.HUNGER_STATUS, gameGlobals.THIRST_STATUS, gameGlobals.PLAY_STATUS, gameGlobals.AFFECTION_STATUS]  # Possible statuses
@@ -119,7 +121,7 @@ func update_animation(is_moving: bool, direction: Vector2):
 	elif direction.x > 0:
 		# Moving right
 		animated_sprite.play("walk")
-		animated_sprite. flip_h = false
+		animated_sprite.flip_h = false
 	elif direction.x < 0:
 		# Moving left
 		animated_sprite.play("walk")
@@ -149,6 +151,7 @@ func check_patience():
 func handle_patience_loss():
 	# Reset and print message for now
 	patience = MAX_PATIENCE
+	patience_lost.emit()
 	print("Patience ran out! The animal is unhappy.")
 
 # Implement logic for animal being thirsty

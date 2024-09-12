@@ -6,8 +6,6 @@ var quitGameButtonRef
 var restartButtonRef
 var gameOverLabelRef
 
-
-
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	startButtonRef = find_child("Start button")
@@ -44,4 +42,4 @@ func hideStateScreen() -> void:
 
 
 func _on_quit_button_pressed() -> void:
-	hideStateScreen()
+	get_tree().quit()

@@ -5,5 +5,10 @@ const THIRST_STATUS = "thirst"
 const PLAY_STATUS = "play"
 const AFFECTION_STATUS = "affection"
 
-var can_drag_item : bool = true
-var is_affection_cursor_selected: bool = true  # Set to false to use cursor to move dog
+const MAX_LEVEL: int = 3
+
+var can_drag_item: bool = true
+var is_affection_cursor_selected: bool = false  # Set to false to use cursor to move dog
+
+var current_level: int = 1
+var is_game_finished: bool = false
