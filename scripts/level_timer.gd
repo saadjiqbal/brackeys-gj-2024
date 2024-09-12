@@ -4,8 +4,9 @@ signal level_finished
 
 const LEVEL_TIME_ARRAY: Array = [60, 120, 180]
 
-@onready var timer_label = $TimerLabel
+@onready var timer_label = $MarginContainer/TimerLabel
 @onready var timer = $Timer
+
 
 var is_level_finished: bool = false
 
