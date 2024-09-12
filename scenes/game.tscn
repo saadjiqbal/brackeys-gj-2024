@@ -10,7 +10,6 @@ script = ExtResource("1_c07yq")
 
 [node name="BackgroundMusic" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("3_b074d")
-autoplay = true
 
 [node name="Cursor" parent="." instance=ExtResource("4_07oxg")]
 

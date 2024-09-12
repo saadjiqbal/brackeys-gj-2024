@@ -13,24 +13,31 @@ const WATER_BOWL_POS: Vector2 = Vector2(300, 100)
 const MAX_PATIENCE_COUNT: int = 3
 
 @onready var level_timer = $LevelTimer
+@onready var background_music = $BackgroundMusic
 
 var current_patience_count: int
 var game_size: Vector2 = Vector2(1024, 768) # TODO: Confirm this]
 var is_game_over: bool
+var is_game_paused: bool
 
 func _ready() -> void:
 	gameGlobals.can_drag_item = true
 	
 	level_timer.level_finished.connect(level_finished)
 	
+	background_music.play()
+	
 	current_patience_count = MAX_PATIENCE_COUNT
+	
 	is_game_over = false
+	is_game_paused = false
 	
 	spawn_items()
 	spawn_animals()
 
 func _physics_process(_delta) -> void:
-	pass
+	if Input.is_action_just_pressed("pause"):
+		pause_game()
 
 func spawn_items() -> void:
 	var food_bowl_instance = FOOD_BOWL_SCENE.instantiate()
@@ -90,3 +97,13 @@ func level_finished() -> void:
 	
 	if gameGlobals.current_level >= (gameGlobals.MAX_LEVEL + 1):
 		game_finished()
+
+func pause_game() -> void:
+	if not is_game_paused:
+		is_game_paused = true
+		Engine.time_scale = 0
+		background_music.stream_paused = true
+	elif is_game_paused:
+		is_game_paused = false
+		Engine.time_scale = 1
+		background_music.stream_paused = false
