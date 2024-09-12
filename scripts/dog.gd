@@ -19,6 +19,7 @@ var status_time_accumulator: float = 0.0 # Accumulates time for triggering statu
 var status_interval: float = 0.0         # Interval to wait for triggering status
 var move_time_accumulator: float = 0.0   # Accumulates time for triggering movement
 var move_interval: float = 0.0           # Interval to wait for triggering movement
+var patience_loss_count: int = 0
 
 var is_moving: bool = false
 var target_position = Vector2()  # Target position
@@ -150,6 +151,11 @@ func check_patience():
 
 func handle_patience_loss():
 	# Reset and print message for now
+	patience_loss_count += 1
+	if patience_loss_count == 1:
+		progress_bar.update_fill_colour(Color.ORANGE)
+	else:
+		progress_bar.update_fill_colour(Color.RED)
 	patience = MAX_PATIENCE
 	patience_lost.emit()
 	print("Patience ran out! The animal is unhappy.")

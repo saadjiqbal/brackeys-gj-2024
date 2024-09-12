@@ -2,8 +2,8 @@
 
 [ext_resource type="Script" path="res://scripts/dog.gd" id="1_prb03"]
 [ext_resource type="Texture2D" uid="uid://dsbmpswh23ext" path="res://assets/animals/dog/Idle.png" id="2_yu3a8"]
-[ext_resource type="Theme" uid="uid://dt22essonkqc" path="res://themes/happiness_bar.tres" id="3_1p2hg"]
 [ext_resource type="Texture2D" uid="uid://d4ln6el3afdi8" path="res://assets/animals/dog/Walk.png" id="3_73mub"]
+[ext_resource type="Script" path="res://scenes/progress_bar.gd" id="4_3s5jj"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_dqccp"]
 atlas = ExtResource("2_yu3a8")
@@ -111,9 +111,9 @@ offset_left = -9.986
 offset_top = -12.0
 offset_right = 10.014
 offset_bottom = -7.76503
-theme = ExtResource("3_1p2hg")
 step = 1.0
 show_percentage = false
+script = ExtResource("4_3s5jj")
 metadata/_edit_use_anchors_ = true
 
 [node name="AnimalActionArea" type="Area2D" parent="."]
