@@ -36,14 +36,17 @@ var cursor_on_animal: bool = false
 var statuses: Array = [gameGlobals.HUNGER_STATUS, gameGlobals.THIRST_STATUS, gameGlobals.PLAY_STATUS, gameGlobals.AFFECTION_STATUS]  # Possible statuses
 var status_icon : Node2D
 var current_status: String = ""
+var game_area : Vector2
 
 # References to the UI elements
-@onready var progress_bar = $CollisionShape2D/ProgressBar
+@onready var progress_bar = $ProgressBar
 @onready var animated_sprite = $AnimatedSprite2D
 
 # Called when the node enters the scene
 func _ready():
 	# Initialize the patience meter and status randomly
+	var game_scene = get_parent()
+	game_area = game_scene.game_size
 	progress_bar.value = MAX_PATIENCE
 	init_status_icon()
 	reset_status()
@@ -100,6 +103,10 @@ func init_status_icon():
 func move_to_target(direction: Vector2):
 	velocity = direction * speed
 	move_and_collide(velocity)
+	
+	if is_colliding_with_screen_edges():
+		print("Colliding with screen edge")
+		target_position = clamp_to_screen_edges(target_position)
 
 	# Check if the dog is close enough to the target
 	if position.distance_to(target_position) < 5:
@@ -108,13 +115,50 @@ func move_to_target(direction: Vector2):
 		reset_movement_timer()
 		print("Reached target, waiting for ", move_interval, " seconds")
 
+
 func set_random_position():
-	var game_scene = get_parent()
-	var game_area = game_scene.game_size
 	while true:
 		target_position = Vector2(randf_range(0, game_area.x), randf_range(0, game_area.y))
 		if position.distance_to(target_position) >= MIN_MOVEMENT_DISTANCE:
 			break
+
+func is_colliding_with_screen_edges() -> bool:
+	var shape_bounds = get_collision_shape_bounds()
+	var screen_rect = Rect2(Vector2.ZERO, game_area)
+	# Define edge rectangles
+	var left_edge = Rect2(screen_rect.position, Vector2(1, game_area.y))  # Left edge
+	var right_edge = Rect2(Vector2(game_area.x - 1, screen_rect.position.y), Vector2(1, game_area.y))  # Right edge
+	var top_edge = Rect2(screen_rect.position, Vector2(game_area.x, 1))  # Top edge
+	var bottom_edge = Rect2(Vector2(screen_rect.position.x, game_area.y - 1), Vector2(game_area.x, 1))  # Bottom edge
+
+
+	return left_edge.intersects(shape_bounds) or \
+		   right_edge.intersects(shape_bounds) or \
+		   top_edge.intersects(shape_bounds) or \
+		   bottom_edge.intersects(shape_bounds)
+
+func get_collision_shape_bounds() -> Rect2:
+	var shape = $CollisionShape2D.shape
+	var shape_extents = Vector2.ZERO
+	var shape_center = position
+	shape_extents = (shape as RectangleShape2D).extents
+	return Rect2(shape_center - shape_extents, shape_extents * 2)
+
+func clamp_to_screen_edges(target_position: Vector2) -> Vector2:
+	var shape_bounds = get_collision_shape_bounds()
+	var screen_rect = Rect2(Vector2.ZERO, game_area)
+
+	if shape_bounds.position.x < screen_rect.position.x:
+		target_position.x += screen_rect.position.x - shape_bounds.position.x
+	elif shape_bounds.position.x + shape_bounds.size.x > screen_rect.position.x + screen_rect.size.x:
+		target_position.x -= (shape_bounds.position.x + shape_bounds.size.x) - (screen_rect.position.x + screen_rect.size.x)
+	
+	if shape_bounds.position.y < screen_rect.position.y:
+		target_position.y += screen_rect.position.y - shape_bounds.position.y
+	elif shape_bounds.position.y + shape_bounds.size.y > screen_rect.position.y + screen_rect.size.y:
+		target_position.y -= (shape_bounds.position.y + shape_bounds.size.y) - (screen_rect.position.y + screen_rect.size.y)
+
+	return target_position
 
 func update_animation(is_moving: bool, direction: Vector2):
 	if not is_moving:
