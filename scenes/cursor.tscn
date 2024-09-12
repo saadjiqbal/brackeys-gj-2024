@@ -5,6 +5,7 @@
 [ext_resource type="AudioStream" uid="uid://cyyc58vmxoao7" path="res://assets/sfx/Click.wav" id="3_wwkhq"]
 
 [node name="Cursor" type="Node2D"]
+process_mode = 3
 script = ExtResource("1_hjlpi")
 
 [node name="ClickParticles" parent="." instance=ExtResource("1_e8kl7")]
