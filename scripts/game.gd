@@ -1,4 +1,4 @@
-extends Node2D
+extends Node
 
 const DOG_SCENE: PackedScene = preload("res://scenes/dog.tscn")
 const FOOD_BOWL_SCENE: PackedScene = preload("res://scenes/food_bowl.tscn")
@@ -13,18 +13,28 @@ const WATER_BOWL_POS: Vector2 = Vector2(300, 100)
 const MAX_PATIENCE_COUNT: int = 3
 
 @onready var level_timer = $LevelTimer
+@onready var background_music = $BackgroundMusic
+@onready var pause_menu = $PauseMenu
 
 var current_patience_count: int
 var game_size: Vector2 = Vector2(1024, 768) # TODO: Confirm this]
 var is_game_over: bool
+var is_game_paused: bool
+
+
+var hotbar_inventory: Array = []
 
 func _ready() -> void:
 	gameGlobals.can_drag_item = true
 	
 	level_timer.level_finished.connect(level_finished)
 	
+	background_music.play()
+	
 	current_patience_count = MAX_PATIENCE_COUNT
+	
 	is_game_over = false
+	is_game_paused = false
 	
 	spawn_items()
 	spawn_animals()

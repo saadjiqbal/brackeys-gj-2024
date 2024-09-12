@@ -1,0 +1,219 @@
+[gd_scene load_steps=39 format=3 uid="uid://by48bsueosbie"]
+
+[ext_resource type="Script" path="res://scripts/pause_menu.gd" id="1_y0t7h"]
+[ext_resource type="FontFile" uid="uid://vxqu6gkpdktb" path="res://assets/fonts/Coffee Soda.ttf" id="2_ntdps"]
+[ext_resource type="Texture2D" uid="uid://d2xk07mfuduom" path="res://assets/ui/pause_icon.png" id="2_xhgqg"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_60wcc"]
+bg_color = Color(0.442911, 0.442911, 0.442911, 0.423529)
+corner_radius_top_left = 30
+corner_radius_top_right = 30
+corner_radius_bottom_right = 30
+corner_radius_bottom_left = 30
+
+[sub_resource type="LabelSettings" id="LabelSettings_ajt2v"]
+font = ExtResource("2_ntdps")
+font_size = 75
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_pj8l8"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_463mf"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_50sk3"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_blg7q"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_p1g2p"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_avqbq"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ahxtg"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_bbr1y"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_dggx1"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_877uh"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_5juey"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ijbj5"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_gugp1"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_r8hv8"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_dkvr3"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_iuuya"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_8tihc"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_nfuw2"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_bubgy"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_wfp1p"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_4e8tm"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ol7y3"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ich3v"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_5p5qb"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_s0ssc"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_rfg5n"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_poqib"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_5yhln"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_6k2g6"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_qu4qx"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_u861s"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_2mmu3"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_gsl8r"]
+
+[node name="PauseMenu" type="Control"]
+process_mode = 3
+z_index = 10
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+script = ExtResource("1_y0t7h")
+
+[node name="PauseBackground" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -180.5
+offset_top = -169.0
+offset_right = 180.5
+offset_bottom = 169.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_60wcc")
+
+[node name="PausedLabel" type="Label" parent="PauseBackground"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -166.0
+offset_right = 166.0
+offset_bottom = 137.0
+grow_horizontal = 2
+text = "PAUSED"
+label_settings = SubResource("LabelSettings_ajt2v")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PauseBackground"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -96.0
+offset_top = -203.0
+offset_right = 96.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/separation = 40
+
+[node name="ResumeButton" type="Button" parent="PauseBackground/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("2_ntdps")
+theme_override_font_sizes/font_size = 30
+theme_override_styles/focus = SubResource("StyleBoxEmpty_pj8l8")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_463mf")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_50sk3")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_blg7q")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_p1g2p")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_avqbq")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_ahxtg")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_bbr1y")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_dggx1")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_877uh")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_5juey")
+text = "RESUME"
+
+[node name="OptionsButton" type="Button" parent="PauseBackground/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("2_ntdps")
+theme_override_font_sizes/font_size = 30
+theme_override_styles/focus = SubResource("StyleBoxEmpty_ijbj5")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_gugp1")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_r8hv8")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_dkvr3")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_iuuya")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_8tihc")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_nfuw2")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_bubgy")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_wfp1p")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_4e8tm")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_ol7y3")
+text = "OPTIONS"
+
+[node name="ExitButton" type="Button" parent="PauseBackground/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("2_ntdps")
+theme_override_font_sizes/font_size = 30
+theme_override_styles/focus = SubResource("StyleBoxEmpty_ijbj5")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_gugp1")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_r8hv8")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_dkvr3")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_iuuya")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_8tihc")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_nfuw2")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_bubgy")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_wfp1p")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_4e8tm")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_ol7y3")
+text = "EXIT"
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+scale = Vector2(0.5, 0.5)
+theme_override_constants/margin_left = 50
+theme_override_constants/margin_top = 50
+
+[node name="PauseButton" type="Button" parent="MarginContainer"]
+layout_mode = 2
+theme_override_styles/focus = SubResource("StyleBoxEmpty_ich3v")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_5p5qb")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_s0ssc")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_rfg5n")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_poqib")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_5yhln")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_6k2g6")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_qu4qx")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_u861s")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_2mmu3")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_gsl8r")
+icon = ExtResource("2_xhgqg")
+
+[connection signal="pressed" from="PauseBackground/VBoxContainer/ResumeButton" to="." method="_on_resume_button_pressed"]
+[connection signal="pressed" from="PauseBackground/VBoxContainer/OptionsButton" to="." method="_on_options_button_pressed"]
+[connection signal="pressed" from="PauseBackground/VBoxContainer/ExitButton" to="." method="_on_exit_button_pressed"]
+[connection signal="pressed" from="MarginContainer/PauseButton" to="." method="_on_pause_button_pressed"]

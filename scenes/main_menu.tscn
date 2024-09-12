@@ -1,0 +1,162 @@
+[gd_scene load_steps=27 format=3 uid="uid://nbq6kcqr8etw"]
+
+[ext_resource type="Script" path="res://scripts/main_menu.gd" id="1_1k5er"]
+[ext_resource type="FontFile" uid="uid://vxqu6gkpdktb" path="res://assets/fonts/Coffee Soda.ttf" id="2_omdxy"]
+[ext_resource type="AudioStream" uid="uid://cs783tijo578f" path="res://assets/music/4_working_time_master.ogg" id="2_v7jgi"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_11w4l"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_v01ik"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_dsvjx"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ixiok"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_kwaa3"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_pcc01"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_wg18w"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_rnlad"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_s4lab"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_mv60b"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_1tcsu"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_lpb10"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_fnycw"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_v1xt2"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_wpoer"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_4bcj8"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_7s3ep"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_wlp2w"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_mi3dj"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_mc42j"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_1up6f"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_nqhe6"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_vkexs"]
+font = ExtResource("2_omdxy")
+font_size = 100
+outline_size = 60
+outline_color = Color(0, 0, 0, 1)
+
+[node name="MainMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_1k5er")
+
+[node name="Background" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Background"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -213.5
+offset_top = -497.0
+offset_right = 213.5
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/separation = 0
+
+[node name="Play" type="Button" parent="Background/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_fonts/font = ExtResource("2_omdxy")
+theme_override_font_sizes/font_size = 75
+theme_override_styles/focus = SubResource("StyleBoxEmpty_11w4l")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_v01ik")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_dsvjx")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_ixiok")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_kwaa3")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_pcc01")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_wg18w")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_rnlad")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_s4lab")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_mv60b")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_1tcsu")
+text = "PLAY"
+
+[node name="Options" type="Button" parent="Background/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_fonts/font = ExtResource("2_omdxy")
+theme_override_font_sizes/font_size = 75
+theme_override_styles/focus = SubResource("StyleBoxEmpty_lpb10")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_fnycw")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_v1xt2")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_wpoer")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_4bcj8")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_7s3ep")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_wlp2w")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_mi3dj")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_mc42j")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_1up6f")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_nqhe6")
+text = "OPTIONS"
+
+[node name="Exit" type="Button" parent="Background/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_fonts/font = ExtResource("2_omdxy")
+theme_override_font_sizes/font_size = 75
+theme_override_styles/focus = SubResource("StyleBoxEmpty_lpb10")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_fnycw")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_v1xt2")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_wpoer")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_4bcj8")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_7s3ep")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_wlp2w")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_mi3dj")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_mc42j")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_1up6f")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_nqhe6")
+text = "EXIT"
+
+[node name="GameName" type="Label" parent="Background"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -302.5
+offset_right = 302.5
+offset_bottom = 137.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 100
+text = "GAME NAME"
+label_settings = SubResource("LabelSettings_vkexs")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MainMenuMusic" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("2_v7jgi")
+
+[connection signal="pressed" from="Background/VBoxContainer/Play" to="." method="_on_play_pressed"]
+[connection signal="pressed" from="Background/VBoxContainer/Options" to="." method="_on_options_pressed"]
+[connection signal="pressed" from="Background/VBoxContainer/Exit" to="." method="_on_exit_pressed"]
