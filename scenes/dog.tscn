@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://scripts/dog.gd" id="1_prb03"]
 [ext_resource type="Texture2D" uid="uid://dsbmpswh23ext" path="res://assets/animals/dog/Idle.png" id="2_yu3a8"]
-[ext_resource type="Theme" uid="uid://dt22essonkqc" path="res://themes/happiness_bar.tres" id="3_1p2hg"]
+[ext_resource type="Theme" uid="uid://dt22essonkqc" path="res://themes/green_progrees_bar.tres" id="3_1p2hg"]
 [ext_resource type="Texture2D" uid="uid://d4ln6el3afdi8" path="res://assets/animals/dog/Walk.png" id="3_73mub"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_dqccp"]

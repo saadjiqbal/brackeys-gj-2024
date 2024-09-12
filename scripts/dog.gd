@@ -8,6 +8,10 @@ const MIN_PATIENCE = 0.0
 const MIN_MOVEMENT_DISTANCE = 20.0
 const STATUS_ICON_SCENE: PackedScene = preload("res://scenes/status_icon.tscn")
 
+var green_progress_theme = load("res://themes/green_progrees_bar.tres")
+var orange_progress_theme = load("res://themes/orange_progrees_bar.tres")
+var red_progress_theme = load("res://themes/red_progrees_bar.tres")
+
 # Properties
 @export var patience_reduction_rate = 10 # Amount of patience lost per second
 @export var speed: float = 2             # Movement speed
@@ -19,6 +23,7 @@ var status_time_accumulator: float = 0.0 # Accumulates time for triggering statu
 var status_interval: float = 0.0         # Interval to wait for triggering status
 var move_time_accumulator: float = 0.0   # Accumulates time for triggering movement
 var move_interval: float = 0.0           # Interval to wait for triggering movement
+var patience_loss_count: int = 0
 
 var is_moving: bool = false
 var target_position = Vector2()  # Target position
@@ -150,6 +155,11 @@ func check_patience():
 
 func handle_patience_loss():
 	# Reset and print message for now
+	patience_loss_count += 1
+	if patience_loss_count == 1:
+		progress_bar.theme = orange_progress_theme
+	else:
+		progress_bar.theme = red_progress_theme
 	patience = MAX_PATIENCE
 	patience_lost.emit()
 	print("Patience ran out! The animal is unhappy.")
