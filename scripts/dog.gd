@@ -93,7 +93,7 @@ func _physics_process(delta):
 # Initialise status icon as invisible and to the right of progress bar
 func init_status_icon():
 	status_icon = STATUS_ICON_SCENE.instantiate()
-	status_icon.position = Vector2(16, - 10)
+	status_icon.position = Vector2(12, - 3)
 	add_child(status_icon)
 	status_icon.hide_icon()
 
