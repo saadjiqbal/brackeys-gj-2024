@@ -38,7 +38,7 @@ var status_icon : Node2D
 var current_status: String = ""
 
 # References to the UI elements
-@onready var progress_bar = $CollisionShape2D/ProgressBar
+@onready var progress_bar = $ProgressBar
 @onready var animated_sprite = $AnimatedSprite2D
 
 # Called when the node enters the scene
