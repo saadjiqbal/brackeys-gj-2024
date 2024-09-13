@@ -17,7 +17,7 @@ const MAX_PATIENCE_COUNT: int = 3
 @onready var pause_menu = $PauseMenu
 
 var current_patience_count: int
-var game_size: Vector2 = Vector2(1024, 768) # TODO: Confirm this]
+var game_size: Vector2 = Vector2(1280, 720)
 var is_game_over: bool
 var is_game_paused: bool
 
