@@ -1,0 +1,122 @@
+[gd_scene load_steps=25 format=3 uid="uid://cjs0pmen4wys5"]
+
+[ext_resource type="Script" path="res://scripts/item_hotbar.gd" id="1_6qawy"]
+[ext_resource type="Texture2D" uid="uid://b5y64v8nui3dr" path="res://icon.svg" id="1_i31ix"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_am5m7"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_uukxs"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_epeq6"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_4de8h"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_2u6r1"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_8vhof"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2uwte"]
+bg_color = Color(1, 1, 1, 1)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_av3du"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_562r2"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_i352y"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_s2jbl"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_o28yq"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_n2fn7"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_gbwe7"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_l66e8"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_m85se"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_4flgo"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_stac1"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_so0b1"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_hg283"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_xfg5q"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_xk8mq"]
+
+[node name="ItemHotbar" type="Control"]
+layout_mode = 3
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 0
+script = ExtResource("1_6qawy")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -304.0
+offset_top = -151.0
+offset_right = 304.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/margin_bottom = 10
+
+[node name="HotbarContainer" type="HBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 110
+
+[node name="WaterBowl" type="Button" parent="MarginContainer/HotbarContainer"]
+layout_mode = 2
+theme_override_styles/focus = SubResource("StyleBoxEmpty_am5m7")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_uukxs")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_epeq6")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_4de8h")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_2u6r1")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_8vhof")
+theme_override_styles/hover = SubResource("StyleBoxFlat_2uwte")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_av3du")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_562r2")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_i352y")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_s2jbl")
+icon = ExtResource("1_i31ix")
+
+[node name="FoodBowl" type="Button" parent="MarginContainer/HotbarContainer"]
+layout_mode = 2
+theme_override_styles/focus = SubResource("StyleBoxEmpty_o28yq")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_n2fn7")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_gbwe7")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_l66e8")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_m85se")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_4flgo")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_stac1")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_so0b1")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_hg283")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_xfg5q")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_xk8mq")
+icon = ExtResource("1_i31ix")
+
+[node name="Toy" type="Button" parent="MarginContainer/HotbarContainer"]
+layout_mode = 2
+theme_override_styles/focus = SubResource("StyleBoxEmpty_o28yq")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_n2fn7")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_gbwe7")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_l66e8")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_m85se")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_4flgo")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_stac1")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_so0b1")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_hg283")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_xfg5q")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_xk8mq")
+icon = ExtResource("1_i31ix")
