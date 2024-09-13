@@ -6,6 +6,7 @@ signal patience_lost
 const MAX_PATIENCE = 100.0
 const MIN_PATIENCE = 0.0
 const MIN_MOVEMENT_DISTANCE = 20.0
+const PATIENCE_LOSS_SPEED_FACTOR = 2   # Amount to increase speed by when patience lost
 const STATUS_ICON_SCENE: PackedScene = preload("res://scenes/status_icon.tscn")
 
 # Properties
@@ -86,7 +87,8 @@ func _physics_process(delta):
 
 	# Decrease patience over time if status is set
 	if current_status != "":
-		patience -= delta * patience_reduction_rate  # Decrease patience by a rate
+		patience -= delta * patience_reduction_rate # Decrease patience by a rate
+		patience -= delta * patience_loss_count * patience_reduction_rate # Decrease further if already lost patience
 	check_patience()
 
 	# Update animation based on direction
@@ -103,7 +105,7 @@ func init_status_icon():
 	status_icon.hide_icon()
 
 func move_to_target(direction: Vector2):
-	velocity = direction * speed
+	velocity = direction * (speed + (patience_loss_count * PATIENCE_LOSS_SPEED_FACTOR))
 	var collision = move_and_collide(velocity)
 
 	# Check if the dog is close enough to the target
