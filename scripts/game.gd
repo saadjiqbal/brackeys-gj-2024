@@ -17,7 +17,7 @@ const MAX_PATIENCE_COUNT: int = 3
 @onready var pause_menu = $PauseMenu
 
 var current_patience_count: int
-var game_size: Vector2 = Vector2(1024, 768) # TODO: Confirm this]
+var game_size: Vector2 = Vector2(1280, 720)
 var is_game_over: bool
 var is_game_paused: bool
 
@@ -36,6 +36,7 @@ func _ready() -> void:
 	is_game_over = false
 	is_game_paused = false
 	
+	create_borders()
 	spawn_items()
 	spawn_animals()
 
@@ -100,3 +101,36 @@ func level_finished() -> void:
 	
 	if gameGlobals.current_level >= (gameGlobals.MAX_LEVEL + 1):
 		game_finished()
+
+func create_borders():
+	var border_thickness = 10  # Thickness of the border
+	
+	# Create top border
+	var top_border = create_static_body(Vector2(game_size.x / 2, -border_thickness / 2), game_size.x, border_thickness)
+	
+	# Create bottom border
+	var bottom_border = create_static_body(Vector2(game_size.x / 2, game_size.y + border_thickness / 2), game_size.x, border_thickness)
+	
+	# Create left border
+	var left_border = create_static_body(Vector2(-border_thickness / 2, game_size.y / 2), border_thickness, game_size.y)
+	
+	# Create right border
+	var right_border = create_static_body(Vector2(game_size.x + border_thickness / 2, game_size.y / 2), border_thickness, game_size.y)
+	
+	add_child(top_border)
+	add_child(bottom_border)
+	add_child(left_border)
+	add_child(right_border)
+
+# Function to create a static body with a rectangle shape
+func create_static_body(position: Vector2, width: float, height: float) -> StaticBody2D:
+	var static_body = StaticBody2D.new()
+	static_body.position = position
+	
+	var collision_shape = CollisionShape2D.new()
+	var shape = RectangleShape2D.new()
+	shape.extents = Vector2(width / 2, height / 2)
+	collision_shape.shape = shape
+	static_body.add_child(collision_shape)
+	
+	return static_body

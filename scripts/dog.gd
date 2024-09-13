@@ -36,15 +36,18 @@ var cursor_on_animal: bool = false
 var statuses: Array = [gameGlobals.HUNGER_STATUS, gameGlobals.THIRST_STATUS, gameGlobals.PLAY_STATUS, gameGlobals.AFFECTION_STATUS]  # Possible statuses
 var status_icon : Node2D
 var current_status: String = ""
+var game_area: Vector2
 
 # References to the UI elements
-@onready var progress_bar = $CollisionShape2D/ProgressBar
+@onready var progress_bar = $ProgressBar
 @onready var animated_sprite = $AnimatedSprite2D
 
 # Called when the node enters the scene
 func _ready():
 	# Initialize the patience meter and status randomly
 	progress_bar.value = MAX_PATIENCE
+	var game_scene = get_parent()
+	game_area = game_scene.game_size
 	init_status_icon()
 	reset_status()
 	reset_movement_timer()
@@ -71,7 +74,9 @@ func _physics_process(delta):
 		hungry(current_status, delta)
 
 	# Left click will show affection or move the dog
-	if Input.is_action_just_pressed("action") and cursor_on_animal:
+	# TODO: Fix mouse click not working
+	#if Input.is_action_just_pressed("action") and cursor_on_animal:
+	if Input.is_action_just_pressed("action"):
 		if not drink_water and not eat_food:
 			if gameGlobals.is_affection_cursor_selected:
 				show_affection()
@@ -93,24 +98,22 @@ func _physics_process(delta):
 # Initialise status icon as invisible and to the right of progress bar
 func init_status_icon():
 	status_icon = STATUS_ICON_SCENE.instantiate()
-	status_icon.position = Vector2(16, - 10)
+	status_icon.position = Vector2(12, - 3)
 	add_child(status_icon)
 	status_icon.hide_icon()
 
 func move_to_target(direction: Vector2):
 	velocity = direction * speed
-	move_and_collide(velocity)
+	var collision = move_and_collide(velocity)
 
 	# Check if the dog is close enough to the target
-	if position.distance_to(target_position) < 5:
+	if position.distance_to(target_position) < 5 or collision:
 		# Stop moving and reset timer
 		is_moving = false
 		reset_movement_timer()
 		print("Reached target, waiting for ", move_interval, " seconds")
 
 func set_random_position():
-	var game_scene = get_parent()
-	var game_area = game_scene.game_size
 	while true:
 		target_position = Vector2(randf_range(0, game_area.x), randf_range(0, game_area.y))
 		if position.distance_to(target_position) >= MIN_MOVEMENT_DISTANCE:
