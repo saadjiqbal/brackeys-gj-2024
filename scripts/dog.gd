@@ -36,6 +36,7 @@ var cursor_on_animal: bool = false
 var statuses: Array = [gameGlobals.HUNGER_STATUS, gameGlobals.THIRST_STATUS, gameGlobals.PLAY_STATUS, gameGlobals.AFFECTION_STATUS]  # Possible statuses
 var status_icon : Node2D
 var current_status: String = ""
+var game_area: Vector2
 
 # References to the UI elements
 @onready var progress_bar = $ProgressBar
@@ -45,6 +46,8 @@ var current_status: String = ""
 func _ready():
 	# Initialize the patience meter and status randomly
 	progress_bar.value = MAX_PATIENCE
+	var game_scene = get_parent()
+	game_area = game_scene.game_size
 	init_status_icon()
 	reset_status()
 	reset_movement_timer()
@@ -71,12 +74,15 @@ func _physics_process(delta):
 		hungry(current_status, delta)
 
 	# Left click will show affection or move the dog
-	if Input.is_action_just_pressed("action") and cursor_on_animal:
+	# TODO: Fix mouse click not working
+	#if Input.is_action_just_pressed("action") and cursor_on_animal:
+	if Input.is_action_just_pressed("action"):
 		if not drink_water and not eat_food:
 			if gameGlobals.is_affection_cursor_selected:
 				show_affection()
 			else:
 				target_position = get_global_mouse_position()
+				target_position = clamp_movement_before_move(target_position)
 				is_moving = true
 
 	# Decrease patience over time if status is set
@@ -97,6 +103,24 @@ func init_status_icon():
 	add_child(status_icon)
 	status_icon.hide_icon()
 
+func clamp_movement_before_move(desired_position: Vector2) -> Vector2:
+	var extents = $CollisionShape2D.shape.extents
+	var new_position = desired_position
+
+	# Check the left and right bounds based on the desired position and extents
+	if desired_position.x - extents.x < 0:
+		new_position.x = extents.x  # Ensure left edge doesn't go out of bounds
+	elif desired_position.x + extents.x > game_area.x:
+		new_position.x = game_area.x - extents.x  # Ensure right edge doesn't go out of bounds
+
+	# Check the top and bottom bounds based on the desired position and extents
+	if desired_position.y - extents.y < 0:
+		new_position.y = extents.y  # Ensure top edge doesn't go out of bounds
+	elif desired_position.y + extents.y > game_area.y:
+		new_position.y = game_area.y - extents.y  # Ensure bottom edge doesn't go out of bounds
+
+	return new_position
+
 func move_to_target(direction: Vector2):
 	velocity = direction * speed
 	move_and_collide(velocity)
@@ -109,8 +133,6 @@ func move_to_target(direction: Vector2):
 		print("Reached target, waiting for ", move_interval, " seconds")
 
 func set_random_position():
-	var game_scene = get_parent()
-	var game_area = game_scene.game_size
 	while true:
 		target_position = Vector2(randf_range(0, game_area.x), randf_range(0, game_area.y))
 		if position.distance_to(target_position) >= MIN_MOVEMENT_DISTANCE:
