@@ -104,10 +104,10 @@ func init_status_icon():
 
 func move_to_target(direction: Vector2):
 	velocity = direction * speed
-	move_and_collide(velocity)
+	var collision = move_and_collide(velocity)
 
 	# Check if the dog is close enough to the target
-	if position.distance_to(target_position) < 5:
+	if position.distance_to(target_position) < 5 or collision:
 		# Stop moving and reset timer
 		is_moving = false
 		reset_movement_timer()
