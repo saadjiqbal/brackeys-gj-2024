@@ -82,7 +82,6 @@ func _physics_process(delta):
 				show_affection()
 			else:
 				target_position = get_global_mouse_position()
-				target_position = clamp_movement_before_move(target_position)
 				is_moving = true
 
 	# Decrease patience over time if status is set
@@ -102,24 +101,6 @@ func init_status_icon():
 	status_icon.position = Vector2(12, - 3)
 	add_child(status_icon)
 	status_icon.hide_icon()
-
-func clamp_movement_before_move(desired_position: Vector2) -> Vector2:
-	var extents = $CollisionShape2D.shape.extents
-	var new_position = desired_position
-
-	# Check the left and right bounds based on the desired position and extents
-	if desired_position.x - extents.x < 0:
-		new_position.x = extents.x  # Ensure left edge doesn't go out of bounds
-	elif desired_position.x + extents.x > game_area.x:
-		new_position.x = game_area.x - extents.x  # Ensure right edge doesn't go out of bounds
-
-	# Check the top and bottom bounds based on the desired position and extents
-	if desired_position.y - extents.y < 0:
-		new_position.y = extents.y  # Ensure top edge doesn't go out of bounds
-	elif desired_position.y + extents.y > game_area.y:
-		new_position.y = game_area.y - extents.y  # Ensure bottom edge doesn't go out of bounds
-
-	return new_position
 
 func move_to_target(direction: Vector2):
 	velocity = direction * speed
