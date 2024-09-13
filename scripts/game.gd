@@ -16,9 +16,11 @@ const MAX_PATIENCE_COUNT: int = 3
 @onready var pause_menu = $PauseMenu
 @onready var item_hotbar = $ItemHotbar
 @onready var background_music = $BackgroundMusic
+@onready var item_despawn_timer = $ItemDespawnTimer
 
 var current_patience_count: int
 var game_size: Vector2 = Vector2(1280, 720)
+
 var is_game_over: bool
 var is_game_paused: bool
 
@@ -26,13 +28,25 @@ var is_food_bowl_hovered: bool = false
 var is_toy_hovered: bool = false
 var is_water_bowl_hovered: bool = false
 
+var is_food_bowl_in_scene: bool = false
+var is_toy_in_scene: bool = false
+var is_water_bowl_in_scene: bool = false
+
+var despawn_item: bool = false
+
 var food_bowl_sprite: Sprite2D
 var food_bowl_sprite_offset: Vector2
+
+var toy_sprite: Sprite2D
+var toy_sprite_offset: Vector2
+
+var water_bowl_sprite: Sprite2D
+var water_bowl_offset: Vector2
 
 func _ready() -> void:
 	gameGlobals.can_drag_item = true
 	
-	#level_timer.level_finished.connect(level_finished)
+	level_timer.level_finished.connect(level_finished)
 	
 	item_hotbar.food_bowl_hovered.connect(on_food_bowl_hover)
 	item_hotbar.toy_hovered.connect(on_toy_hover)
@@ -52,7 +66,7 @@ func _ready() -> void:
 	spawn_animals()
 
 func _physics_process(_delta) -> void:
-	if Input.is_action_just_pressed("action") and is_food_bowl_hovered:
+	if Input.is_action_just_pressed("action") and is_food_bowl_hovered and not is_food_bowl_in_scene:
 		food_bowl_sprite = Sprite2D.new()
 		food_bowl_sprite.texture = load("res://icon.svg")
 		food_bowl_sprite.position = Vector2(640, 643)
@@ -63,10 +77,17 @@ func _physics_process(_delta) -> void:
 		
 		gameGlobals.can_drag_item = false
 
-	if Input.is_action_pressed("action") and is_food_bowl_hovered:
+	if Input.is_action_pressed("action") and is_food_bowl_hovered and not is_food_bowl_in_scene:
 		food_bowl_sprite.position = get_viewport().get_mouse_position() - food_bowl_sprite_offset
 	elif Input.is_action_just_released("action"):
 		gameGlobals.can_drag_item = true
+		is_food_bowl_in_scene = true
+		item_despawn_timer.start()
+		
+	if despawn_item:
+		food_bowl_sprite.queue_free()
+		despawn_item = false
+		is_food_bowl_in_scene = false
 
 func spawn_items() -> void:
 	var food_bowl_instance = FOOD_BOWL_SCENE.instantiate()
@@ -165,7 +186,12 @@ func on_food_bowl_hover() -> void:
 		is_food_bowl_hovered = true
 
 func on_toy_hover() -> void:
-	is_toy_hovered = true
+	if gameGlobals.can_drag_item:
+		is_toy_hovered = true
 
 func on_water_bowl_hover() -> void:
-	is_water_bowl_hovered = true
+	if gameGlobals.can_drag_item:
+		is_water_bowl_hovered = true
+
+func _on_item_despawn_timer_timeout():
+	despawn_item = true
