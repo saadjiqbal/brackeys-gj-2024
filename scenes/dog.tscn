@@ -89,7 +89,7 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mshye"]
-size = Vector2(17.0408, 11.6354)
+size = Vector2(35.875, 29.125)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_64iw8"]
 size = Vector2(36.0971, 24.3701)
@@ -104,17 +104,8 @@ animation = &"walk"
 frame_progress = 0.469953
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-2.8125, 9.1875)
 shape = SubResource("RectangleShape2D_mshye")
-
-[node name="ProgressBar" type="ProgressBar" parent="CollisionShape2D"]
-offset_left = -9.986
-offset_top = -12.0
-offset_right = 10.014
-offset_bottom = -7.76503
-step = 1.0
-show_percentage = false
-script = ExtResource("4_3s5jj")
-metadata/_edit_use_anchors_ = true
 
 [node name="AnimalActionArea" type="Area2D" parent="."]
 collision_mask = 15
@@ -123,6 +114,16 @@ collision_mask = 15
 position = Vector2(0, 10.915)
 scale = Vector2(1.5, 1.5)
 shape = SubResource("RectangleShape2D_64iw8")
+
+[node name="ProgressBar" type="ProgressBar" parent="."]
+offset_left = -12.7985
+offset_top = -4.875
+offset_right = 7.2015
+offset_bottom = -0.64003
+step = 1.0
+show_percentage = false
+script = ExtResource("4_3s5jj")
+metadata/_edit_use_anchors_ = true
 
 [connection signal="area_entered" from="AnimalActionArea" to="." method="_on_animal_action_area_area_entered"]
 [connection signal="area_exited" from="AnimalActionArea" to="." method="_on_animal_action_area_area_exited"]
