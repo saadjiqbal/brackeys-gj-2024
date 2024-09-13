@@ -47,7 +47,7 @@ func _ready():
 	# Initialize the patience meter and status randomly
 	progress_bar.value = MAX_PATIENCE
 	var game_scene = get_parent()
-	game_area = game_scene.game_size
+	#game_area = game_scene.game_size
 	init_status_icon()
 	reset_status()
 	reset_movement_timer()
@@ -64,7 +64,7 @@ func _physics_process(delta):
 	if not is_moving:
 		move_time_accumulator += delta
 		if move_time_accumulator >= move_interval:
-			set_random_position()
+			#set_random_position()
 			is_moving = true
 
 	if drink_water:
@@ -76,7 +76,7 @@ func _physics_process(delta):
 	# Left click will show affection or move the dog
 	# TODO: Fix mouse click not working
 	#if Input.is_action_just_pressed("action") and cursor_on_animal:
-	if Input.is_action_just_pressed("action"):
+	if Input.is_action_just_pressed("action") and cursor_on_animal:
 		if not drink_water and not eat_food:
 			if gameGlobals.is_affection_cursor_selected:
 				show_affection()

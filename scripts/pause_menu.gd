@@ -1,4 +1,4 @@
-extends Control
+extends CanvasLayer
 
 const SCALE_ON_HOVER: Vector2 = Vector2(0.55, 0.55)
 
@@ -6,6 +6,7 @@ const SCALE_ON_HOVER: Vector2 = Vector2(0.55, 0.55)
 @onready var pause_background = $PauseBackground
 @onready var pause_button = $MarginContainer/PauseButton
 @onready var margin_container = $MarginContainer
+@onready var pause_menu = $"."
 
 var scale_on_load: Vector2
 

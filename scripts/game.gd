@@ -13,9 +13,9 @@ const TEST_ICON = preload("res://icon.svg")
 const MAX_PATIENCE_COUNT: int = 3
 
 @onready var level_timer = $LevelTimer
-@onready var background_music = $BackgroundMusic
 @onready var pause_menu = $PauseMenu
 @onready var item_hotbar = $ItemHotbar
+@onready var background_music = $BackgroundMusic
 
 var current_patience_count: int
 var game_size: Vector2 = Vector2(1280, 720)
@@ -32,7 +32,7 @@ var food_bowl_sprite_offset: Vector2
 func _ready() -> void:
 	gameGlobals.can_drag_item = true
 	
-	level_timer.level_finished.connect(level_finished)
+	#level_timer.level_finished.connect(level_finished)
 	
 	item_hotbar.food_bowl_hovered.connect(on_food_bowl_hover)
 	item_hotbar.toy_hovered.connect(on_toy_hover)

@@ -16,6 +16,8 @@ stream = ExtResource("3_b074d")
 [node name="Cursor" parent="." instance=ExtResource("4_07oxg")]
 
 [node name="LevelTimer" parent="." instance=ExtResource("4_0m1cl")]
+offset_left = 1280.0
+offset_right = 1280.0
 
 [node name="PauseMenu" parent="." instance=ExtResource("5_356ry")]
 
