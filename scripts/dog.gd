@@ -4,6 +4,7 @@ signal patience_lost
 
 # Constants
 const MAX_PATIENCE = 100.0
+const PATIENCE_INCREMENT = 20.0
 const MIN_PATIENCE = 0.0
 const MIN_MOVEMENT_DISTANCE = 20.0
 const PATIENCE_LOSS_SPEED_FACTOR = 2   # Amount to increase speed by when patience lost
@@ -169,6 +170,9 @@ func handle_patience_loss():
 func thirsty(status: String, delta: float):
 	if status == gameGlobals.THIRST_STATUS:
 		print("Drinking water")
+		patience += PATIENCE_INCREMENT
+		if patience >= MAX_PATIENCE:
+			patience = MAX_PATIENCE
 		reset_status()
 	elif status != "":
 		patience -= patience_reduction_rate * delta
@@ -177,6 +181,9 @@ func thirsty(status: String, delta: float):
 func hungry(status: String, delta: float):
 	if status == gameGlobals.HUNGER_STATUS:
 		print("Eating food")
+		patience += PATIENCE_INCREMENT
+		if patience >= MAX_PATIENCE:
+			patience = MAX_PATIENCE
 		reset_status()
 	elif status != "":
 		patience -= patience_reduction_rate * delta
