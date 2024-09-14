@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://ddkfhl1avabbh" path="res://assets/items/toy2.png" id="2_fo7xx"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_h4dw7"]
-size = Vector2(11.125, 11.5)
+size = Vector2(11.125, 8)
 
 [node name="Toy" type="Node2D"]
 z_index = 1

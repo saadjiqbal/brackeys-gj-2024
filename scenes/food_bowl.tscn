@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://b2o2u27epnms4" path="res://assets/items/foodbowl.png" id="2_t5hwe"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2kom1"]
-size = Vector2(11.1, 8.95)
+size = Vector2(8.3, 6.9)
 
 [node name="FoodBowl" type="Node2D"]
 z_index = 10
@@ -21,6 +21,8 @@ collision_layer = 8
 collision_mask = 15
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="FoodBowlArea"]
+position = Vector2(-0.349998, 0.349998)
+scale = Vector2(1, 1)
 shape = SubResource("RectangleShape2D_2kom1")
 
 [node name="FoodBowlTimer" type="Timer" parent="."]
