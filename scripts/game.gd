@@ -5,10 +5,13 @@ const FOOD_BOWL_SCENE: PackedScene = preload("res://scenes/food_bowl.tscn")
 const TOY_SCENE: PackedScene = preload("res://scenes/toy.tscn")
 const WATER_BOWL_SCENE: PackedScene = preload("res://scenes/water_bowl.tscn")
 
+const GAME_AREA_WIDTH = 1280
+const ITEM_Y_POSITION = 657
+
 const DOG_POS: Vector2 = Vector2(640, 275)
-const FOOD_BOWL_POS: Vector2 = Vector2(640, 657) 
-const TOY_POS: Vector2 = Vector2(821, 657)
-const WATER_BOWL_POS: Vector2 = Vector2(460, 657)
+const FOOD_BOWL_POS: Vector2 = Vector2(640, ITEM_Y_POSITION) 
+const TOY_POS: Vector2 = Vector2(821, ITEM_Y_POSITION)
+const WATER_BOWL_POS: Vector2 = Vector2(460, ITEM_Y_POSITION)
 
 const SPRITE_SCALE: Vector2 = Vector2(0.75, 0.75)
 
@@ -22,7 +25,8 @@ const MAX_PATIENCE_COUNT: int = 3
 @onready var background_music = $BackgroundMusic
 
 var current_patience_count: int
-var game_size: Vector2 = Vector2(1280, 720)
+# Game area will be just above position of items
+var game_size: Vector2 = Vector2(GAME_AREA_WIDTH, ITEM_Y_POSITION - 70)
 
 var food_bowl_scene_instance
 var toy_scene_instance
