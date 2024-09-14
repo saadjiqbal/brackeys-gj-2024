@@ -125,6 +125,8 @@ show_percentage = false
 script = ExtResource("4_3s5jj")
 metadata/_edit_use_anchors_ = true
 
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+
 [connection signal="area_entered" from="AnimalActionArea" to="." method="_on_animal_action_area_area_entered"]
 [connection signal="area_exited" from="AnimalActionArea" to="." method="_on_animal_action_area_area_exited"]
 [connection signal="mouse_entered" from="AnimalActionArea" to="." method="_on_animal_action_area_mouse_entered"]
