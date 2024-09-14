@@ -38,15 +38,27 @@ var current_status: String = ""
 var target_cure_status: String = ""
 var game_area: Vector2
 
+var drink_sfx = preload("res://assets/sfx/dog_drink.mp3")
+var eat_sfx = preload("res://assets/sfx/dog_eat.mp3")
+var play_sfx = preload("res://assets/sfx/bark3.mp3")
+
 var item_status_dict = {
 	"WaterBowlArea": gameGlobals.THIRST_STATUS,
 	"FoodBowlArea": gameGlobals.HUNGER_STATUS,
 	"ToyArea": gameGlobals.PLAY_STATUS
 }
 
+var status_curing_sfx_dict = {
+	gameGlobals.THIRST_STATUS: drink_sfx,
+	gameGlobals.HUNGER_STATUS: eat_sfx,
+	gameGlobals.PLAY_STATUS: play_sfx,
+	gameGlobals.AFFECTION_STATUS: play_sfx
+}
+
 # References to the UI elements
 @onready var progress_bar = $ProgressBar
 @onready var animated_sprite = $AnimatedSprite2D
+@onready var sfx_player = $AudioStreamPlayer2D
 
 # Called when the node enters the scene
 func _ready():
@@ -193,6 +205,8 @@ func check_is_status_cured(delta: float):
 		if gameGlobals.can_drag_item:
 			# Increase patience if correct item placed
 			if target_cure_status == current_status:
+				sfx_player.stream = status_curing_sfx_dict[current_status]
+				sfx_player.play()
 				patience += patience_increment_rate * delta
 				if patience >= MAX_PATIENCE:
 					patience = MAX_PATIENCE
