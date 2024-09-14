@@ -1,15 +1,20 @@
 extends CanvasLayer
 
-const AUDIO_SCALE_ON_MUTE: Vector2 = Vector2(0.45, 0.45)
+const AUDIO_SCALE_ON_MUTE: Vector2 = Vector2(0.27, 0.27)
+const AUDIO_MARGIN_TOP_ON_MUTE: int = 100
 
 @onready var pause_background = $PauseBackground
+
 @onready var pause_button = $PauseMarginContainer/PauseButton
 @onready var audio_button = $AudioMarginContainer/AudioButton
+
 @onready var pause_margin_container = $PauseMarginContainer
 @onready var audio_margin_container = $AudioMarginContainer
 
 var pause_scale_on_load: Vector2
 var audio_scale_on_load: Vector2
+
+var audio_margin_top_on_load: int
 
 var audio_muted: bool = false
 
@@ -21,6 +26,8 @@ func _ready():
 	
 	pause_scale_on_load = pause_margin_container.scale
 	audio_scale_on_load = audio_margin_container.scale
+	
+	audio_margin_top_on_load = audio_margin_container.get_theme_constant("margin_top")
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -49,10 +56,12 @@ func mute_game() -> void:
 	if !audio_muted:
 		audio_button.icon = load("res://assets/ui/Icon_Small_Blank_AudioOff.png")
 		audio_margin_container.scale = AUDIO_SCALE_ON_MUTE
+		audio_margin_container.add_theme_constant_override("margin_top", AUDIO_MARGIN_TOP_ON_MUTE)
 		audio_muted = true
 	else:
 		audio_button.icon = load("res://assets/ui/Icon_Small_Blank_Audio.png")
 		audio_margin_container.scale = audio_scale_on_load
+		audio_margin_container.add_theme_constant_override("margin_top", audio_margin_top_on_load)
 		audio_muted = false
 
 func _on_resume_button_pressed():
