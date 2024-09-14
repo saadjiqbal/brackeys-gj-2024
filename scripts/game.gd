@@ -25,6 +25,7 @@ const MAX_PATIENCE_COUNT: int = 3
 @onready var background_music = $BackgroundMusic
 
 var current_patience_count: int
+
 # Game area will be just above position of items
 var game_size: Vector2 = Vector2(GAME_AREA_WIDTH, ITEM_Y_POSITION - 70)
 
@@ -36,8 +37,6 @@ func _ready() -> void:
 	gameGlobals.can_drag_item = true
 	
 	level_timer.level_finished.connect(level_finished)
-	
-	background_music.play()
 	
 	current_patience_count = MAX_PATIENCE_COUNT
 	
