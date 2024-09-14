@@ -11,6 +11,9 @@ const ITEM_Y_POSITION = 657
 const DOG_POS_LEVEL_1: Vector2 = Vector2(640, 275)
 const DOG1_POS_LEVEL_2: Vector2 = Vector2(240, 275)
 const DOG2_POS_LEVEL_2: Vector2 = Vector2(1000, 275)
+const DOG1_POS_LEVEL_3: Vector2 = Vector2(240, 400)
+const DOG2_POS_LEVEL_3: Vector2 = Vector2(1000, 400)
+const DOG3_POS_LEVEL_3: Vector2 = Vector2(640, 100)
 
 const FOOD_BOWL_POS: Vector2 = Vector2(640, ITEM_Y_POSITION) 
 const TOY_POS: Vector2 = Vector2(821, ITEM_Y_POSITION)
@@ -52,20 +55,27 @@ func _ready() -> void:
 func _physics_process(_delta) -> void:
 	pass
 
+# Reset item positions and delete dog instances
 func reset_level():
 	food_bowl_scene_instance.reset_position()
 	toy_scene_instance.reset_position()
 	water_bowl_scene_instance.reset_position()
 	
-	for character in get_children():
-		if character.name == "Dog":
-			character.queue_free()
+	for child in get_children():
+		if child is CharacterBody2D:
+			child.queue_free()
 
+# Initialise dog positions for a new level
 func start_new_level(level_count: int):
 	if level_count == 2:
 		# Spawn 2 dogs
 		instantiate_dog(DOG1_POS_LEVEL_2)
 		instantiate_dog(DOG2_POS_LEVEL_2)
+	elif level_count == 3:
+		# Spawn 3 dogs
+		instantiate_dog(DOG1_POS_LEVEL_3)
+		instantiate_dog(DOG2_POS_LEVEL_3)
+		instantiate_dog(DOG3_POS_LEVEL_3)
 
 func spawn_items() -> void:
 	food_bowl_scene_instance = FOOD_BOWL_SCENE.instantiate()
