@@ -49,6 +49,11 @@ func _ready() -> void:
 func _physics_process(_delta) -> void:
 	pass
 
+func reset_item_positions():
+	food_bowl_scene_instance.reset_position()
+	toy_scene_instance.reset_position()
+	water_bowl_scene_instance.reset_position()
+
 func spawn_items() -> void:
 	food_bowl_scene_instance = FOOD_BOWL_SCENE.instantiate()
 	toy_scene_instance = TOY_SCENE.instantiate()
@@ -86,9 +91,9 @@ func game_win() -> void:
 # Triggers when our timer emits level_finished signal
 func level_finished() -> void:
 	gameGlobals.current_level = gameGlobals.current_level + 1
-	
+
+	reset_item_positions()
 	print("Current level: ", gameGlobals.current_level)
-	
 	if gameGlobals.current_level >= (gameGlobals.MAX_LEVEL + 1):
 		game_win()
 
