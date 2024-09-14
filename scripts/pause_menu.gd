@@ -67,9 +67,6 @@ func mute_game() -> void:
 func _on_resume_button_pressed():
 	resume_game()
 
-func _on_options_button_pressed():
-	pass # Replace with function body.
-
 func _on_exit_button_pressed():
 	get_tree().quit()
 

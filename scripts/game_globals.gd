@@ -16,3 +16,6 @@ var is_game_finished: bool = false
 var hotbar_size: int = 3
 
 var playback_position: float
+
+var game_over: bool = false
+var game_win: bool = false
