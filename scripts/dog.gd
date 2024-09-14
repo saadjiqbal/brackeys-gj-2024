@@ -183,10 +183,12 @@ func handle_patience_loss():
 # Check if current status has been cured correctly
 func check_is_status_cured(delta: float):
 	if target_cure_status == current_status and current_status != "":
-		patience += patience_increment_rate * delta
-		if patience >= MAX_PATIENCE:
-			patience = MAX_PATIENCE
-		is_curing_status = true
+		# Increase patience if correct item placed and dropped
+		if gameGlobals.can_drag_item:
+			patience += patience_increment_rate * delta
+			if patience >= MAX_PATIENCE:
+				patience = MAX_PATIENCE
+			is_curing_status = true
 	elif current_status != "":
 		patience -= patience_reduction_rate * delta
 
