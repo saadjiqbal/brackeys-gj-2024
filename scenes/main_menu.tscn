@@ -149,10 +149,11 @@ offset_right = 302.5
 offset_bottom = 137.0
 grow_horizontal = 2
 theme_override_font_sizes/font_size = 100
-text = "GAME NAME"
+text = "crazy dogs"
 label_settings = SubResource("LabelSettings_vkexs")
 horizontal_alignment = 1
 vertical_alignment = 1
+uppercase = true
 
 [node name="MainMenuMusic" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("2_v7jgi")
