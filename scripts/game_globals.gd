@@ -10,7 +10,6 @@ const MAX_LEVEL: int = 3
 var can_drag_item: bool = true
 
 var current_level: int = 1
-var is_game_finished: bool = false
 
 var hotbar_size: int = 3
 
