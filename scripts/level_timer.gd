@@ -2,7 +2,7 @@ extends CanvasLayer
 
 signal level_finished
 
-const LEVEL_TIME_ARRAY: Array = [60, 120, 180]
+const LEVEL_TIME_ARRAY: Array = [60, 60, 60]
 
 @onready var timer_label = $MarginContainer/TimerLabel
 @onready var timer = $Timer
