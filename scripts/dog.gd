@@ -38,7 +38,14 @@ var cursor_on_animal: bool = false
 var statuses: Array = [gameGlobals.HUNGER_STATUS, gameGlobals.THIRST_STATUS, gameGlobals.PLAY_STATUS, gameGlobals.AFFECTION_STATUS]  # Possible statuses
 var status_icon : Node2D
 var current_status: String = ""
+var target_cure_status: String = ""
 var game_area: Vector2
+
+var item_status_dict = {
+	"WaterBowlArea": gameGlobals.THIRST_STATUS,
+	"FoodBowlArea": gameGlobals.HUNGER_STATUS,
+	"ToyArea": gameGlobals.PLAY_STATUS
+}
 
 # References to the UI elements
 @onready var progress_bar = $ProgressBar
@@ -69,11 +76,7 @@ func _physics_process(delta):
 			#set_random_position()
 			is_moving = true
 
-	if drink_water:
-		thirsty(current_status, delta)
-	
-	if eat_food:
-		hungry(current_status, delta)
+	check_is_status_cured(delta)
 
 	# Left click will show affection or move the dog
 	# TODO: Fix mouse click not working
@@ -166,26 +169,15 @@ func handle_patience_loss():
 	patience_lost.emit()
 	print("Patience ran out! The animal is unhappy.")
 
-# Implement logic for animal being thirsty
-func thirsty(status: String, delta: float):
-	if status == gameGlobals.THIRST_STATUS:
-		print("Drinking water")
+# Check if current status has been cured correctly
+func check_is_status_cured(delta: float):
+	if target_cure_status == current_status and current_status != "":
+		print("Status cured")
 		patience += PATIENCE_INCREMENT
 		if patience >= MAX_PATIENCE:
 			patience = MAX_PATIENCE
 		reset_status()
-	elif status != "":
-		patience -= patience_reduction_rate * delta
-
-# Implement logic for animal being hungry
-func hungry(status: String, delta: float):
-	if status == gameGlobals.HUNGER_STATUS:
-		print("Eating food")
-		patience += PATIENCE_INCREMENT
-		if patience >= MAX_PATIENCE:
-			patience = MAX_PATIENCE
-		reset_status()
-	elif status != "":
+	elif current_status != "":
 		patience -= patience_reduction_rate * delta
 
 func show_affection() -> void:
@@ -193,22 +185,16 @@ func show_affection() -> void:
 
 # Check what has entered our Area2D node
 func _on_animal_action_area_area_entered(area):
-	if area.name == "WaterBowlArea":
-		drink_water = true
-	elif area.name == "FoodBowlArea":
-		eat_food = true
+	if area.name in item_status_dict:
+		target_cure_status = item_status_dict[area.name]
 	elif area.name == "AnimalActionArea":
-		# TODO: Stop moving and start throwing some hands
+		## TODO: Stop moving and start throwing some hands
 		print("Colliding with animal")
 
 # Check what has exited our Area2D node
 func _on_animal_action_area_area_exited(area):
-	if area.name == "WaterBowlArea":
-		print("Done drinking water")
-		drink_water = false
-	elif area.name == "FoodBowlArea":
-		print("Done eating food")
-		eat_food = false
+	if area.name in item_status_dict:
+		target_cure_status = ""
 
 # Check if mouse is inside our Area2D node
 func _on_animal_action_area_mouse_entered():
