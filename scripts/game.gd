@@ -49,6 +49,11 @@ func _ready() -> void:
 func _physics_process(_delta) -> void:
 	pass
 
+func remove_dogs():
+	for character in get_children():
+		if character.name == "Dog":
+			character.queue_free()
+
 func reset_item_positions():
 	food_bowl_scene_instance.reset_position()
 	toy_scene_instance.reset_position()
@@ -93,6 +98,7 @@ func level_finished() -> void:
 	gameGlobals.current_level = gameGlobals.current_level + 1
 
 	reset_item_positions()
+	remove_dogs()
 	print("Current level: ", gameGlobals.current_level)
 	if gameGlobals.current_level >= (gameGlobals.MAX_LEVEL + 1):
 		game_win()
