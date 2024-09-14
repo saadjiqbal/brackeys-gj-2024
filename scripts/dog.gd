@@ -57,7 +57,7 @@ func _ready():
 	# Initialize the patience meter and status randomly
 	progress_bar.value = MAX_PATIENCE
 	var game_scene = get_parent()
-	#game_area = game_scene.game_size
+	game_area = game_scene.game_size
 	init_status_icon()
 	reset_status()
 	reset_movement_timer()
@@ -123,6 +123,7 @@ func move_to_target(direction: Vector2):
 func set_random_position():
 	while true:
 		target_position = Vector2(randf_range(0, game_area.x), randf_range(0, game_area.y))
+		print("Random position set to " + str(target_position))
 		if position.distance_to(target_position) >= MIN_MOVEMENT_DISTANCE:
 			break
 
