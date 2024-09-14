@@ -3,7 +3,7 @@ extends CharacterBody2D
 signal patience_lost
 
 # Constants
-const MAX_PATIENCE_LOSS_COUNT = 3
+const MAX_PATIENCE_LOSS_COUNT = 3      # Max number of times dog's patience can reach 0
 const MAX_PATIENCE = 100.0             # Max value of patience bar
 const PATIENCE_INCREMENT = 20.0        # Amount patience bar increments when status is cured (one time increment per cure)
 const MIN_PATIENCE = 0.0               # Min value of patience bar
@@ -161,7 +161,7 @@ func check_patience():
 		handle_patience_loss()
 
 func handle_patience_loss():
-	if patience_loss_count <= MAX_PATIENCE_LOSS_COUNT:
+	if patience_loss_count < MAX_PATIENCE_LOSS_COUNT:
 		print("Patience ran out! The animal is unhappy.")
 		# Change progress bar colour and reset patience
 		patience_loss_count += 1
@@ -169,19 +169,21 @@ func handle_patience_loss():
 			progress_bar.update_fill_colour(Color.ORANGE)
 		else:
 			progress_bar.update_fill_colour(Color.RED)
-		patience = MAX_PATIENCE
 
-		# Increase frequency of status and movement
-		min_random_interval -= 2
-		if min_random_interval < 1:
-			min_random_interval = 1
-		max_random_interval -= 2
-		if max_random_interval < 1:
-			max_random_interval = 1
-			print("Max random interval too low")
 		if patience_loss_count == MAX_PATIENCE_LOSS_COUNT:
 			patience_lost.emit()
 			print("Patience ran out completely!")
+		else:
+			patience = MAX_PATIENCE
+			# Increase frequency of status and movement
+			min_random_interval -= 2
+			if min_random_interval < 1:
+				min_random_interval = 1
+			max_random_interval -= 2
+			if max_random_interval < 1:
+				max_random_interval = 1
+				print("Max random interval too low")
+
 
 # Check if current status has been cured correctly
 func check_is_status_cured(delta: float):
