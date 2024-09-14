@@ -8,8 +8,9 @@ const MAX_PATIENCE = 100.0             # Max value of patience bar
 const PATIENCE_INCREMENT = 20.0        # Amount patience bar increments when status is cured (one time increment per cure)
 const MIN_PATIENCE = 0.0               # Min value of patience bar
 const MIN_MOVEMENT_DISTANCE = 20.0     # Minimum distance to move when generating a new target position
-const PATIENCE_LOSS_SPEED_FACTOR = 2   # Amount to increase speed by when patience lost
+const PATIENCE_LOSS_SPEED_FACTOR = 2   # Amount to increase speed by when patience lost 
 const STATUS_ICON_SCENE: PackedScene = preload("res://scenes/status_icon.tscn")
+const WRONG_ITEM_PATIENCE_REDUCE_FACTOR = 2 # Factor to multiply patience reduction by when wrong item is placed
 
 # Properties
 @export var patience_reduction_rate = 10 # Amount of patience lost per second
@@ -25,7 +26,7 @@ var move_interval: float = 0.0           # Interval to wait for triggering movem
 var patience_loss_count: int = 0
 var patience_increment_rate = 20
 
-var is_curing_status: bool = false
+var is_attempting_cure_status: bool = false
 var is_moving: bool = false
 var target_position = Vector2()  # Target position
 var cursor_on_animal: bool = false       
@@ -66,7 +67,7 @@ func _physics_process(delta):
 			status_icon.show_icon(current_status)
 			print(current_status)
 
-	if not is_moving and not is_curing_status:
+	if not is_moving and not is_attempting_cure_status:
 		move_time_accumulator += delta
 		if move_time_accumulator >= move_interval:
 			set_random_position()
@@ -78,7 +79,7 @@ func _physics_process(delta):
 	# TODO: Fix mouse click not working
 	#if Input.is_action_just_pressed("action") and cursor_on_animal:
 	if Input.is_action_just_pressed("action") and cursor_on_animal:
-		if not is_curing_status:
+		if not is_attempting_cure_status:
 			if gameGlobals.is_affection_cursor_selected:
 				show_affection(delta)
 			else:
@@ -95,7 +96,7 @@ func _physics_process(delta):
 	var direction = (target_position - position).normalized()
 
 	# Stop moving when curing status
-	if is_curing_status:
+	if is_attempting_cure_status:
 		is_moving = false
 
 	if is_moving:
@@ -187,13 +188,17 @@ func handle_patience_loss():
 
 # Check if current status has been cured correctly
 func check_is_status_cured(delta: float):
-	if target_cure_status == current_status and current_status != "":
-		# Increase patience if correct item placed and dropped
+	if target_cure_status != "" and current_status != "":
+		# If item is dropped, then attempting to cure status
 		if gameGlobals.can_drag_item:
-			patience += patience_increment_rate * delta
-			if patience >= MAX_PATIENCE:
-				patience = MAX_PATIENCE
-			is_curing_status = true
+			# Increase patience if correct item placed
+			if target_cure_status == current_status:
+				patience += patience_increment_rate * delta
+				if patience >= MAX_PATIENCE:
+					patience = MAX_PATIENCE
+			else:
+				patience -= patience_reduction_rate * delta * WRONG_ITEM_PATIENCE_REDUCE_FACTOR
+			is_attempting_cure_status = true
 	elif current_status != "":
 		patience -= patience_reduction_rate * delta
 
@@ -217,7 +222,7 @@ func _on_animal_action_area_area_exited(area):
 		if target_cure_status == current_status:
 			reset_status()
 		target_cure_status = ""
-		is_curing_status = false
+		is_attempting_cure_status = false
 
 # Check if mouse is inside our Area2D node
 func _on_animal_action_area_mouse_entered():
