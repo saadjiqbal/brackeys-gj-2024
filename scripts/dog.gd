@@ -8,8 +8,9 @@ const MAX_PATIENCE = 100.0             # Max value of patience bar
 const PATIENCE_INCREMENT = 20.0        # Amount patience bar increments when status is cured (one time increment per cure)
 const MIN_PATIENCE = 0.0               # Min value of patience bar
 const MIN_MOVEMENT_DISTANCE = 20.0     # Minimum distance to move when generating a new target position
-const PATIENCE_LOSS_SPEED_FACTOR = 2   # Amount to increase speed by when patience lost
+const PATIENCE_LOSS_SPEED_FACTOR = 2   # Amount to increase speed by when patience lost 
 const STATUS_ICON_SCENE: PackedScene = preload("res://scenes/status_icon.tscn")
+const WRONG_ITEM_PATIENCE_REDUCE_FACTOR = 2 # Factor to multiply patience reduction by when wrong item is placed
 
 # Properties
 @export var patience_reduction_rate = 10 # Amount of patience lost per second
@@ -23,16 +24,11 @@ var status_interval: float = 0.0         # Interval to wait for triggering statu
 var move_time_accumulator: float = 0.0   # Accumulates time for triggering movement
 var move_interval: float = 0.0           # Interval to wait for triggering movement
 var patience_loss_count: int = 0
+var patience_increment_rate = 20
 
+var is_attempting_cure_status: bool = false
 var is_moving: bool = false
 var target_position = Vector2()  # Target position
-
-# Possible variables to use in future
-var hunger: float = 0.0                  # Hunger level
-var thirst: float = 0.0                  # Thirst level
-var playfulness: float = 0.0             # Playfulness level
-var drink_water: bool = false            
-var eat_food: bool = false               
 var cursor_on_animal: bool = false       
 
 # Statuses
@@ -71,7 +67,7 @@ func _physics_process(delta):
 			status_icon.show_icon(current_status)
 			print(current_status)
 
-	if not is_moving:
+	if not is_moving and not is_attempting_cure_status:
 		move_time_accumulator += delta
 		if move_time_accumulator >= move_interval:
 			set_random_position()
@@ -83,9 +79,9 @@ func _physics_process(delta):
 	# TODO: Fix mouse click not working
 	#if Input.is_action_just_pressed("action") and cursor_on_animal:
 	if Input.is_action_just_pressed("action") and cursor_on_animal:
-		if not drink_water and not eat_food:
+		if not is_attempting_cure_status:
 			if gameGlobals.is_affection_cursor_selected:
-				show_affection()
+				show_affection(delta)
 			else:
 				target_position = get_global_mouse_position()
 				is_moving = true
@@ -98,6 +94,11 @@ func _physics_process(delta):
 
 	# Update animation based on direction
 	var direction = (target_position - position).normalized()
+
+	# Stop moving when curing status
+	if is_attempting_cure_status:
+		is_moving = false
+
 	if is_moving:
 		move_to_target(direction)
 	update_animation(is_moving, direction)
@@ -187,17 +188,24 @@ func handle_patience_loss():
 
 # Check if current status has been cured correctly
 func check_is_status_cured(delta: float):
-	if target_cure_status == current_status and current_status != "":
-		print("Status cured")
-		patience += PATIENCE_INCREMENT
-		if patience >= MAX_PATIENCE:
-			patience = MAX_PATIENCE
-		reset_status()
+	if target_cure_status != "" and current_status != "":
+		# If item is dropped, then attempting to cure status
+		if gameGlobals.can_drag_item:
+			# Increase patience if correct item placed
+			if target_cure_status == current_status:
+				patience += patience_increment_rate * delta
+				if patience >= MAX_PATIENCE:
+					patience = MAX_PATIENCE
+			else:
+				patience -= patience_reduction_rate * delta * WRONG_ITEM_PATIENCE_REDUCE_FACTOR
+			is_attempting_cure_status = true
 	elif current_status != "":
 		patience -= patience_reduction_rate * delta
 
-func show_affection() -> void:
-	print("Showing affection")
+func show_affection(delta: float) -> void:
+	if current_status == gameGlobals.AFFECTION_STATUS:
+		patience += patience_increment_rate * delta
+		print("Showing affection")
 
 # Check what has entered our Area2D node
 func _on_animal_action_area_area_entered(area):
@@ -210,7 +218,11 @@ func _on_animal_action_area_area_entered(area):
 # Check what has exited our Area2D node
 func _on_animal_action_area_area_exited(area):
 	if area.name in item_status_dict:
+		# Reset status if cured correctly
+		if target_cure_status == current_status:
+			reset_status()
 		target_cure_status = ""
+		is_attempting_cure_status = false
 
 # Check if mouse is inside our Area2D node
 func _on_animal_action_area_mouse_entered():
