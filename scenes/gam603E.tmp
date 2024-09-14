@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://dnubasacbx764"]
+[gd_scene load_steps=7 format=3 uid="uid://dnubasacbx764"]
 
 [ext_resource type="Script" path="res://scripts/game.gd" id="1_c07yq"]
 [ext_resource type="AudioStream" uid="uid://b1xvnipsnfxwq" path="res://assets/music/2_cafe_avenue_master.ogg" id="3_b074d"]
 [ext_resource type="PackedScene" uid="uid://ns36cax58tjo" path="res://scenes/level_timer.tscn" id="4_0m1cl"]
 [ext_resource type="PackedScene" uid="uid://7hc6qrro5n2s" path="res://scenes/cursor.tscn" id="4_07oxg"]
 [ext_resource type="PackedScene" uid="uid://by48bsueosbie" path="res://scenes/pause_menu.tscn" id="5_356ry"]
+[ext_resource type="PackedScene" uid="uid://cjs0pmen4wys5" path="res://scenes/item_hotbar.tscn" id="6_xm7oq"]
 
 [node name="Game" type="Node"]
 script = ExtResource("1_c07yq")
@@ -17,3 +18,20 @@ stream = ExtResource("3_b074d")
 [node name="LevelTimer" parent="." instance=ExtResource("4_0m1cl")]
 
 [node name="PauseMenu" parent="." instance=ExtResource("5_356ry")]
+
+[node name="ItemHotbar" parent="." instance=ExtResource("6_xm7oq")]
+
+[node name="Timers" type="Node" parent="."]
+
+[node name="FoodBowlTimer" type="Timer" parent="Timers"]
+wait_time = 2.0
+
+[node name="ToyTimer" type="Timer" parent="Timers"]
+wait_time = 2.0
+
+[node name="WaterBowlTimer" type="Timer" parent="Timers"]
+wait_time = 2.0
+
+[connection signal="timeout" from="Timers/FoodBowlTimer" to="." method="_on_food_bowl_timer_timeout"]
+[connection signal="timeout" from="Timers/ToyTimer" to="." method="_on_toy_timer_timeout"]
+[connection signal="timeout" from="Timers/WaterBowlTimer" to="." method="_on_water_bowl_timer_timeout"]

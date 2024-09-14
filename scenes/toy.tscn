@@ -1,37 +1,31 @@
-[gd_scene load_steps=6 format=3 uid="uid://dcty3s1ejlbh1"]
+[gd_scene load_steps=4 format=3 uid="uid://dcty3s1ejlbh1"]
 
-[ext_resource type="Texture2D" uid="uid://cq72ayplyeq3y" path="res://assets/items/kidsroom.png" id="1_2rdwn"]
 [ext_resource type="Script" path="res://scripts/toy.gd" id="1_dq4kq"]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_se5vg"]
-atlas = ExtResource("1_2rdwn")
-region = Rect2(48, 0, 16, 18)
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_yjs56"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_se5vg")
-}],
-"loop": true,
-"name": &"default",
-"speed": 5.0
-}]
+[ext_resource type="Texture2D" uid="uid://ddkfhl1avabbh" path="res://assets/items/toy2.png" id="2_fo7xx"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_h4dw7"]
+size = Vector2(11.125, 11.5)
 
 [node name="Toy" type="Node2D"]
 z_index = 1
+position = Vector2(821, 657)
 scale = Vector2(8, 8)
 script = ExtResource("1_dq4kq")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-sprite_frames = SubResource("SpriteFrames_yjs56")
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.1, 0.1)
+texture = ExtResource("2_fo7xx")
 
 [node name="ToyArea" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ToyArea"]
+position = Vector2(-0.0625, 0)
 shape = SubResource("RectangleShape2D_h4dw7")
+
+[node name="ToyTimer" type="Timer" parent="."]
+unique_name_in_owner = true
+wait_time = 10.0
 
 [connection signal="mouse_entered" from="ToyArea" to="." method="_on_toy_area_mouse_entered"]
 [connection signal="mouse_exited" from="ToyArea" to="." method="_on_toy_area_mouse_exited"]
+[connection signal="timeout" from="ToyTimer" to="." method="_on_toy_timer_timeout"]

@@ -6,33 +6,43 @@ const TOY_SCENE: PackedScene = preload("res://scenes/toy.tscn")
 const WATER_BOWL_SCENE: PackedScene = preload("res://scenes/water_bowl.tscn")
 
 const DOG_POS: Vector2 = Vector2(640, 275)
-const FOOD_BOWL_POS: Vector2 = Vector2(150, 100) 
-const TOY_POS: Vector2 = Vector2(450, 100)
-const WATER_BOWL_POS: Vector2 = Vector2(300, 100)
+const FOOD_BOWL_POS: Vector2 = Vector2(640, 657) 
+const TOY_POS: Vector2 = Vector2(821, 657)
+const WATER_BOWL_POS: Vector2 = Vector2(460, 657)
+
+const SPRITE_SCALE: Vector2 = Vector2(0.75, 0.75)
+
 const TEST_ICON = preload("res://icon.svg")
 const MAX_PATIENCE_COUNT: int = 3
 
 @onready var level_timer = $LevelTimer
+
 @onready var pause_menu = $PauseMenu
 @onready var item_hotbar = $ItemHotbar
 @onready var background_music = $BackgroundMusic
-@onready var item_despawn_timer = $ItemDespawnTimer
 
 var current_patience_count: int
 var game_size: Vector2 = Vector2(1280, 720)
 
-var is_game_over: bool
-var is_game_paused: bool
+var food_bowl_scene_instance
+var toy_scene_instance
+var water_bowl_scene_instance
 
 var is_food_bowl_hovered: bool = false
 var is_toy_hovered: bool = false
 var is_water_bowl_hovered: bool = false
 
+var is_food_bowl_sprite_spawned: bool = false
+var is_toy_sprite_spawned: bool = false
+var is_water_bowl_sprite_spawned: bool = false
+
 var is_food_bowl_in_scene: bool = false
 var is_toy_in_scene: bool = false
 var is_water_bowl_in_scene: bool = false
 
-var despawn_item: bool = false
+var is_food_bowl_dragged: bool = false
+var is_toy_dragged: bool = false
+var is_water_bowl_dragged: bool = false
 
 var food_bowl_sprite: Sprite2D
 var food_bowl_sprite_offset: Vector2
@@ -43,64 +53,34 @@ var toy_sprite_offset: Vector2
 var water_bowl_sprite: Sprite2D
 var water_bowl_offset: Vector2
 
+var despawn_food_bowl: bool = false
+var despawn_toy: bool = false
+var despawn_water_bowl: bool = false
+
 func _ready() -> void:
 	gameGlobals.can_drag_item = true
 	
 	level_timer.level_finished.connect(level_finished)
 	
-	item_hotbar.food_bowl_hovered.connect(on_food_bowl_hover)
-	item_hotbar.toy_hovered.connect(on_toy_hover)
-	item_hotbar.water_bowl_hovered.connect(on_water_bowl_hover)
-	
 	background_music.play()
 	
 	current_patience_count = MAX_PATIENCE_COUNT
 	
-	food_bowl_sprite = Sprite2D.new()
-	
-	is_game_over = false
-	is_game_paused = false
-	
 	create_borders()
-	#spawn_items()
+	spawn_items()
 	spawn_animals()
 
 func _physics_process(_delta) -> void:
-	if Input.is_action_just_pressed("action") and is_food_bowl_hovered and not is_food_bowl_in_scene:
-		food_bowl_sprite = Sprite2D.new()
-		food_bowl_sprite.texture = load("res://icon.svg")
-		food_bowl_sprite.position = Vector2(640, 643)
-		
-		add_child(food_bowl_sprite)
-		
-		food_bowl_sprite_offset = get_viewport().get_mouse_position() - food_bowl_sprite.position
-		
-		gameGlobals.can_drag_item = false
-
-	if Input.is_action_pressed("action") and is_food_bowl_hovered and not is_food_bowl_in_scene:
-		food_bowl_sprite.position = get_viewport().get_mouse_position() - food_bowl_sprite_offset
-	elif Input.is_action_just_released("action"):
-		gameGlobals.can_drag_item = true
-		is_food_bowl_in_scene = true
-		item_despawn_timer.start()
-		
-	if despawn_item:
-		food_bowl_sprite.queue_free()
-		despawn_item = false
-		is_food_bowl_in_scene = false
+	pass
 
 func spawn_items() -> void:
-	var food_bowl_instance = FOOD_BOWL_SCENE.instantiate()
-	var toy_instance = TOY_SCENE.instantiate()
-	var water_bowl_instance = WATER_BOWL_SCENE.instantiate()
+	food_bowl_scene_instance = FOOD_BOWL_SCENE.instantiate()
+	toy_scene_instance = TOY_SCENE.instantiate()
+	water_bowl_scene_instance = WATER_BOWL_SCENE.instantiate()
 	
-	food_bowl_instance.position = FOOD_BOWL_POS
-	toy_instance.position = TOY_POS
-	water_bowl_instance.position = WATER_BOWL_POS
-	
-	add_child(food_bowl_instance)
-	add_child(toy_instance)
-	add_child(water_bowl_instance)
+	add_child(food_bowl_scene_instance)
+	add_child(toy_scene_instance)
+	add_child(water_bowl_scene_instance)
 
 func spawn_animals() -> void:
 	# Animal positions need to be randomized in a given area
@@ -180,18 +160,3 @@ func create_static_body(position: Vector2, width: float, height: float) -> Stati
 	static_body.add_child(collision_shape)
 	
 	return static_body
-
-func on_food_bowl_hover() -> void:
-	if gameGlobals.can_drag_item:
-		is_food_bowl_hovered = true
-
-func on_toy_hover() -> void:
-	if gameGlobals.can_drag_item:
-		is_toy_hovered = true
-
-func on_water_bowl_hover() -> void:
-	if gameGlobals.can_drag_item:
-		is_water_bowl_hovered = true
-
-func _on_item_despawn_timer_timeout():
-	despawn_item = true

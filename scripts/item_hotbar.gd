@@ -4,9 +4,10 @@ signal food_bowl_hovered
 signal toy_hovered
 signal water_bowl_hovered
 
-@onready var food_bowl = $MarginContainer/HotbarContainer/FoodBowl
-@onready var toy = $MarginContainer/HotbarContainer/Toy
-@onready var water_bowl = $MarginContainer/HotbarContainer/WaterBowl
+
+@onready var food_bowl = %FoodBowl
+@onready var toy = %Toy
+@onready var water_bowl = %WaterBowl
 
 var food_bowl_draggable: bool = false
 var toy_draggable: bool = false
@@ -14,7 +15,7 @@ var water_bowl_draggable: bool = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	print(food_bowl.get_global_position())
+	pass
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta):

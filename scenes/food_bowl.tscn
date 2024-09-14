@@ -1,52 +1,20 @@
-[gd_scene load_steps=8 format=3 uid="uid://blsnk45mypkkh"]
+[gd_scene load_steps=4 format=3 uid="uid://blsnk45mypkkh"]
 
 [ext_resource type="Script" path="res://scripts/food_bowl.gd" id="1_3a7ic"]
-[ext_resource type="Texture2D" uid="uid://rir81ybqu0t2" path="res://assets/items/items.png" id="1_wmlwq"]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_x62ib"]
-atlas = ExtResource("1_wmlwq")
-region = Rect2(432, 24, 16, 8)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_umhy3"]
-atlas = ExtResource("1_wmlwq")
-region = Rect2(432, 24, 16, 8)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_4sb7e"]
-atlas = ExtResource("1_wmlwq")
-region = Rect2(432, 8, 16, 8)
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_o78pc"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_x62ib")
-}],
-"loop": true,
-"name": &"default",
-"speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_umhy3")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_4sb7e")
-}],
-"loop": true,
-"name": &"empty",
-"speed": 5.0
-}]
+[ext_resource type="Texture2D" uid="uid://b2o2u27epnms4" path="res://assets/items/foodbowl.png" id="2_t5hwe"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2kom1"]
 size = Vector2(11.1, 8.95)
 
 [node name="FoodBowl" type="Node2D"]
+z_index = 10
+position = Vector2(640, 657)
 scale = Vector2(10, 10)
 script = ExtResource("1_3a7ic")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-z_index = 1
-sprite_frames = SubResource("SpriteFrames_o78pc")
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.08, 0.08)
+texture = ExtResource("2_t5hwe")
 
 [node name="FoodBowlArea" type="Area2D" parent="."]
 collision_layer = 8
@@ -55,5 +23,10 @@ collision_mask = 15
 [node name="CollisionShape2D" type="CollisionShape2D" parent="FoodBowlArea"]
 shape = SubResource("RectangleShape2D_2kom1")
 
+[node name="FoodBowlTimer" type="Timer" parent="."]
+unique_name_in_owner = true
+wait_time = 10.0
+
 [connection signal="mouse_entered" from="FoodBowlArea" to="." method="_on_food_bowl_area_mouse_entered"]
 [connection signal="mouse_exited" from="FoodBowlArea" to="." method="_on_food_bowl_area_mouse_exited"]
+[connection signal="timeout" from="FoodBowlTimer" to="." method="_on_food_bowl_timer_timeout"]
