@@ -8,7 +8,13 @@ const WATER_BOWL_SCENE: PackedScene = preload("res://scenes/water_bowl.tscn")
 const GAME_AREA_WIDTH = 1280
 const ITEM_Y_POSITION = 657
 
-const DOG_POS: Vector2 = Vector2(640, 275)
+const DOG_POS_LEVEL_1: Vector2 = Vector2(640, 275)
+const DOG1_POS_LEVEL_2: Vector2 = Vector2(240, 275)
+const DOG2_POS_LEVEL_2: Vector2 = Vector2(1000, 275)
+const DOG1_POS_LEVEL_3: Vector2 = Vector2(240, 400)
+const DOG2_POS_LEVEL_3: Vector2 = Vector2(1000, 400)
+const DOG3_POS_LEVEL_3: Vector2 = Vector2(640, 100)
+
 const FOOD_BOWL_POS: Vector2 = Vector2(640, ITEM_Y_POSITION) 
 const TOY_POS: Vector2 = Vector2(821, ITEM_Y_POSITION)
 const WATER_BOWL_POS: Vector2 = Vector2(460, ITEM_Y_POSITION)
@@ -44,10 +50,32 @@ func _ready() -> void:
 	
 	create_borders()
 	spawn_items()
-	spawn_animals()
+	instantiate_dog(DOG_POS_LEVEL_1)
 
 func _physics_process(_delta) -> void:
 	pass
+
+# Reset item positions and delete dog instances
+func reset_level():
+	food_bowl_scene_instance.reset_position()
+	toy_scene_instance.reset_position()
+	water_bowl_scene_instance.reset_position()
+	
+	for child in get_children():
+		if child is CharacterBody2D:
+			child.queue_free()
+
+# Initialise dog positions for a new level
+func start_new_level(level_count: int):
+	if level_count == 2:
+		# Spawn 2 dogs
+		instantiate_dog(DOG1_POS_LEVEL_2)
+		instantiate_dog(DOG2_POS_LEVEL_2)
+	elif level_count == 3:
+		# Spawn 3 dogs
+		instantiate_dog(DOG1_POS_LEVEL_3)
+		instantiate_dog(DOG2_POS_LEVEL_3)
+		instantiate_dog(DOG3_POS_LEVEL_3)
 
 func spawn_items() -> void:
 	food_bowl_scene_instance = FOOD_BOWL_SCENE.instantiate()
@@ -58,20 +86,11 @@ func spawn_items() -> void:
 	add_child(toy_scene_instance)
 	add_child(water_bowl_scene_instance)
 
-func spawn_animals() -> void:
-	# Animal positions need to be randomized in a given area
+func instantiate_dog(position: Vector2):
 	var dog_instance = DOG_SCENE.instantiate()
-	dog_instance.position = DOG_POS
-	
+	dog_instance.position = position
 	dog_instance.patience_lost.connect(game_over)
-	
 	add_child(dog_instance)
-	
-	#for i in range (2):
-		#var dog_instance = DOG_SCENE.instantiate()
-		#dog_instance.position = Vector2(randf() * 1024, randf() * 768)
-		#dog_instance.patience_lost.connect(update_patience_count)
-		#add_child(dog_instance)
 
 func game_over() -> void:
 	# Add logic to stop dog moving & stop music + play a game over sound effect / music
@@ -86,9 +105,10 @@ func game_win() -> void:
 # Triggers when our timer emits level_finished signal
 func level_finished() -> void:
 	gameGlobals.current_level = gameGlobals.current_level + 1
-	
+
+	reset_level()
+	start_new_level(gameGlobals.current_level)
 	print("Current level: ", gameGlobals.current_level)
-	
 	if gameGlobals.current_level >= (gameGlobals.MAX_LEVEL + 1):
 		game_win()
 
