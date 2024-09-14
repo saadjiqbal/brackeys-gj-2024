@@ -42,6 +42,7 @@ var game_area: Vector2
 var drink_sfx = preload("res://assets/sfx/dog_drink.mp3")
 var eat_sfx = preload("res://assets/sfx/dog_eat.mp3")
 var play_sfx = preload("res://assets/sfx/bark3.mp3")
+var status_popup_sfx = preload("res://assets/sfx/status_notification.mp3")
 
 var item_status_dict = {
 	"WaterBowlArea": gameGlobals.THIRST_STATUS,
@@ -78,6 +79,8 @@ func _physics_process(delta):
 		if current_status == "":
 			current_status = get_random_status()
 			status_icon.show_icon(current_status)
+			sfx_player.stream = status_popup_sfx
+			sfx_player.play()
 			print(current_status)
 
 	if not is_moving and not is_attempting_cure_status:
