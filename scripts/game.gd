@@ -63,7 +63,7 @@ func spawn_animals() -> void:
 	var dog_instance = DOG_SCENE.instantiate()
 	dog_instance.position = DOG_POS
 	
-	dog_instance.patience_lost.connect(update_patience_count)
+	dog_instance.patience_lost.connect(game_over)
 	
 	add_child(dog_instance)
 	
@@ -73,26 +73,10 @@ func spawn_animals() -> void:
 		#dog_instance.patience_lost.connect(update_patience_count)
 		#add_child(dog_instance)
 
-# Triggers when our animal instance emits patience_lost signal
-func update_patience_count() -> void:
-	# This does not work with multiple animals. Play the game with multiple
-	# animals enabled and then look at the debug window, it is counting the
-	# patience down multiple times for multiple animals if they are the same
-	# animal.
-	#
-	# How do we differentiate between the animal?
-	current_patience_count = current_patience_count - 1
-	
-	print("Patience count: ", current_patience_count)
-	
-	if current_patience_count == 0:
-		game_finished()
-
-func game_finished() -> void:
-	# For debugging purposes only. We would ideally handle this bool vars
-	# and if game is truly over then we would switch to our UI to show game
-	# over instead of just quitting the game.
+func game_over() -> void:
+	# Add logic to stop dog moving & stop music + play a game over sound effect / music
 	gameGlobals.game_over = true
+	
 	print("Game Over")
 
 func game_win() -> void:
