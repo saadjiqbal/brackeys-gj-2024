@@ -16,9 +16,9 @@ func _ready() -> void:
 func _process(_delta) -> void:
 	update_timer_label()
 	
-	if is_level_finished and not gameGlobals.is_game_finished:
+	if is_level_finished and not gameGlobals.game_over:
 		set_level_timer()
-	elif gameGlobals.is_game_finished:
+	elif gameGlobals.game_over:
 		stop_level_timer()
 
 func set_level_timer() -> void:

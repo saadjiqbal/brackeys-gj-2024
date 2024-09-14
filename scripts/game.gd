@@ -35,6 +35,8 @@ var water_bowl_scene_instance
 
 func _ready() -> void:
 	gameGlobals.can_drag_item = true
+	gameGlobals.game_over = false
+	gameGlobals.game_win = false
 	
 	level_timer.level_finished.connect(level_finished)
 	
@@ -90,8 +92,12 @@ func game_finished() -> void:
 	# For debugging purposes only. We would ideally handle this bool vars
 	# and if game is truly over then we would switch to our UI to show game
 	# over instead of just quitting the game.
-	gameGlobals.is_game_finished = true
+	gameGlobals.game_over = true
 	print("Game Over")
+
+func game_win() -> void:
+	gameGlobals.game_win = true
+	print("Game Win")
 
 # Triggers when our timer emits level_finished signal
 func level_finished() -> void:
@@ -100,7 +106,7 @@ func level_finished() -> void:
 	print("Current level: ", gameGlobals.current_level)
 	
 	if gameGlobals.current_level >= (gameGlobals.MAX_LEVEL + 1):
-		game_finished()
+		game_win()
 
 func create_borders():
 	var border_thickness = 10  # Thickness of the border
