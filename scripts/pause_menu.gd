@@ -11,8 +11,6 @@ const AUDIO_MARGIN_TOP_ON_MUTE: int = 100
 @onready var pause_margin_container = $PauseMarginContainer
 @onready var audio_margin_container = $AudioMarginContainer
 
-@onready var animation_player = $AnimationPlayer
-
 var pause_scale_on_load: Vector2
 var audio_scale_on_load: Vector2
 
@@ -40,14 +38,12 @@ func _process(delta):
 
 func pause_game() -> void:
 	get_tree().paused = true
-	animation_player.play("blur")
 	pause_background.visible = true
 	pause_button.visible = false
 	audio_button.visible = false
 
 func resume_game() -> void:
 	get_tree().paused = false
-	animation_player.play_backwards("blur")
 	pause_background.visible = false
 	pause_button.visible = true
 	audio_button.visible = true
