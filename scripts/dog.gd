@@ -97,6 +97,11 @@ func _physics_process(delta):
 		if not is_attempting_cure_status:
 			show_affection(delta)
 
+	# Move animal on right click
+	if Input.is_action_just_pressed("right_click") and cursor_on_animal:
+		target_position = get_global_mouse_position()
+		is_moving = true
+
 	# Decrease patience over time if status is set
 	if current_status != "":
 		patience -= delta * patience_reduction_rate # Decrease patience by a rate
