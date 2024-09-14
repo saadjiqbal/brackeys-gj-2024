@@ -8,6 +8,7 @@ var sprite_offset : Vector2
 var scale_on_load : Vector2
 
 @onready var food_bowl_timer = %FoodBowlTimer
+@onready var sprite_2d = $Sprite2D
 
 func _ready() -> void:
 	scale_on_load = self.scale
@@ -30,12 +31,14 @@ func reset_position() -> void:
 func _on_food_bowl_area_mouse_entered():
 	if gameGlobals.can_drag_item:
 		draggable = true
+		sprite_2d.texture = load("res://assets/items/foodbowl_highlighted.png")
 		self.scale = SCALE_ON_HOVER
 
 
 func _on_food_bowl_area_mouse_exited():
 	if gameGlobals.can_drag_item:
 		draggable = false
+		sprite_2d.texture = load("res://assets/items/foodbowl.png")
 		self.scale = scale_on_load
 
 func _on_food_bowl_timer_timeout():
