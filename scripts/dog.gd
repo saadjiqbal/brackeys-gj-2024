@@ -115,7 +115,7 @@ func accumulate_and_set_status(delta: float):
 	status_time_accumulator += delta
 	if status_time_accumulator >= status_interval:
 		if current_status == "":
-			current_status = "affection" #get_random_status()
+			current_status = get_random_status()
 			status_icon.show_icon(current_status)
 			# Play special SFX for affection and reset timer
 			if current_status == gameGlobals.AFFECTION_STATUS:
