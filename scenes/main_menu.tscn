@@ -102,7 +102,7 @@ theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_mv60b")
 theme_override_styles/normal = SubResource("StyleBoxEmpty_1tcsu")
 text = "PLAY"
 
-[node name="Options" type="Button" parent="Background/VBoxContainer"]
+[node name="Retry" type="Button" parent="Background/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_fonts/font = ExtResource("2_omdxy")
@@ -118,7 +118,7 @@ theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_mi3dj")
 theme_override_styles/pressed = SubResource("StyleBoxEmpty_mc42j")
 theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_1up6f")
 theme_override_styles/normal = SubResource("StyleBoxEmpty_nqhe6")
-text = "OPTIONS"
+text = "RETRY"
 
 [node name="Exit" type="Button" parent="Background/VBoxContainer"]
 layout_mode = 2
@@ -156,5 +156,5 @@ vertical_alignment = 1
 uppercase = true
 
 [connection signal="pressed" from="Background/VBoxContainer/Play" to="." method="_on_play_pressed"]
-[connection signal="pressed" from="Background/VBoxContainer/Options" to="." method="_on_options_pressed"]
+[connection signal="pressed" from="Background/VBoxContainer/Retry" to="." method="_on_retry_pressed"]
 [connection signal="pressed" from="Background/VBoxContainer/Exit" to="." method="_on_exit_pressed"]

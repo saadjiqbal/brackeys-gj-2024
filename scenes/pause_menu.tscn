@@ -6,7 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://c6f7ei1tl04wr" path="res://assets/ui/Icon_Small_Blank_Audio.png" id="4_krd7b"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_60wcc"]
-bg_color = Color(0.219501, 0.219501, 0.219501, 1)
+bg_color = Color(0.164706, 0.164706, 0.168627, 1)
 corner_radius_top_left = 30
 corner_radius_top_right = 30
 corner_radius_bottom_right = 30
@@ -143,9 +143,10 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -96.0
-offset_top = -203.0
-offset_right = 96.0
+offset_left = -101.0
+offset_top = -188.0
+offset_right = 91.0
+offset_bottom = 15.0
 grow_horizontal = 2
 grow_vertical = 0
 theme_override_constants/separation = 40
@@ -154,7 +155,7 @@ theme_override_constants/separation = 40
 layout_mode = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("2_ntdps")
-theme_override_font_sizes/font_size = 30
+theme_override_font_sizes/font_size = 40
 theme_override_styles/focus = SubResource("StyleBoxEmpty_pj8l8")
 theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_463mf")
 theme_override_styles/disabled = SubResource("StyleBoxEmpty_50sk3")
@@ -168,29 +169,11 @@ theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_877uh")
 theme_override_styles/normal = SubResource("StyleBoxEmpty_5juey")
 text = "RESUME"
 
-[node name="OptionsButton" type="Button" parent="PauseBackground/VBoxContainer"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_fonts/font = ExtResource("2_ntdps")
-theme_override_font_sizes/font_size = 30
-theme_override_styles/focus = SubResource("StyleBoxEmpty_ijbj5")
-theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_gugp1")
-theme_override_styles/disabled = SubResource("StyleBoxEmpty_r8hv8")
-theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_dkvr3")
-theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_iuuya")
-theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_8tihc")
-theme_override_styles/hover = SubResource("StyleBoxEmpty_nfuw2")
-theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_bubgy")
-theme_override_styles/pressed = SubResource("StyleBoxEmpty_wfp1p")
-theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_4e8tm")
-theme_override_styles/normal = SubResource("StyleBoxEmpty_ol7y3")
-text = "OPTIONS"
-
 [node name="ExitButton" type="Button" parent="PauseBackground/VBoxContainer"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("2_ntdps")
-theme_override_font_sizes/font_size = 30
+theme_override_font_sizes/font_size = 40
 theme_override_styles/focus = SubResource("StyleBoxEmpty_ijbj5")
 theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_gugp1")
 theme_override_styles/disabled = SubResource("StyleBoxEmpty_r8hv8")
@@ -249,7 +232,6 @@ theme_override_styles/normal = SubResource("StyleBoxEmpty_usoy7")
 icon = ExtResource("4_krd7b")
 
 [connection signal="pressed" from="PauseBackground/VBoxContainer/ResumeButton" to="." method="_on_resume_button_pressed"]
-[connection signal="pressed" from="PauseBackground/VBoxContainer/OptionsButton" to="." method="_on_options_button_pressed"]
 [connection signal="pressed" from="PauseBackground/VBoxContainer/ExitButton" to="." method="_on_exit_button_pressed"]
 [connection signal="pressed" from="PauseMarginContainer/PauseButton" to="." method="_on_pause_button_pressed"]
 [connection signal="pressed" from="AudioMarginContainer/AudioButton" to="." method="_on_audio_button_pressed"]
