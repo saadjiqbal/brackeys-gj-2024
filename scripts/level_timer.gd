@@ -1,4 +1,4 @@
-extends Control
+extends CanvasLayer
 
 signal level_finished
 

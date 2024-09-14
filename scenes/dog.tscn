@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://scripts/dog.gd" id="1_prb03"]
 [ext_resource type="Texture2D" uid="uid://dsbmpswh23ext" path="res://assets/animals/dog/Idle.png" id="2_yu3a8"]
 [ext_resource type="Texture2D" uid="uid://d4ln6el3afdi8" path="res://assets/animals/dog/Walk.png" id="3_73mub"]
-[ext_resource type="Script" path="res://scenes/progress_bar.gd" id="4_3s5jj"]
+[ext_resource type="Script" path="res://scripts/progress_bar.gd" id="4_3s5jj"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_dqccp"]
 atlas = ExtResource("2_yu3a8")

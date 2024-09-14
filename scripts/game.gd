@@ -6,23 +6,56 @@ const TOY_SCENE: PackedScene = preload("res://scenes/toy.tscn")
 const WATER_BOWL_SCENE: PackedScene = preload("res://scenes/water_bowl.tscn")
 
 const DOG_POS: Vector2 = Vector2(640, 275)
-const FOOD_BOWL_POS: Vector2 = Vector2(150, 100) 
-const TOY_POS: Vector2 = Vector2(450, 100)
-const WATER_BOWL_POS: Vector2 = Vector2(300, 100)
+const FOOD_BOWL_POS: Vector2 = Vector2(640, 657) 
+const TOY_POS: Vector2 = Vector2(821, 657)
+const WATER_BOWL_POS: Vector2 = Vector2(460, 657)
 
+const SPRITE_SCALE: Vector2 = Vector2(0.75, 0.75)
+
+const TEST_ICON = preload("res://icon.svg")
 const MAX_PATIENCE_COUNT: int = 3
 
 @onready var level_timer = $LevelTimer
-@onready var background_music = $BackgroundMusic
+
 @onready var pause_menu = $PauseMenu
+@onready var item_hotbar = $ItemHotbar
+@onready var background_music = $BackgroundMusic
 
 var current_patience_count: int
 var game_size: Vector2 = Vector2(1280, 720)
-var is_game_over: bool
-var is_game_paused: bool
 
+var food_bowl_scene_instance
+var toy_scene_instance
+var water_bowl_scene_instance
 
-var hotbar_inventory: Array = []
+var is_food_bowl_hovered: bool = false
+var is_toy_hovered: bool = false
+var is_water_bowl_hovered: bool = false
+
+var is_food_bowl_sprite_spawned: bool = false
+var is_toy_sprite_spawned: bool = false
+var is_water_bowl_sprite_spawned: bool = false
+
+var is_food_bowl_in_scene: bool = false
+var is_toy_in_scene: bool = false
+var is_water_bowl_in_scene: bool = false
+
+var is_food_bowl_dragged: bool = false
+var is_toy_dragged: bool = false
+var is_water_bowl_dragged: bool = false
+
+var food_bowl_sprite: Sprite2D
+var food_bowl_sprite_offset: Vector2
+
+var toy_sprite: Sprite2D
+var toy_sprite_offset: Vector2
+
+var water_bowl_sprite: Sprite2D
+var water_bowl_offset: Vector2
+
+var despawn_food_bowl: bool = false
+var despawn_toy: bool = false
+var despawn_water_bowl: bool = false
 
 func _ready() -> void:
 	gameGlobals.can_drag_item = true
@@ -33,9 +66,6 @@ func _ready() -> void:
 	
 	current_patience_count = MAX_PATIENCE_COUNT
 	
-	is_game_over = false
-	is_game_paused = false
-	
 	create_borders()
 	spawn_items()
 	spawn_animals()
@@ -44,17 +74,13 @@ func _physics_process(_delta) -> void:
 	pass
 
 func spawn_items() -> void:
-	var food_bowl_instance = FOOD_BOWL_SCENE.instantiate()
-	var toy_instance = TOY_SCENE.instantiate()
-	var water_bowl_instance = WATER_BOWL_SCENE.instantiate()
+	food_bowl_scene_instance = FOOD_BOWL_SCENE.instantiate()
+	toy_scene_instance = TOY_SCENE.instantiate()
+	water_bowl_scene_instance = WATER_BOWL_SCENE.instantiate()
 	
-	food_bowl_instance.position = FOOD_BOWL_POS
-	toy_instance.position = TOY_POS
-	water_bowl_instance.position = WATER_BOWL_POS
-	
-	add_child(food_bowl_instance)
-	add_child(toy_instance)
-	add_child(water_bowl_instance)
+	add_child(food_bowl_scene_instance)
+	add_child(toy_scene_instance)
+	add_child(water_bowl_scene_instance)
 
 func spawn_animals() -> void:
 	# Animal positions need to be randomized in a given area

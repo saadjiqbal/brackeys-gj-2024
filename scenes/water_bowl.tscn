@@ -1,52 +1,19 @@
-[gd_scene load_steps=8 format=3 uid="uid://b5df3mp0lbdpt"]
+[gd_scene load_steps=4 format=3 uid="uid://b5df3mp0lbdpt"]
 
-[ext_resource type="Texture2D" uid="uid://rir81ybqu0t2" path="res://assets/items/items.png" id="1_5k8od"]
 [ext_resource type="Script" path="res://scripts/water_bowl.gd" id="1_s2wny"]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_fkyml"]
-atlas = ExtResource("1_5k8od")
-region = Rect2(432, 40, 16, 8)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_degwl"]
-atlas = ExtResource("1_5k8od")
-region = Rect2(432, 40, 16, 8)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_yptv4"]
-atlas = ExtResource("1_5k8od")
-region = Rect2(432, 8, 16, 8)
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_2bp0e"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_fkyml")
-}],
-"loop": true,
-"name": &"default",
-"speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_degwl")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_yptv4")
-}],
-"loop": true,
-"name": &"empty",
-"speed": 5.0
-}]
+[ext_resource type="Texture2D" uid="uid://ccho0lmp8e7p8" path="res://assets/items/waterbowl.png" id="2_oiokm"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xyryh"]
 size = Vector2(11, 9)
 
 [node name="WaterBowl" type="Node2D"]
+position = Vector2(460, 657)
 scale = Vector2(10, 10)
 script = ExtResource("1_s2wny")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-z_index = 1
-sprite_frames = SubResource("SpriteFrames_2bp0e")
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.08, 0.08)
+texture = ExtResource("2_oiokm")
 
 [node name="WaterBowlArea" type="Area2D" parent="."]
 collision_layer = 4
@@ -55,5 +22,10 @@ collision_mask = 15
 [node name="CollisionShape2D" type="CollisionShape2D" parent="WaterBowlArea"]
 shape = SubResource("RectangleShape2D_xyryh")
 
+[node name="WaterBowlTimer" type="Timer" parent="."]
+unique_name_in_owner = true
+wait_time = 10.0
+
 [connection signal="mouse_entered" from="WaterBowlArea" to="." method="_on_water_bowl_area_mouse_entered"]
 [connection signal="mouse_exited" from="WaterBowlArea" to="." method="_on_water_bowl_area_mouse_exited"]
+[connection signal="timeout" from="WaterBowlTimer" to="." method="_on_water_bowl_timer_timeout"]
