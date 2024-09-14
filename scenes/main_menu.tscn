@@ -1,8 +1,7 @@
-[gd_scene load_steps=27 format=3 uid="uid://nbq6kcqr8etw"]
+[gd_scene load_steps=26 format=3 uid="uid://nbq6kcqr8etw"]
 
 [ext_resource type="Script" path="res://scripts/main_menu.gd" id="1_1k5er"]
 [ext_resource type="FontFile" uid="uid://vxqu6gkpdktb" path="res://assets/fonts/Coffee Soda.ttf" id="2_omdxy"]
-[ext_resource type="AudioStream" uid="uid://cs783tijo578f" path="res://assets/music/4_working_time_master.ogg" id="2_v7jgi"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_11w4l"]
 
@@ -144,9 +143,10 @@ layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -302.5
-offset_right = 302.5
-offset_bottom = 137.0
+offset_left = -317.0
+offset_top = 50.0
+offset_right = 317.0
+offset_bottom = 187.0
 grow_horizontal = 2
 theme_override_font_sizes/font_size = 100
 text = "crazy dogs"
@@ -154,9 +154,6 @@ label_settings = SubResource("LabelSettings_vkexs")
 horizontal_alignment = 1
 vertical_alignment = 1
 uppercase = true
-
-[node name="MainMenuMusic" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource("2_v7jgi")
 
 [connection signal="pressed" from="Background/VBoxContainer/Play" to="." method="_on_play_pressed"]
 [connection signal="pressed" from="Background/VBoxContainer/Options" to="." method="_on_options_pressed"]

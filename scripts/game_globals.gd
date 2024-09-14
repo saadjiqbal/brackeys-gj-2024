@@ -14,3 +14,5 @@ var current_level: int = 1
 var is_game_finished: bool = false
 
 var hotbar_size: int = 3
+
+var playback_position: float
