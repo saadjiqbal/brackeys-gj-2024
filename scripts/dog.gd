@@ -66,7 +66,7 @@ func _physics_process(delta):
 			status_icon.show_icon(current_status)
 			print(current_status)
 
-	if not is_moving:
+	if not is_moving and not is_curing_status:
 		move_time_accumulator += delta
 		if move_time_accumulator >= move_interval:
 			set_random_position()
@@ -93,6 +93,11 @@ func _physics_process(delta):
 
 	# Update animation based on direction
 	var direction = (target_position - position).normalized()
+
+	# Stop moving when curing status
+	if is_curing_status:
+		is_moving = false
+
 	if is_moving:
 		move_to_target(direction)
 	update_animation(is_moving, direction)
