@@ -27,6 +27,7 @@ var patience_loss_count: int = 0
 var patience_increment_rate = 20
 
 var is_attempting_cure_status: bool = false
+var has_played_sfx_sound: bool = false
 var is_moving: bool = false
 var target_position = Vector2()  # Target position
 var cursor_on_animal: bool = false       
@@ -205,8 +206,10 @@ func check_is_status_cured(delta: float):
 		if gameGlobals.can_drag_item:
 			# Increase patience if correct item placed
 			if target_cure_status == current_status:
-				sfx_player.stream = status_curing_sfx_dict[current_status]
-				sfx_player.play()
+				if not has_played_sfx_sound:
+					sfx_player.stream = status_curing_sfx_dict[current_status]
+					sfx_player.play()
+					has_played_sfx_sound = true
 				patience += patience_increment_rate * delta
 				if patience >= MAX_PATIENCE:
 					patience = MAX_PATIENCE
@@ -237,6 +240,7 @@ func _on_animal_action_area_area_exited(area):
 			reset_status()
 		target_cure_status = ""
 		is_attempting_cure_status = false
+		has_played_sfx_sound = false
 
 # Check if mouse is inside our Area2D node
 func _on_animal_action_area_mouse_entered():
