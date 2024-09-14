@@ -8,7 +8,6 @@ const AFFECTION_STATUS = "affection"
 const MAX_LEVEL: int = 3
 
 var can_drag_item: bool = true
-var is_affection_cursor_selected: bool = false  # Set to false to use cursor to move dog
 
 var current_level: int = 1
 
