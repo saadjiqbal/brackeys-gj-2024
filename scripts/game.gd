@@ -28,35 +28,6 @@ var food_bowl_scene_instance
 var toy_scene_instance
 var water_bowl_scene_instance
 
-var is_food_bowl_hovered: bool = false
-var is_toy_hovered: bool = false
-var is_water_bowl_hovered: bool = false
-
-var is_food_bowl_sprite_spawned: bool = false
-var is_toy_sprite_spawned: bool = false
-var is_water_bowl_sprite_spawned: bool = false
-
-var is_food_bowl_in_scene: bool = false
-var is_toy_in_scene: bool = false
-var is_water_bowl_in_scene: bool = false
-
-var is_food_bowl_dragged: bool = false
-var is_toy_dragged: bool = false
-var is_water_bowl_dragged: bool = false
-
-var food_bowl_sprite: Sprite2D
-var food_bowl_sprite_offset: Vector2
-
-var toy_sprite: Sprite2D
-var toy_sprite_offset: Vector2
-
-var water_bowl_sprite: Sprite2D
-var water_bowl_offset: Vector2
-
-var despawn_food_bowl: bool = false
-var despawn_toy: bool = false
-var despawn_water_bowl: bool = false
-
 func _ready() -> void:
 	gameGlobals.can_drag_item = true
 	
