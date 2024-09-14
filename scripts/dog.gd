@@ -11,6 +11,7 @@ const MIN_MOVEMENT_DISTANCE = 20.0     # Minimum distance to move when generatin
 const PATIENCE_LOSS_SPEED_FACTOR = 2   # Amount to increase speed by when patience lost 
 const STATUS_ICON_SCENE: PackedScene = preload("res://scenes/status_icon.tscn")
 const WRONG_ITEM_PATIENCE_REDUCE_FACTOR = 2 # Factor to multiply patience reduction by when wrong item is placed
+const AFFECTION_INCREMENT = 5
 
 # Properties
 @export var patience_reduction_rate = 10 # Amount of patience lost per second
@@ -91,16 +92,10 @@ func _physics_process(delta):
 
 	check_is_status_cured(delta)
 
-	# Left click will show affection or move the dog
-	# TODO: Fix mouse click not working
-	#if Input.is_action_just_pressed("action") and cursor_on_animal:
+	# Left click will show affection
 	if Input.is_action_just_pressed("action") and cursor_on_animal:
 		if not is_attempting_cure_status:
-			if gameGlobals.is_affection_cursor_selected:
-				show_affection(delta)
-			else:
-				target_position = get_global_mouse_position()
-				is_moving = true
+			show_affection(delta)
 
 	# Decrease patience over time if status is set
 	if current_status != "":
@@ -224,7 +219,7 @@ func check_is_status_cured(delta: float):
 
 func show_affection(delta: float) -> void:
 	if current_status == gameGlobals.AFFECTION_STATUS:
-		patience += patience_increment_rate * delta
+		patience += AFFECTION_INCREMENT
 		print("Showing affection")
 
 # Check what has entered our Area2D node
