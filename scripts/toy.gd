@@ -4,6 +4,7 @@ const SCALE_ON_HOVER : Vector2 = Vector2(8.5, 8.5)
 const DEFAULT_POSITION: Vector2 = Vector2(821, 657)
 
 @onready var toy_timer = %ToyTimer
+@onready var sprite_2d = $Sprite2D
 
 var draggable : bool = false
 var sprite_offset : Vector2
@@ -30,11 +31,13 @@ func reset_position() -> void:
 func _on_toy_area_mouse_entered():
 	if gameGlobals.can_drag_item:
 		draggable = true
+		sprite_2d.texture = load("res://assets/items/toy2_highlighted.png")
 		self.scale = SCALE_ON_HOVER
 
 func _on_toy_area_mouse_exited():
 	if gameGlobals.can_drag_item:
 		draggable = false
+		sprite_2d.texture = load("res://assets/items/toy2.png")
 		self.scale = scale_on_load
 
 func _on_toy_timer_timeout():

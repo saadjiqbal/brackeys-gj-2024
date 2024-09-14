@@ -4,6 +4,7 @@ const SCALE_ON_HOVER : Vector2 = Vector2(10.5, 10.5)
 const DEFAULT_POSITION: Vector2 = Vector2(460, 657)
 
 @onready var water_bowl_timer = %WaterBowlTimer
+@onready var sprite_2d = $Sprite2D
 
 var draggable : bool = false
 var sprite_offset : Vector2
@@ -30,12 +31,14 @@ func reset_position() -> void:
 func _on_water_bowl_area_mouse_entered():
 	if gameGlobals.can_drag_item:
 		draggable = true
+		sprite_2d.texture = load("res://assets/items/waterbowl_highlighted.png")
 		self.scale = SCALE_ON_HOVER
 
 
 func _on_water_bowl_area_mouse_exited():
 	if gameGlobals.can_drag_item:
 		draggable = false
+		sprite_2d.texture = load("res://assets/items/waterbowl.png")
 		self.scale = scale_on_load
 
 
