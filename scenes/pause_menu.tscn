@@ -1,8 +1,9 @@
-[gd_scene load_steps=39 format=3 uid="uid://by48bsueosbie"]
+[gd_scene load_steps=51 format=3 uid="uid://by48bsueosbie"]
 
 [ext_resource type="Script" path="res://scripts/pause_menu.gd" id="1_y0t7h"]
 [ext_resource type="FontFile" uid="uid://vxqu6gkpdktb" path="res://assets/fonts/Coffee Soda.ttf" id="2_ntdps"]
 [ext_resource type="Texture2D" uid="uid://d2xk07mfuduom" path="res://assets/ui/pause_icon.png" id="2_xhgqg"]
+[ext_resource type="Texture2D" uid="uid://c6f7ei1tl04wr" path="res://assets/ui/Icon_Small_Blank_Audio.png" id="4_krd7b"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_60wcc"]
 bg_color = Color(0.442911, 0.442911, 0.442911, 0.423529)
@@ -80,6 +81,28 @@ font_size = 75
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_2mmu3"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_gsl8r"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_pj55v"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_buqm6"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_heb67"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_axsq4"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_5ohy3"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_vqxko"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_677rq"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_uwu72"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_r54p1"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_5fgev"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_usoy7"]
 
 [node name="PauseMenu" type="CanvasLayer"]
 process_mode = 3
@@ -181,14 +204,14 @@ theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_4e8tm")
 theme_override_styles/normal = SubResource("StyleBoxEmpty_ol7y3")
 text = "EXIT"
 
-[node name="MarginContainer" type="MarginContainer" parent="."]
+[node name="PauseMarginContainer" type="MarginContainer" parent="."]
 offset_right = 40.0
 offset_bottom = 40.0
 scale = Vector2(0.5, 0.5)
 theme_override_constants/margin_left = 50
 theme_override_constants/margin_top = 50
 
-[node name="PauseButton" type="Button" parent="MarginContainer"]
+[node name="PauseButton" type="Button" parent="PauseMarginContainer"]
 layout_mode = 2
 theme_override_styles/focus = SubResource("StyleBoxEmpty_ich3v")
 theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_5p5qb")
@@ -203,7 +226,30 @@ theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_2mmu3")
 theme_override_styles/normal = SubResource("StyleBoxEmpty_gsl8r")
 icon = ExtResource("2_xhgqg")
 
+[node name="AudioMarginContainer" type="MarginContainer" parent="."]
+offset_left = 100.0
+offset_right = 233.0
+offset_bottom = 194.0
+scale = Vector2(0.5, 0.5)
+theme_override_constants/margin_top = 40
+
+[node name="AudioButton" type="Button" parent="AudioMarginContainer"]
+layout_mode = 2
+theme_override_styles/focus = SubResource("StyleBoxEmpty_pj55v")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_buqm6")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_heb67")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_axsq4")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_5ohy3")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_vqxko")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_677rq")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_uwu72")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_r54p1")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_5fgev")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_usoy7")
+icon = ExtResource("4_krd7b")
+
 [connection signal="pressed" from="PauseBackground/VBoxContainer/ResumeButton" to="." method="_on_resume_button_pressed"]
 [connection signal="pressed" from="PauseBackground/VBoxContainer/OptionsButton" to="." method="_on_options_button_pressed"]
 [connection signal="pressed" from="PauseBackground/VBoxContainer/ExitButton" to="." method="_on_exit_button_pressed"]
-[connection signal="pressed" from="MarginContainer/PauseButton" to="." method="_on_pause_button_pressed"]
+[connection signal="pressed" from="PauseMarginContainer/PauseButton" to="." method="_on_pause_button_pressed"]
+[connection signal="pressed" from="AudioMarginContainer/AudioButton" to="." method="_on_audio_button_pressed"]
