@@ -74,7 +74,7 @@ func _physics_process(delta):
 	if not is_moving:
 		move_time_accumulator += delta
 		if move_time_accumulator >= move_interval:
-			#set_random_position()
+			set_random_position()
 			is_moving = true
 
 	check_is_status_cured(delta)
