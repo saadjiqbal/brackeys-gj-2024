@@ -3,16 +3,19 @@ extends CharacterBody2D
 signal patience_lost
 
 # Constants
-const MAX_PATIENCE = 100.0
-const MIN_PATIENCE = 0.0
-const MIN_MOVEMENT_DISTANCE = 20.0
+const MAX_PATIENCE_LOSS_COUNT = 3      # Max number of times dog's patience can reach 0
+const MAX_PATIENCE = 100.0             # Max value of patience bar
+const PATIENCE_INCREMENT = 20.0        # Amount patience bar increments when status is cured (one time increment per cure)
+const MIN_PATIENCE = 0.0               # Min value of patience bar
+const MIN_MOVEMENT_DISTANCE = 20.0     # Minimum distance to move when generating a new target position
+const PATIENCE_LOSS_SPEED_FACTOR = 2   # Amount to increase speed by when patience lost
 const STATUS_ICON_SCENE: PackedScene = preload("res://scenes/status_icon.tscn")
 
 # Properties
 @export var patience_reduction_rate = 10 # Amount of patience lost per second
 @export var speed: float = 2             # Movement speed
-@export var min_interval: float = 5.0    # Min interval for random status timer
-@export var max_interval: float = 15.0   # Max interval for random status timer
+@export var min_random_interval: float = 5.0    # Min interval for random status/movement timer
+@export var max_random_interval: float = 15.0   # Max interval for random status/movement timer
 
 var patience: float = 100.0              # A patience meter starting at 100
 var status_time_accumulator: float = 0.0 # Accumulates time for triggering status
@@ -36,7 +39,14 @@ var cursor_on_animal: bool = false
 var statuses: Array = [gameGlobals.HUNGER_STATUS, gameGlobals.THIRST_STATUS, gameGlobals.PLAY_STATUS, gameGlobals.AFFECTION_STATUS]  # Possible statuses
 var status_icon : Node2D
 var current_status: String = ""
+var target_cure_status: String = ""
 var game_area: Vector2
+
+var item_status_dict = {
+	"WaterBowlArea": gameGlobals.THIRST_STATUS,
+	"FoodBowlArea": gameGlobals.HUNGER_STATUS,
+	"ToyArea": gameGlobals.PLAY_STATUS
+}
 
 # References to the UI elements
 @onready var progress_bar = $ProgressBar
@@ -47,7 +57,7 @@ func _ready():
 	# Initialize the patience meter and status randomly
 	progress_bar.value = MAX_PATIENCE
 	var game_scene = get_parent()
-	#game_area = game_scene.game_size
+	game_area = game_scene.game_size
 	init_status_icon()
 	reset_status()
 	reset_movement_timer()
@@ -64,14 +74,10 @@ func _physics_process(delta):
 	if not is_moving:
 		move_time_accumulator += delta
 		if move_time_accumulator >= move_interval:
-			#set_random_position()
+			set_random_position()
 			is_moving = true
 
-	if drink_water:
-		thirsty(current_status, delta)
-	
-	if eat_food:
-		hungry(current_status, delta)
+	check_is_status_cured(delta)
 
 	# Left click will show affection or move the dog
 	# TODO: Fix mouse click not working
@@ -86,7 +92,8 @@ func _physics_process(delta):
 
 	# Decrease patience over time if status is set
 	if current_status != "":
-		patience -= delta * patience_reduction_rate  # Decrease patience by a rate
+		patience -= delta * patience_reduction_rate # Decrease patience by a rate
+		patience -= delta * patience_loss_count * patience_reduction_rate # Decrease further if already lost patience
 	check_patience()
 
 	# Update animation based on direction
@@ -103,7 +110,7 @@ func init_status_icon():
 	status_icon.hide_icon()
 
 func move_to_target(direction: Vector2):
-	velocity = direction * speed
+	velocity = direction * (speed + (patience_loss_count * PATIENCE_LOSS_SPEED_FACTOR))
 	var collision = move_and_collide(velocity)
 
 	# Check if the dog is close enough to the target
@@ -116,6 +123,7 @@ func move_to_target(direction: Vector2):
 func set_random_position():
 	while true:
 		target_position = Vector2(randf_range(0, game_area.x), randf_range(0, game_area.y))
+		print("Random position set to " + str(target_position))
 		if position.distance_to(target_position) >= MIN_MOVEMENT_DISTANCE:
 			break
 
@@ -134,12 +142,12 @@ func update_animation(is_moving: bool, direction: Vector2):
 func reset_status():
 	current_status = ""
 	status_time_accumulator = 0
-	status_interval = randf_range(min_interval, max_interval)
+	status_interval = randf_range(min_random_interval, max_random_interval)
 	status_icon.hide_icon()
 
 func reset_movement_timer():
 	move_time_accumulator = 0
-	move_interval = randf_range(min_interval, max_interval)
+	move_interval = randf_range(min_random_interval, max_random_interval)
 
 # Function to handle random status selection
 func get_random_status() -> String:
@@ -153,30 +161,39 @@ func check_patience():
 		handle_patience_loss()
 
 func handle_patience_loss():
-	# Reset and print message for now
-	patience_loss_count += 1
-	if patience_loss_count == 1:
-		progress_bar.update_fill_colour(Color.ORANGE)
-	else:
-		progress_bar.update_fill_colour(Color.RED)
-	patience = MAX_PATIENCE
-	patience_lost.emit()
-	print("Patience ran out! The animal is unhappy.")
+	if patience_loss_count < MAX_PATIENCE_LOSS_COUNT:
+		print("Patience ran out! The animal is unhappy.")
+		# Change progress bar colour and reset patience
+		patience_loss_count += 1
+		if patience_loss_count == 1:
+			progress_bar.update_fill_colour(Color.ORANGE)
+		else:
+			progress_bar.update_fill_colour(Color.RED)
 
-# Implement logic for animal being thirsty
-func thirsty(status: String, delta: float):
-	if status == gameGlobals.THIRST_STATUS:
-		print("Drinking water")
-		reset_status()
-	elif status != "":
-		patience -= patience_reduction_rate * delta
+		if patience_loss_count == MAX_PATIENCE_LOSS_COUNT:
+			patience_lost.emit()
+			print("Patience ran out completely!")
+		else:
+			patience = MAX_PATIENCE
+			# Increase frequency of status and movement
+			min_random_interval -= 2
+			if min_random_interval < 1:
+				min_random_interval = 1
+			max_random_interval -= 2
+			if max_random_interval < 1:
+				max_random_interval = 1
+				print("Max random interval too low")
 
-# Implement logic for animal being hungry
-func hungry(status: String, delta: float):
-	if status == gameGlobals.HUNGER_STATUS:
-		print("Eating food")
+
+# Check if current status has been cured correctly
+func check_is_status_cured(delta: float):
+	if target_cure_status == current_status and current_status != "":
+		print("Status cured")
+		patience += PATIENCE_INCREMENT
+		if patience >= MAX_PATIENCE:
+			patience = MAX_PATIENCE
 		reset_status()
-	elif status != "":
+	elif current_status != "":
 		patience -= patience_reduction_rate * delta
 
 func show_affection() -> void:
@@ -184,22 +201,16 @@ func show_affection() -> void:
 
 # Check what has entered our Area2D node
 func _on_animal_action_area_area_entered(area):
-	if area.name == "WaterBowlArea":
-		drink_water = true
-	elif area.name == "FoodBowlArea":
-		eat_food = true
+	if area.name in item_status_dict:
+		target_cure_status = item_status_dict[area.name]
 	elif area.name == "AnimalActionArea":
-		# TODO: Stop moving and start throwing some hands
+		## TODO: Stop moving and start throwing some hands
 		print("Colliding with animal")
 
 # Check what has exited our Area2D node
 func _on_animal_action_area_area_exited(area):
-	if area.name == "WaterBowlArea":
-		print("Done drinking water")
-		drink_water = false
-	elif area.name == "FoodBowlArea":
-		print("Done eating food")
-		eat_food = false
+	if area.name in item_status_dict:
+		target_cure_status = ""
 
 # Check if mouse is inside our Area2D node
 func _on_animal_action_area_mouse_entered():
