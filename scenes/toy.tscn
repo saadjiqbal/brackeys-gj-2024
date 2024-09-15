@@ -24,7 +24,7 @@ shape = SubResource("RectangleShape2D_h4dw7")
 
 [node name="ToyTimer" type="Timer" parent="."]
 unique_name_in_owner = true
-wait_time = 10.0
+wait_time = 5.0
 
 [connection signal="mouse_entered" from="ToyArea" to="." method="_on_toy_area_mouse_entered"]
 [connection signal="mouse_exited" from="ToyArea" to="." method="_on_toy_area_mouse_exited"]
