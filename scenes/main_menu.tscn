@@ -82,7 +82,7 @@ offset_top = -497.0
 offset_right = 213.5
 grow_horizontal = 2
 grow_vertical = 0
-theme_override_constants/separation = 0
+theme_override_constants/separation = -100
 
 [node name="Play" type="Button" parent="Background/VBoxContainer"]
 layout_mode = 2
@@ -101,24 +101,6 @@ theme_override_styles/pressed = SubResource("StyleBoxEmpty_s4lab")
 theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_mv60b")
 theme_override_styles/normal = SubResource("StyleBoxEmpty_1tcsu")
 text = "PLAY"
-
-[node name="Retry" type="Button" parent="Background/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-theme_override_fonts/font = ExtResource("2_omdxy")
-theme_override_font_sizes/font_size = 75
-theme_override_styles/focus = SubResource("StyleBoxEmpty_lpb10")
-theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_fnycw")
-theme_override_styles/disabled = SubResource("StyleBoxEmpty_v1xt2")
-theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_wpoer")
-theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_4bcj8")
-theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_7s3ep")
-theme_override_styles/hover = SubResource("StyleBoxEmpty_wlp2w")
-theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_mi3dj")
-theme_override_styles/pressed = SubResource("StyleBoxEmpty_mc42j")
-theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_1up6f")
-theme_override_styles/normal = SubResource("StyleBoxEmpty_nqhe6")
-text = "RETRY"
 
 [node name="Exit" type="Button" parent="Background/VBoxContainer"]
 layout_mode = 2
@@ -156,5 +138,4 @@ vertical_alignment = 1
 uppercase = true
 
 [connection signal="pressed" from="Background/VBoxContainer/Play" to="." method="_on_play_pressed"]
-[connection signal="pressed" from="Background/VBoxContainer/Retry" to="." method="_on_retry_pressed"]
 [connection signal="pressed" from="Background/VBoxContainer/Exit" to="." method="_on_exit_pressed"]
