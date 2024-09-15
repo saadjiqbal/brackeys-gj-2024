@@ -224,13 +224,23 @@ func handle_patience_loss():
 				max_random_interval = 1
 				print("Max random interval too low")
 
+func get_draggable_for_status(status: String):
+	if status == gameGlobals.HUNGER_STATUS:
+		return !gameGlobals.is_food_bowl_draggable
+	elif status == gameGlobals.THIRST_STATUS:
+		return !gameGlobals.is_water_bowl_draggable
+	elif status == gameGlobals.PLAY_STATUS:
+		return !gameGlobals.is_toy_draggable
+	else:
+		return false
 
 # Check if current status has been cured correctly
 func check_is_status_cured(delta: float):
 	if target_cure_status != "" and current_status != "":
-		# If item is dropped, then attempting to cure status
-		if gameGlobals.can_drag_item:
-			# Increase patience if correct item placed
+		# Check status if corresponding item is not being dragged
+		var is_item_placed = get_draggable_for_status(current_status)
+		if is_item_placed:
+			# Increase patience if correct chosen and placed (i.e. not being dragged)
 			if target_cure_status == current_status:
 				if not has_played_sfx_sound:
 					sfx_player.stream = status_curing_sfx_dict[current_status]
