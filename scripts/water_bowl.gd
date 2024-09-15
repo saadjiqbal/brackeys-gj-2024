@@ -25,6 +25,9 @@ func _physics_process(_delta) -> void:
 			elif Input.is_action_just_released("action"):
 				gameGlobals.can_drag_item = true
 				water_bowl_timer.start()
+				
+		if Input.is_action_just_pressed("right_click"):
+			reset_position()
 
 func reset_position() -> void:
 	self.position = DEFAULT_POSITION
