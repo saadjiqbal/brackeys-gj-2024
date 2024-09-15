@@ -61,6 +61,8 @@ var status_curing_sfx_dict = {
 	gameGlobals.AFFECTION_STATUS: play_sfx
 }
 
+var colliding_items = []
+
 # References to the UI elements
 @onready var progress_bar = $ProgressBar
 @onready var animated_sprite = $AnimatedSprite2D
@@ -96,7 +98,7 @@ func _physics_process(delta):
 		is_moving = true
 
 	# Decrease patience over time if status is set
-	if current_status != "":
+	if current_status != "" and current_status != target_cure_status:
 		patience -= delta * patience_reduction_rate # Decrease patience by a rate
 		patience -= delta * patience_loss_count * patience_reduction_rate # Decrease further if already lost patience
 	check_patience()
@@ -222,13 +224,23 @@ func handle_patience_loss():
 				max_random_interval = 1
 				print("Max random interval too low")
 
+func get_draggable_for_status(status: String):
+	if status == gameGlobals.HUNGER_STATUS:
+		return !gameGlobals.is_food_bowl_draggable
+	elif status == gameGlobals.THIRST_STATUS:
+		return !gameGlobals.is_water_bowl_draggable
+	elif status == gameGlobals.PLAY_STATUS:
+		return !gameGlobals.is_toy_draggable
+	else:
+		return false
 
 # Check if current status has been cured correctly
 func check_is_status_cured(delta: float):
 	if target_cure_status != "" and current_status != "":
-		# If item is dropped, then attempting to cure status
-		if gameGlobals.can_drag_item:
-			# Increase patience if correct item placed
+		# Check status if corresponding item is not being dragged
+		var is_item_placed = get_draggable_for_status(current_status)
+		if is_item_placed:
+			# Increase patience if correct chosen and placed (i.e. not being dragged)
 			if target_cure_status == current_status:
 				if not has_played_sfx_sound:
 					sfx_player.stream = status_curing_sfx_dict[current_status]
@@ -248,10 +260,32 @@ func show_affection(delta: float) -> void:
 		patience += AFFECTION_PATIENCE_INCREMENT
 		print("Showing affection")
 
+# Function to update the target cure status based on colliding items
+func update_target_cure_status():
+	var found_current_status_cure = false
+	for item in colliding_items:
+		var potential_cure_status = item_status_dict[item]
+		
+		# Prioritize curing the current status
+		if potential_cure_status == current_status:
+			target_cure_status = potential_cure_status
+			found_current_status_cure = true
+			break  # Exit early since we found the cure for the current status
+		
+		# If no current status cure found yet, set target_cure_status to another valid item
+		if not found_current_status_cure:
+			target_cure_status = potential_cure_status
+
+	# If no items colliding, reset target_cure_status
+	if not found_current_status_cure and colliding_items.is_empty():
+		target_cure_status = ""
+
 # Check what has entered our Area2D node
 func _on_animal_action_area_area_entered(area):
 	if area.name in item_status_dict:
-		target_cure_status = item_status_dict[area.name]
+		colliding_items.append(area.name)
+		# Check if any colliding items can cure the status
+		update_target_cure_status()
 	elif area.name == "AnimalActionArea":
 		## TODO: Stop moving and start throwing some hands
 		print("Colliding with animal")
@@ -259,10 +293,14 @@ func _on_animal_action_area_area_entered(area):
 # Check what has exited our Area2D node
 func _on_animal_action_area_area_exited(area):
 	if area.name in item_status_dict:
-		# Reset status if cured correctly
-		if target_cure_status == current_status:
+		# Remove the item from the list
+		colliding_items.erase(area.name)
+
+		# Check again if any remaining items can cure the status, reset if curing item has been removed
+		if item_status_dict[area.name] == current_status:
 			reset_status()
-		target_cure_status = ""
+		update_target_cure_status()
+
 		is_attempting_cure_status = false
 		has_played_sfx_sound = false
 
