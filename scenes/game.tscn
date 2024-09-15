@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://dnubasacbx764"]
+[gd_scene load_steps=9 format=3 uid="uid://dnubasacbx764"]
 
 [ext_resource type="Script" path="res://scripts/game.gd" id="1_c07yq"]
 [ext_resource type="PackedScene" uid="uid://ns36cax58tjo" path="res://scenes/level_timer.tscn" id="4_0m1cl"]
@@ -6,6 +6,8 @@
 [ext_resource type="PackedScene" uid="uid://by48bsueosbie" path="res://scenes/pause_menu.tscn" id="5_356ry"]
 [ext_resource type="PackedScene" uid="uid://c0lo7lebeo7i1" path="res://scenes/game_over.tscn" id="5_ust46"]
 [ext_resource type="PackedScene" uid="uid://xn7ogn786u5w" path="res://scenes/game_win.tscn" id="6_25nsv"]
+[ext_resource type="AudioStream" uid="uid://0gktkrbqxr0a" path="res://assets/sfx/game_over.mp3" id="7_su6tx"]
+[ext_resource type="AudioStream" uid="uid://dt453n2xmls2w" path="res://assets/sfx/level_complete.mp3" id="8_2fpur"]
 
 [node name="Game" type="Node"]
 script = ExtResource("1_c07yq")
@@ -19,3 +21,9 @@ script = ExtResource("1_c07yq")
 [node name="GameOver" parent="." instance=ExtResource("5_ust46")]
 
 [node name="GameWin" parent="." instance=ExtResource("6_25nsv")]
+
+[node name="GameOverSFX" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("7_su6tx")
+
+[node name="GameWinSFX" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("8_2fpur")
