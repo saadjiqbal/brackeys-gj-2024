@@ -118,20 +118,23 @@ func set_target_position(target_pos: Vector2):
 	target_position = target_pos
 	is_moving = true
 
+func set_random_status():
+	current_status = get_random_status()
+	status_icon.show_icon(current_status)
+	# Play special SFX for affection and reset timer
+	if current_status == gameGlobals.AFFECTION_STATUS:
+		sfx_player.stream = whine_sfx
+		affection_timer_accumulator = 0
+	else:
+		sfx_player.stream = status_popup_sfx
+	sfx_player.play()
+	print(current_status)
+
 func accumulate_and_set_status(delta: float):
-	status_time_accumulator += delta
-	if status_time_accumulator >= status_interval:
-		if current_status == "":
-			current_status = get_random_status()
-			status_icon.show_icon(current_status)
-			# Play special SFX for affection and reset timer
-			if current_status == gameGlobals.AFFECTION_STATUS:
-				sfx_player.stream = whine_sfx
-				affection_timer_accumulator = 0
-			else:
-				sfx_player.stream = status_popup_sfx
-			sfx_player.play()
-			print(current_status)
+	if current_status == "":
+		status_time_accumulator += delta
+		if status_time_accumulator >= status_interval:
+			set_random_status()
 
 	# Check affection timer, reset status if timed out
 	if current_status == gameGlobals.AFFECTION_STATUS:
@@ -313,6 +316,7 @@ func _on_animal_action_area_area_exited(area):
 
 	if area.name == "AnimalActionArea":
 		reset_status()
+		set_random_status()
 
 # Check if mouse is inside our Area2D node
 func _on_animal_action_area_mouse_entered():
