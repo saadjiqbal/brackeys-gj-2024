@@ -72,9 +72,8 @@ func set_move_position(target_position: Vector2):
 
 func find_closest_node_to_position(target_position: Vector2) -> Node2D:
 	var closest_node = null
-	var closest_distance = 20000  # Start with an infinitely large distance
+	var closest_distance = 20000  # Start with a very big distance
 	for child in get_children():
-		print(child)
 		if child is CharacterBody2D:
 			# Calculate the distance between the node and the target position
 			var distance = child.position.distance_to(target_position)
