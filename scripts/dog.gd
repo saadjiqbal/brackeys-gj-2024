@@ -98,7 +98,7 @@ func _physics_process(delta):
 		is_moving = true
 
 	# Decrease patience over time if status is set
-	if current_status != "":
+	if current_status != "" and current_status != target_cure_status:
 		patience -= delta * patience_reduction_rate # Decrease patience by a rate
 		patience -= delta * patience_loss_count * patience_reduction_rate # Decrease further if already lost patience
 	check_patience()
