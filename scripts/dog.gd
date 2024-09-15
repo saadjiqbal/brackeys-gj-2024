@@ -94,9 +94,9 @@ func _physics_process(delta):
 			show_affection(delta)
 
 	# Move animal on right click
-	if Input.is_action_just_pressed("right_click") and cursor_on_animal:
-		target_position = get_global_mouse_position()
-		is_moving = true
+	#if Input.is_action_just_pressed("right_click") and cursor_on_animal:
+		#target_position = get_global_mouse_position()
+		#is_moving = true
 
 	# Decrease patience over time if status is set
 	if current_status != "" and current_status != target_cure_status:
@@ -113,6 +113,10 @@ func _physics_process(delta):
 	if is_moving:
 		move_to_target(direction)
 	update_animation(is_moving, direction)
+
+func set_target_position(target_pos: Vector2):
+	target_position = target_pos
+	is_moving = true
 
 func accumulate_and_set_status(delta: float):
 	status_time_accumulator += delta

@@ -67,6 +67,23 @@ func _ready() -> void:
 func _physics_process(_delta) -> void:
 	pass
 
+func set_move_position(target_position: Vector2):
+	find_closest_node_to_position(target_position).set_target_position(target_position)
+
+func find_closest_node_to_position(target_position: Vector2) -> Node2D:
+	var closest_node = null
+	var closest_distance = float('inf')  # Start with an infinitely large distance
+	for child in get_children():
+		if child is CharacterBody2D:
+			# Calculate the distance between the node and the target position
+			var distance = child.position.distance_to(target_position)
+			
+			# Check if this distance is smaller than the closest distance found so far
+			if distance < closest_distance:
+				closest_distance = distance
+				closest_node = child
+	return closest_node
+
 # Reset item positions and delete dog instances
 func reset_level():
 	food_bowl_scene_instance.reset_position()
