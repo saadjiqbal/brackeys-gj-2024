@@ -101,8 +101,8 @@ func _physics_process(delta):
 		patience -= delta * patience_loss_count * patience_reduction_rate # Decrease further if already lost patience
 	check_patience()
 
-	# Stop moving when curing status
-	if is_attempting_cure_status:
+	# Stop moving when curing status or game is over
+	if is_attempting_cure_status or patience_loss_count == MAX_PATIENCE_LOSS_COUNT:
 		is_moving = false
 
 	# Update animation based on direction
