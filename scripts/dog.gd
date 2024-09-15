@@ -47,6 +47,7 @@ var eat_sfx = preload("res://assets/sfx/dog_eat.mp3")
 var play_sfx = preload("res://assets/sfx/bark3.mp3")
 var status_popup_sfx = preload("res://assets/sfx/status_notification.mp3")
 var whine_sfx = preload("res://assets/sfx/dog_whine.mp3")
+var anger_sfx = preload("res://assets/sfx/dog_growl.mp3")
 
 var item_status_dict = {
 	"WaterBowlArea": gameGlobals.THIRST_STATUS,
@@ -287,8 +288,10 @@ func _on_animal_action_area_area_entered(area):
 		# Check if any colliding items can cure the status
 		update_target_cure_status()
 	elif area.name == "AnimalActionArea":
-		## TODO: Stop moving and start throwing some hands
 		print("Colliding with animal")
+		current_status = gameGlobals.ANGER_STATUS
+		status_icon.show_icon(current_status)
+		sfx_player.stream = anger_sfx
 
 # Check what has exited our Area2D node
 func _on_animal_action_area_area_exited(area):
@@ -303,6 +306,9 @@ func _on_animal_action_area_area_exited(area):
 
 		is_attempting_cure_status = false
 		has_played_sfx_sound = false
+
+	if area.name == "AnimalActionArea":
+		reset_status()
 
 # Check if mouse is inside our Area2D node
 func _on_animal_action_area_mouse_entered():
