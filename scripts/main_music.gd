@@ -6,6 +6,9 @@ func _ready():
 	self.play()
 
 
+func _stop_music():
+	self.stop()
+
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	pass

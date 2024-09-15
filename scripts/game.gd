@@ -25,10 +25,12 @@ const TEST_ICON = preload("res://icon.svg")
 const MAX_PATIENCE_COUNT: int = 3
 
 @onready var level_timer = $LevelTimer
-
 @onready var pause_menu = $PauseMenu
 @onready var item_hotbar = $ItemHotbar
 @onready var background_music = $BackgroundMusic
+
+@onready var game_over_sfx = $GameOverSFX
+@onready var game_win_sfx = $GameWinSFX
 
 var current_patience_count: int
 
@@ -95,6 +97,10 @@ func instantiate_dog(position: Vector2):
 func game_over() -> void:
 	# Add logic to stop dog moving & stop music + play a game over sound effect / music
 	gameGlobals.game_over = true
+	gameGlobals.can_drag_item = false
+	mainMusic._stop_music()
+	game_over_sfx.play()
+	
 	
 	print("Game Over")
 
