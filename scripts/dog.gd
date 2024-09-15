@@ -251,7 +251,9 @@ func show_affection(delta: float) -> void:
 # Check what has entered our Area2D node
 func _on_animal_action_area_area_entered(area):
 	if area.name in item_status_dict:
-		target_cure_status = item_status_dict[area.name]
+		# Give priority to target cure status if multiple items are colliding
+		if target_cure_status != current_status:
+			target_cure_status = item_status_dict[area.name]
 	elif area.name == "AnimalActionArea":
 		## TODO: Stop moving and start throwing some hands
 		print("Colliding with animal")
