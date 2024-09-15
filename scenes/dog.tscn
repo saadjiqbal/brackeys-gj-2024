@@ -92,7 +92,7 @@ animations = [{
 size = Vector2(35.875, 29.125)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_64iw8"]
-size = Vector2(36.0971, 20.2417)
+size = Vector2(27.5833, 19)
 
 [node name="Dog" type="CharacterBody2D"]
 scale = Vector2(8, 8)
@@ -111,7 +111,7 @@ shape = SubResource("RectangleShape2D_mshye")
 collision_mask = 15
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AnimalActionArea"]
-position = Vector2(0, 7.81871)
+position = Vector2(-2.0625, 8.74999)
 scale = Vector2(1.5, 1.5)
 shape = SubResource("RectangleShape2D_64iw8")
 
