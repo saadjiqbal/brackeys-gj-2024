@@ -14,7 +14,7 @@ const DOG1_POS_LEVEL_2: Vector2 = Vector2(240, 275)
 const DOG2_POS_LEVEL_2: Vector2 = Vector2(1000, 275)
 const DOG1_POS_LEVEL_3: Vector2 = Vector2(240, 400)
 const DOG2_POS_LEVEL_3: Vector2 = Vector2(1000, 400)
-const DOG3_POS_LEVEL_3: Vector2 = Vector2(640, 100)
+const DOG3_POS_LEVEL_3: Vector2 = Vector2(640, 200)
 
 const FOOD_BOWL_POS: Vector2 = Vector2(640, ITEM_Y_POSITION) 
 const TOY_POS: Vector2 = Vector2(821, ITEM_Y_POSITION)
