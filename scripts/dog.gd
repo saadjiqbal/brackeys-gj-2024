@@ -299,6 +299,7 @@ func _on_animal_action_area_area_entered(area):
 		current_status = gameGlobals.ANGER_STATUS
 		status_icon.show_icon(current_status)
 		sfx_player.stream = anger_sfx
+		sfx_player.play()
 
 # Check what has exited our Area2D node
 func _on_animal_action_area_area_exited(area):
