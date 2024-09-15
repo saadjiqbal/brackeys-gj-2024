@@ -5,6 +5,7 @@ const FOOD_BOWL_SCENE: PackedScene = preload("res://scenes/food_bowl.tscn")
 const TOY_SCENE: PackedScene = preload("res://scenes/toy.tscn")
 const WATER_BOWL_SCENE: PackedScene = preload("res://scenes/water_bowl.tscn")
 
+const GAME_AREA_TOP_Y = 150
 const GAME_AREA_WIDTH = 1280
 const ITEM_Y_POSITION = 657
 
@@ -13,7 +14,7 @@ const DOG1_POS_LEVEL_2: Vector2 = Vector2(240, 275)
 const DOG2_POS_LEVEL_2: Vector2 = Vector2(1000, 275)
 const DOG1_POS_LEVEL_3: Vector2 = Vector2(240, 400)
 const DOG2_POS_LEVEL_3: Vector2 = Vector2(1000, 400)
-const DOG3_POS_LEVEL_3: Vector2 = Vector2(640, 100)
+const DOG3_POS_LEVEL_3: Vector2 = Vector2(640, 200)
 
 const FOOD_BOWL_POS: Vector2 = Vector2(640, ITEM_Y_POSITION) 
 const TOY_POS: Vector2 = Vector2(821, ITEM_Y_POSITION)
@@ -149,7 +150,7 @@ func create_borders():
 	var border_thickness = 10  # Thickness of the border
 	
 	# Create top border
-	var top_border = create_static_body(Vector2(game_size.x / 2, -border_thickness / 2), game_size.x, border_thickness)
+	var top_border = create_static_body(Vector2(game_size.x / 2, GAME_AREA_TOP_Y -border_thickness / 2), game_size.x, border_thickness)
 	
 	# Create bottom border
 	var bottom_border = create_static_body(Vector2(game_size.x / 2, game_size.y + border_thickness / 2), game_size.x, border_thickness)
