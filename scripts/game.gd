@@ -46,6 +46,8 @@ var food_bowl_scene_instance
 var toy_scene_instance
 var water_bowl_scene_instance
 
+var game_over_sfx_played: bool = false
+
 func _ready() -> void:
 	gameGlobals.can_drag_item = true
 	gameGlobals.game_over = false
@@ -125,7 +127,11 @@ func game_over() -> void:
 	gameGlobals.game_over = true
 	gameGlobals.can_drag_item = false
 	mainMusic._stop_music()
-	game_over_sfx.play()
+	
+	if not game_over_sfx_played:
+		game_over_sfx_played = true
+		game_over_sfx.play()
+		
 	
 	print("Game Over")
 
