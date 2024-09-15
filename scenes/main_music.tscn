@@ -5,6 +5,7 @@
 
 [node name="MainMusic" type="AudioStreamPlayer2D"]
 stream = ExtResource("1_ym0vk")
+volume_db = -4.0
 script = ExtResource("2_8w1hm")
 
 [connection signal="finished" from="." to="." method="_on_finished"]
