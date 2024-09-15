@@ -3,7 +3,6 @@ extends Node2D
 const SCALE_ON_HOVER : Vector2 = Vector2(10.5, 10.5)
 const DEFAULT_POSITION: Vector2 = Vector2(640, 657)
 
-var draggable : bool = false
 var sprite_offset : Vector2
 var scale_on_load : Vector2
 
@@ -14,7 +13,7 @@ func _ready() -> void:
 	scale_on_load = self.scale
 
 func _physics_process(_delta) -> void:
-	if draggable:
+	if gameGlobals.is_food_bowl_draggable:
 		if Input.is_action_just_pressed("action"):
 			sprite_offset = get_global_mouse_position() - self.position
 			gameGlobals.can_drag_item = false
@@ -30,14 +29,14 @@ func reset_position() -> void:
 
 func _on_food_bowl_area_mouse_entered():
 	if gameGlobals.can_drag_item:
-		draggable = true
+		gameGlobals.is_food_bowl_draggable = true
 		sprite_2d.texture = load("res://assets/items/foodbowl_highlighted.png")
 		self.scale = SCALE_ON_HOVER
 
 
 func _on_food_bowl_area_mouse_exited():
 	if gameGlobals.can_drag_item:
-		draggable = false
+		gameGlobals.is_food_bowl_draggable = false
 		sprite_2d.texture = load("res://assets/items/foodbowl.png")
 		self.scale = scale_on_load
 

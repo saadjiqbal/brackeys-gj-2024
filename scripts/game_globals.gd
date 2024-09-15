@@ -8,6 +8,9 @@ const AFFECTION_STATUS = "affection"
 const MAX_LEVEL: int = 3
 
 var can_drag_item: bool = true
+var is_water_bowl_draggable: bool = true
+var is_food_bowl_draggable: bool = true
+var is_toy_draggable: bool = true
 
 var current_level: int = 1
 
