@@ -26,7 +26,7 @@ func _physics_process(_delta) -> void:
 				gameGlobals.can_drag_item = true
 				water_bowl_timer.start()
 				
-		if Input.is_action_just_pressed("right_click"):
+		if Input.is_action_just_pressed("spacebar"):
 			reset_position()
 
 func reset_position() -> void:
