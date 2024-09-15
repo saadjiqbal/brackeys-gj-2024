@@ -17,7 +17,7 @@ const AFFECTION_PATIENCE_INCREMENT = 5 # Amount to increase patience when clicki
 @export var patience_reduction_rate = 10 # Amount of patience lost per second
 @export var speed: float = 2             # Movement speed
 @export var min_random_interval: float = 5.0    # Min interval for random status/movement timer
-@export var max_random_interval: float = 15.0   # Max interval for random status/movement timer
+@export var max_random_interval: float = 10.0   # Max interval for random status/movement timer
 @export var affection_timeout_s: float = 5.0    # Number of seconds that affection status lasts for 
 
 var patience: float = 100.0              # A patience meter starting at 100
@@ -47,6 +47,7 @@ var eat_sfx = preload("res://assets/sfx/dog_eat.mp3")
 var play_sfx = preload("res://assets/sfx/bark3.mp3")
 var status_popup_sfx = preload("res://assets/sfx/status_notification.mp3")
 var whine_sfx = preload("res://assets/sfx/dog_whine.mp3")
+var anger_sfx = preload("res://assets/sfx/dog_growl.mp3")
 
 var item_status_dict = {
 	"WaterBowlArea": gameGlobals.THIRST_STATUS,
@@ -93,9 +94,9 @@ func _physics_process(delta):
 			show_affection(delta)
 
 	# Move animal on right click
-	if Input.is_action_just_pressed("right_click") and cursor_on_animal:
-		target_position = get_global_mouse_position()
-		is_moving = true
+	#if Input.is_action_just_pressed("right_click") and cursor_on_animal:
+		#target_position = get_global_mouse_position()
+		#is_moving = true
 
 	# Decrease patience over time if status is set
 	if current_status != "" and current_status != target_cure_status:
@@ -113,20 +114,27 @@ func _physics_process(delta):
 		move_to_target(direction)
 	update_animation(is_moving, direction)
 
+func set_target_position(target_pos: Vector2):
+	target_position = target_pos
+	is_moving = true
+
+func set_random_status():
+	current_status = get_random_status()
+	status_icon.show_icon(current_status)
+	# Play special SFX for affection and reset timer
+	if current_status == gameGlobals.AFFECTION_STATUS:
+		sfx_player.stream = whine_sfx
+		affection_timer_accumulator = 0
+	else:
+		sfx_player.stream = status_popup_sfx
+	sfx_player.play()
+	print(current_status)
+
 func accumulate_and_set_status(delta: float):
-	status_time_accumulator += delta
-	if status_time_accumulator >= status_interval:
-		if current_status == "":
-			current_status = get_random_status()
-			status_icon.show_icon(current_status)
-			# Play special SFX for affection and reset timer
-			if current_status == gameGlobals.AFFECTION_STATUS:
-				sfx_player.stream = whine_sfx
-				affection_timer_accumulator = 0
-			else:
-				sfx_player.stream = status_popup_sfx
-			sfx_player.play()
-			print(current_status)
+	if current_status == "":
+		status_time_accumulator += delta
+		if status_time_accumulator >= status_interval:
+			set_random_status()
 
 	# Check affection timer, reset status if timed out
 	if current_status == gameGlobals.AFFECTION_STATUS:
@@ -219,7 +227,7 @@ func handle_patience_loss():
 			min_random_interval -= 2
 			if min_random_interval < 1:
 				min_random_interval = 1
-			max_random_interval -= 2
+			max_random_interval -= 1
 			if max_random_interval < 1:
 				max_random_interval = 1
 				print("Max random interval too low")
@@ -287,8 +295,10 @@ func _on_animal_action_area_area_entered(area):
 		# Check if any colliding items can cure the status
 		update_target_cure_status()
 	elif area.name == "AnimalActionArea":
-		## TODO: Stop moving and start throwing some hands
 		print("Colliding with animal")
+		current_status = gameGlobals.ANGER_STATUS
+		status_icon.show_icon(current_status)
+		sfx_player.stream = anger_sfx
 
 # Check what has exited our Area2D node
 func _on_animal_action_area_area_exited(area):
@@ -303,6 +313,10 @@ func _on_animal_action_area_area_exited(area):
 
 		is_attempting_cure_status = false
 		has_played_sfx_sound = false
+
+	if area.name == "AnimalActionArea":
+		reset_status()
+		set_random_status()
 
 # Check if mouse is inside our Area2D node
 func _on_animal_action_area_mouse_entered():

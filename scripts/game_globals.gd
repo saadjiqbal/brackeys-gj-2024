@@ -4,6 +4,7 @@ const HUNGER_STATUS = "hunger"
 const THIRST_STATUS = "thirst"
 const PLAY_STATUS = "play"
 const AFFECTION_STATUS = "affection"
+const ANGER_STATUS = "anger"
 
 const MAX_LEVEL: int = 3
 
