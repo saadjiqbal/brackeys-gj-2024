@@ -1,6 +1,6 @@
 [gd_scene load_steps=28 format=3 uid="uid://c0lo7lebeo7i1"]
 
-[ext_resource type="Script" path="res://scenes/game_over.gd" id="1_6fytx"]
+[ext_resource type="Script" path="res://scripts/game_over.gd" id="1_6fytx"]
 [ext_resource type="FontFile" uid="uid://vxqu6gkpdktb" path="res://assets/fonts/Coffee Soda.ttf" id="1_fa0e0"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ana7u"]

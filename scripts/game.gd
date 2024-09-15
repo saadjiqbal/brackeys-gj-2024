@@ -32,6 +32,10 @@ const MAX_PATIENCE_COUNT: int = 3
 @onready var game_over_sfx = $GameOverSFX
 @onready var game_win_sfx = $GameWinSFX
 
+@onready var level_1 = $"Level 1"
+@onready var level_2 = $"Level 2"
+@onready var level_3 = $"Level 3"
+
 var current_patience_count: int
 
 # Game area will be just above position of items
@@ -45,10 +49,15 @@ func _ready() -> void:
 	gameGlobals.can_drag_item = true
 	gameGlobals.game_over = false
 	gameGlobals.game_win = false
+	gameGlobals.current_level = 1
 	
 	level_timer.level_finished.connect(level_finished)
 	
 	current_patience_count = MAX_PATIENCE_COUNT
+	
+	level_1.visible = true
+	level_2.visible = false
+	level_3.visible = false
 	
 	create_borders()
 	spawn_items()
@@ -101,22 +110,40 @@ func game_over() -> void:
 	mainMusic._stop_music()
 	game_over_sfx.play()
 	
-	
 	print("Game Over")
 
 func game_win() -> void:
 	gameGlobals.game_win = true
+	gameGlobals.can_drag_item = false
+	mainMusic._stop_music()
+	game_win_sfx.play()
+	
 	print("Game Win")
 
 # Triggers when our timer emits level_finished signal
 func level_finished() -> void:
+	# pass 1, finished level 1, current_level = 1
+	# pass 2, finished level 2, current_level = 2
+	# pass 3, finished level 3, curren_level = 3
+	print("Current level: ", gameGlobals.current_level)
+	if gameGlobals.current_level >= gameGlobals.MAX_LEVEL:
+		game_win()
+	
 	gameGlobals.current_level = gameGlobals.current_level + 1
 
+	level_transition()
 	reset_level()
 	start_new_level(gameGlobals.current_level)
-	print("Current level: ", gameGlobals.current_level)
-	if gameGlobals.current_level >= (gameGlobals.MAX_LEVEL + 1):
-		game_win()
+
+func level_transition()-> void:
+	if gameGlobals.current_level == 2:
+		level_1.visible = false
+		level_2.visible = true
+		level_3.visible = false
+	elif gameGlobals.current_level == 3:
+		level_1.visible = false
+		level_2.visible = false
+		level_3.visible = true
 
 func create_borders():
 	var border_thickness = 10  # Thickness of the border

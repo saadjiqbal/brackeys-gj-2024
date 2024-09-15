@@ -2,7 +2,7 @@ extends CanvasLayer
 
 signal level_finished
 
-const LEVEL_TIME_ARRAY: Array = [60, 60, 60]
+const LEVEL_TIME_ARRAY: Array = [10, 10, 10]
 
 @onready var timer_label = $MarginContainer/TimerLabel
 @onready var timer = $Timer
@@ -11,6 +11,8 @@ const LEVEL_TIME_ARRAY: Array = [60, 60, 60]
 var is_level_finished: bool = false
 
 func _ready() -> void:
+	timer.set_wait_time(10)
+	timer.start()
 	set_level_timer()
 
 func _process(_delta) -> void:
