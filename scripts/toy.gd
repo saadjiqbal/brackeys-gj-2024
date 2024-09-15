@@ -6,6 +6,7 @@ const DEFAULT_POSITION: Vector2 = Vector2(821, 657)
 @onready var toy_timer = %ToyTimer
 @onready var sprite_2d = $Sprite2D
 
+var draggable: bool = false
 var sprite_offset : Vector2
 var scale_on_load : Vector2
 
@@ -14,7 +15,7 @@ func _ready() -> void:
 
 func _physics_process(_delta) -> void:
 	if not gameGlobals.game_over or not gameGlobals.game_win:
-		if gameGlobals.is_toy_draggable:
+		if draggable:
 			if Input.is_action_just_pressed("action"):
 				sprite_offset = get_global_mouse_position() - self.position
 				gameGlobals.can_drag_item = false
@@ -30,12 +31,14 @@ func reset_position() -> void:
 
 func _on_toy_area_mouse_entered():
 	if gameGlobals.can_drag_item:
+		draggable = true
 		gameGlobals.is_toy_draggable = true
 		sprite_2d.texture = load("res://assets/items/toy2_highlighted.png")
 		self.scale = SCALE_ON_HOVER
 
 func _on_toy_area_mouse_exited():
 	if gameGlobals.can_drag_item:
+		draggable = false
 		gameGlobals.is_toy_draggable = false
 		sprite_2d.texture = load("res://assets/items/toy2.png")
 		self.scale = scale_on_load
