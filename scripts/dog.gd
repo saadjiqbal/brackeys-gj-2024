@@ -17,7 +17,7 @@ const AFFECTION_PATIENCE_INCREMENT = 5 # Amount to increase patience when clicki
 @export var patience_reduction_rate = 10 # Amount of patience lost per second
 @export var speed: float = 2             # Movement speed
 @export var min_random_interval: float = 5.0    # Min interval for random status/movement timer
-@export var max_random_interval: float = 15.0   # Max interval for random status/movement timer
+@export var max_random_interval: float = 10.0   # Max interval for random status/movement timer
 @export var affection_timeout_s: float = 5.0    # Number of seconds that affection status lasts for 
 
 var patience: float = 100.0              # A patience meter starting at 100
@@ -224,7 +224,7 @@ func handle_patience_loss():
 			min_random_interval -= 2
 			if min_random_interval < 1:
 				min_random_interval = 1
-			max_random_interval -= 2
+			max_random_interval -= 1
 			if max_random_interval < 1:
 				max_random_interval = 1
 				print("Max random interval too low")
