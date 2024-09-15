@@ -7,7 +7,7 @@
 size = Vector2(11.125, 8)
 
 [node name="Toy" type="Node2D"]
-z_index = 1
+z_index = 10
 position = Vector2(821, 657)
 scale = Vector2(8, 8)
 script = ExtResource("1_dq4kq")
