@@ -14,6 +14,7 @@ func game_over() -> void:
 		self.visible = true
 
 func retry_game() -> void:
+	mainMusic.play()
 	get_tree().change_scene_to_file("res://scenes/game.tscn")
 
 func _on_retry_pressed():
