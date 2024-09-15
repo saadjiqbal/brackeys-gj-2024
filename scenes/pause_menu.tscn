@@ -6,7 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://c6f7ei1tl04wr" path="res://assets/ui/Icon_Small_Blank_Audio.png" id="4_krd7b"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_60wcc"]
-bg_color = Color(0.164706, 0.164706, 0.168627, 1)
+bg_color = Color(0.9, 0.87465, 0.783, 1)
 corner_radius_top_left = 30
 corner_radius_top_right = 30
 corner_radius_bottom_right = 30
@@ -15,6 +15,8 @@ corner_radius_bottom_left = 30
 [sub_resource type="LabelSettings" id="LabelSettings_ajt2v"]
 font = ExtResource("2_ntdps")
 font_size = 75
+outline_size = 40
+outline_color = Color(0, 0, 0, 1)
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_pj8l8"]
 
@@ -153,6 +155,7 @@ theme_override_constants/separation = 40
 
 [node name="ResumeButton" type="Button" parent="PauseBackground/VBoxContainer"]
 layout_mode = 2
+theme_override_colors/font_hover_color = Color(0.815686, 0.596078, 0.356863, 1)
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("2_ntdps")
 theme_override_font_sizes/font_size = 40
@@ -171,6 +174,7 @@ text = "RESUME"
 
 [node name="ExitButton" type="Button" parent="PauseBackground/VBoxContainer"]
 layout_mode = 2
+theme_override_colors/font_hover_color = Color(0.815686, 0.596078, 0.356863, 1)
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("2_ntdps")
 theme_override_font_sizes/font_size = 40

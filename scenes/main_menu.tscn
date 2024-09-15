@@ -1,12 +1,11 @@
 [gd_scene load_steps=28 format=3 uid="uid://nbq6kcqr8etw"]
 
 [ext_resource type="Script" path="res://scripts/main_menu.gd" id="1_1k5er"]
-[ext_resource type="Texture2D" uid="uid://dfyjc8vgc5f6e" path="res://assets/ui/Crazy_Dogs_Splash.png" id="2_m5wye"]
+[ext_resource type="Texture2D" uid="uid://bjmwi5qtvxoq2" path="res://assets/ui/Crazy_Dogs_Splash.png" id="2_m5wye"]
 [ext_resource type="FontFile" uid="uid://vxqu6gkpdktb" path="res://assets/fonts/Coffee Soda.ttf" id="2_omdxy"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_hp8ey"]
 texture = ExtResource("2_m5wye")
-texture_margin_left = 6.0
 axis_stretch_horizontal = 2
 axis_stretch_vertical = 1
 
@@ -95,6 +94,8 @@ theme_override_constants/separation = -100
 [node name="Play" type="Button" parent="Background/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
+theme_override_colors/font_hover_color = Color(0.815686, 0.596078, 0.356863, 1)
+theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("2_omdxy")
 theme_override_font_sizes/font_size = 75
 theme_override_styles/focus = SubResource("StyleBoxEmpty_11w4l")
@@ -113,6 +114,8 @@ text = "PLAY"
 [node name="Exit" type="Button" parent="Background/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
+theme_override_colors/font_hover_color = Color(0.815686, 0.596078, 0.356863, 1)
+theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("2_omdxy")
 theme_override_font_sizes/font_size = 75
 theme_override_styles/focus = SubResource("StyleBoxEmpty_lpb10")
